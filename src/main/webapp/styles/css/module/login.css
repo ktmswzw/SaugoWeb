@@ -12,7 +12,7 @@ body {
     margin: 0;
 }
 #logo {
-    padding: 20px 0 20px 5px;
+    padding: 100px 0 20px 5px;
 }
 
 
@@ -58,4 +58,21 @@ body {
 
 .form-control{
     height: 37px;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #d82059;
+    border-color: #d81a54;
+}
+.btn-danger:focus,
+.btn-danger.focus {
+    color: #fff;
+    background-color: #d81149;
+    border-color: #d80b44;
+}
+.btn-danger:hover {
+    color: #fff;
+    background-color: #d82059;
+    border-color: #d81a54;
 }

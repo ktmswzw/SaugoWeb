@@ -21,16 +21,16 @@
                 <div class="panel-body">
                     <input name="userKey" type="hidden" id="userKey"
                            value="D1B5CC2FE46C4CC983C073BCA897935608D926CD32992B5911"
-                            />
+                    />
                     <input name="salt" type="hidden" id="salt"
                            value="${salt}"
-                            />
+                    />
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                             <input type="number" id="username" name="username" class="form-control"
-                                   placeholder="手机号码" value="15869100507" required autofocus=""  tabindex="1">
-                            <span class="input-group-addon"  data-toggle="tooltip" title="保存登陆信息">
+                                   placeholder="手机号码" value="15869100507" required autofocus="" tabindex="1">
+                            <span class="input-group-addon" data-toggle="tooltip" title="保存登陆信息">
                                 <span class="glyphicon glyphicon-saved"></span>
                                 <input type="checkbox" id="rememberMe" name="rememberMe" data-size="mini">
                             </span>
@@ -43,11 +43,12 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-lock"></span>
                             </span>
-                            <input type="password" id="password" name="password" value="123456" class="form-control " placeholder="登录密码"
-                                   required  tabindex="2"/>
-                            <span class="input-group-addon"   data-toggle="tooltip" title="查看密码">
+                            <input type="password" id="password" name="password" value="123456" class="form-control "
+                                   placeholder="登录密码"
+                                   required tabindex="2"/>
+                            <span class="input-group-addon" data-toggle="tooltip" title="查看密码">
                                     <span class="glyphicon glyphicon-eye-open"></span>
-                                    <input type="checkbox" id="show-password" data-size="mini" >
+                                    <input type="checkbox" id="show-password" data-size="mini">
                                 </input>
                             </span>
                         </div>
@@ -59,7 +60,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
                             <input type="text" id="captcha" name="captcha" class="form-control"
-                                   placeholder="验证码" autocomplete="false" required  tabindex="3"/>
+                                   placeholder="验证码" autocomplete="false" required tabindex="3"/>
                             <span class="input-group-addon refresh" data-toggle="tooltip" title="点击刷新">
                                 <span class="glyphicon glyphicon-refresh" id="refresh"></span>
                                 <img id="Kaptcha" src=""/>
@@ -70,13 +71,11 @@
                     <div id="hiddenMsg"></div>
 
 
-                    <div class="form-group">
-                        <div class="btn-group">
-                            <button type="submit" id="but_login" name="but_login" class="btn btn-primary"  tabindex="4"
-                                    autocomplete="off">
-                                <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;进入
-                            </button>
-                        </div>
+                    <div class="btn-group">
+                        <button type="submit" id="but_login" name="but_login" class="btn btn-danger" tabindex="4"
+                                autocomplete="off">
+                            <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;进入
+                        </button>
                     </div>
                 </div>
 
