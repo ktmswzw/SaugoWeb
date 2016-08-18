@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://ehcache.sf.net/ehcache.xsd" updateCheck="false" name="ssmCache">
 
-	<diskStore path="java.io.tmpdir/mybatis/ssm" /> <!--系统临时文件目录-->
+	<diskStore path="java.io.tmpdir/mybatis/xecoder" /> <!--系统临时文件目录-->
 
 	<!--
        配置自定义缓存

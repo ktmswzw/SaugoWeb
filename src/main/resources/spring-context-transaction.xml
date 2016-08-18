@@ -52,10 +52,10 @@
     <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
         <property name="patterns">
             <list>
-                <value>com.ssm.common.*</value>
-                <value>com.ssm.service.*</value>
-                <value>com.ssm.business.service.*</value>
-                <value>com.ssm.service.*</value>
+                <value>com.xecoder.common.*</value>
+                <value>com.xecoder.service.*</value>
+                <value>com.xecoder.business.service.*</value>
+                <value>com.xecoder.service.*</value>
             </list>
         </property>
     </bean>

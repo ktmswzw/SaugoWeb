@@ -98,7 +98,7 @@
 
     <!-- 配置数据源 -->
     <bean name="dataSourceGenerator" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <!--        <property name="url" value="jdbc:mysql://localhost:3306/ssm?useUnicode=true&amp;characterEncoding=UTF-8" />
+        <!--        <property name="url" value="jdbc:mysql://localhost:3306/xecoder?useUnicode=true&amp;characterEncoding=UTF-8" />
                 <property name="username" value="vincent" />
                 <property name="password" value="123qwe" />-->
 
@@ -148,7 +148,7 @@
 
     </bean>
 
-    <bean id="multipleDataSource" class="com.ssm.common.mybatis.MultipleDataSource">
+    <bean id="multipleDataSource" class="com.xecoder.common.mybatis.MultipleDataSource">
         <property name="defaultTargetDataSource" ref="dataSource"/>
         <property name="targetDataSources">
             <map>
@@ -167,13 +167,13 @@
 
     <!--扫描mapper -->
     <bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.ssm.mapper,com.ssm.business.mapper,com.ssm.mapper" />
+        <property name="basePackage" value="com.xecoder.mapper,com.xecoder.business.mapper,com.xecoder.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /> <!--
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>-->
     </bean>
 
     <!-- 单SESSION 多数据源 -->
-    <bean id="baseDao" class="com.ssm.common.basedao.BaseDaoSingleSession">
+    <bean id="baseDao" class="com.xecoder.common.basedao.BaseDaoSingleSession">
         <property name="sqlSessionFactory">
             <ref bean="sqlSessionFactory" />
         </property>

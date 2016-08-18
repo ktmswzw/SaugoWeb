@@ -1,8 +1,8 @@
 package {javaPath}.service;
 
 import {javaPath}.entity.{moduleCode};
-import com.ssm.common.mybatis.Page;
-import com.ssm.exception.ServiceException;
+import com.xecoder.common.mybatis.Page;
+import com.xecoder.exception.ServiceException;
 
 import java.util.List;
 

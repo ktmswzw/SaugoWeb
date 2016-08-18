@@ -1,6 +1,6 @@
-package com.ssm.service.ssm.dao;
+package com.xecoder.service.xecoder.dao;
 
-import com.ssm.business.{moduleCode};
+import com.xecoder.business.{moduleCode};
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.apache.commons.lang.StringUtils;
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * Created by  moxz
  * User: 224911261@qq.com
  * 2015/9/14-10:15
- * HabitServer.com.ssm.service.ssm.dao
+ * HabitServer.com.xecoder.service.xecoder.dao
  */
 
 @Repository

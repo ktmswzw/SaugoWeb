@@ -49,7 +49,7 @@
     </bean>
 
 	<!-- 項目自定义的Realm -->
-	<bean id="shiroDbRealm" class="com.ssm.shiro.ShiroDbRealm">
+	<bean id="shiroDbRealm" class="com.xecoder.shiro.ShiroDbRealm">
 		<property name="userService" ref="userService"/>
 		<property name="userRoleService" ref="userRoleService"/>
 		<property name="roleService" ref="roleService"/>
@@ -144,7 +144,7 @@
 		</property>
 	</bean>
 
-    <bean id="kickoutSessionControlFilter" class="com.ssm.shiro.KickoutSessionControlFilter">
+    <bean id="kickoutSessionControlFilter" class="com.xecoder.shiro.KickoutSessionControlFilter">
         <property name="cacheManager" ref="shiroEhcacheManager"/>
         <property name="sessionManager" ref="sessionManager"/>
         <property name="kickoutAfter" value="false"/>
@@ -152,8 +152,8 @@
         <property name="kickoutUrl" value="/login?kickout=1"/>
     </bean>
 
-	<bean id="captchaFormAuthenticationFilter" class="com.ssm.shiro.CaptchaFormAuthenticationFilter"/>
-	<bean id="myUserFilter" class="com.ssm.shiro.MyUserFilter"/>  
+	<bean id="captchaFormAuthenticationFilter" class="com.xecoder.shiro.CaptchaFormAuthenticationFilter"/>
+	<bean id="myUserFilter" class="com.xecoder.shiro.MyUserFilter"/>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>

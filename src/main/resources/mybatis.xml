@@ -4,11 +4,11 @@
 
 	<!--配置数据库方言-->
     <!--  <properties>
-            <property name="dialect" value="com.ssm.common.mybatis.MySQLDialect"/>
+            <property name="dialect" value="com.xecoder.common.mybatis.MySQLDialect"/>
     </properties>
 
     <plugins>
-         <plugin interceptor="com.ssm.common.mybatis.DiclectStatementHandlerInterceptor">
+         <plugin interceptor="com.xecoder.common.mybatis.DiclectStatementHandlerInterceptor">
          </plugin>
      </plugins>-->
 
@@ -40,7 +40,7 @@
     </settings>
 
     <plugins>
-		<plugin interceptor="com.ssm.common.mybatis.PageInterceptor">
+		<plugin interceptor="com.xecoder.common.mybatis.PageInterceptor">
 		</plugin>
 	</plugins>
 

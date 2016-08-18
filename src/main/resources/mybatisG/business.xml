@@ -33,29 +33,29 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.ssm.business.entity" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.xecoder.business.entity" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.ssm.business.mapper"  targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="com.xecoder.business.mapper"  targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ssm.business.mapper"  targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xecoder.business.mapper"  targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
 
-        <!--<table schema="ssm" tableName="business_dictionary" domainObjectName="Dictionary" >
+        <!--<table schema="xecoder" tableName="business_dictionary" domainObjectName="Dictionary" >
             &lt;!&ndash;<columnOverride column="create_time" property="createTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
        &ndash;&gt; </table>-->
 
-        <!--        <table schema="ssm" tableName="business_investor" domainObjectName="Investor" >
+        <!--        <table schema="xecoder" tableName="business_investor" domainObjectName="Investor" >
                     <columnOverride column="input_time" property="inputTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
                 </table>-->
         <!--
-                <table schema="ssm" tableName="business_visit" domainObjectName="Visit" >
+                <table schema="xecoder" tableName="business_visit" domainObjectName="Visit" >
                     <columnOverride column="input_time" property="inputTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
                 </table>-->
         <table schema="recruits" tableName="business_dm" domainObjectName="CodeManage" >
@@ -63,13 +63,13 @@
         <table schema="recruits" tableName="business_tjxx" domainObjectName="Tjxx" >
         </table>
         <!--
-        <table schema="ssm" tableName="business_visit_client" domainObjectName="VisitClient" >
+        <table schema="xecoder" tableName="business_visit_client" domainObjectName="VisitClient" >
         </table>
 
 
-        <table schema="ssm" tableName="business_visit_rivaly" domainObjectName="VisitRivaly" >
+        <table schema="xecoder" tableName="business_visit_rivaly" domainObjectName="VisitRivaly" >
         </table>
-        <table schema="ssm" tableName="business_visit_msg" domainObjectName="VisitMsg" >
+        <table schema="xecoder" tableName="business_visit_msg" domainObjectName="VisitMsg" >
         </table>-->
     </context>
 </generatorConfiguration>

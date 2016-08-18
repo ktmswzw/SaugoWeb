@@ -93,7 +93,7 @@ requirejs(['jquery','bootstrap','fuelux','table', 'tablezn','select','switchs','
 
         $("#moduleName").val(tableComment);
         $("#moduleCode").val(tableName);
-        $("#moduleCodeUrl").val("com.ssm.business");
+        $("#moduleCodeUrl").val("com.xecoder.business");
         $("#indexPageName").val("list");
         $("#editPageName").val("edit");
 
