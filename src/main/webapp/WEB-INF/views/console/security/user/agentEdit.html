@@ -12,7 +12,7 @@
           data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
         <!-- Modal -->
         <div class="panel panel-default">
-            <div class="panel-heading">帐号编辑</div>
+            <div class="panel-heading">用户管理</div>
             <div class="panel-body">
                 <div class="control-group">
                     <input type="hidden" name="id" id="id"/>
@@ -64,11 +64,11 @@
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="orgId">部门</label>
+                        <label class="control-label" for="parentId">上级</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <input type="hidden" class="form-control" id="orgId" name="orgId" maxlength="15"
-                               placeholder="部门选择" >
+                        <input type="hidden" class="form-control" id="parentId" name="parentId" maxlength="15"
+                               placeholder="上级选择" >
                         <ul class="tree tree-folder-select" role="tree" id="myTree">
                             <li class="tree-branch hide" data-template="treebranch" role="treeitem" aria-expanded="false">
                                 <div class="tree-branch-header">
@@ -97,10 +97,10 @@
                     </div>
                     <div class="col-sm-8 controls">
                         <div class="pull-left">
-                        <div class="switch" >
-                            <input type="checkbox" id="status" name="status" data-size="small" value="enabled" checked="true" data-on-color="success" data-off-color="warning" data-on-text="在用" data-off-text="注销">
+                            <div class="switch" >
+                                <input type="checkbox" id="status" name="status" data-size="small" value="enabled" checked="true" data-on-color="success" data-off-color="warning" data-on-text="在用" data-off-text="注销">
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
@@ -111,8 +111,8 @@
                 <div class="row control-group">
                     <div class="col-sm-4 col-sm-offset-5">
                         <div style="align-content: center">
-                        <button type="submit" id="save" class="btn btn-primary" >保存</button>
-                        <button type="button" id="back" class="btn btn-default">取消</button>
+                            <button type="submit" id="save" class="btn btn-primary" >保存</button>
+                            <button type="button" id="back" class="btn btn-default">取消</button>
                         </div>
                     </div>
                 </div>

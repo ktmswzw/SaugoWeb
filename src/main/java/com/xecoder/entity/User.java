@@ -39,9 +39,9 @@ public class User {
 
     private String identityCards;
 
-
     @Transient
     private String plainPassword;
+
 
     private Organization organization;
     private List<UserRole> userRoles;
@@ -49,6 +49,8 @@ public class User {
 
     private String roles;
 
+    @Transient
+    private String rolesName;
 
     public Long getId() {
         return id;
@@ -161,15 +163,21 @@ public class User {
     public void setUserRoles(List<UserRole> userRoles) {
         this.userRoles = userRoles;
         String role_s = "";
+        String role_string = "";
         int i=0;
         for(UserRole userRole:userRoles)
         {
-            if(i<userRoles.size()-1)
-                role_s += userRole.getRoleId().toString()+",";
-            else
+            if(i<userRoles.size()-1) {
+                role_s += userRole.getRoleId().toString() + ",";
+                role_string += userRole.getRole().getDescription() + ",";
+            }
+            else {
                 role_s += userRole.getRoleId().toString();
+                role_string += userRole.getRole().getDescription();
+            }
             i++;
         }
+        this.setRolesName(role_string);
         this.setRoles(role_s);
     }
 
@@ -206,5 +214,11 @@ public class User {
         this.organization = organization;
     }
 
+    public String getRolesName() {
+        return rolesName;
+    }
 
+    public void setRolesName(String rolesName) {
+        this.rolesName = rolesName;
+    }
 }

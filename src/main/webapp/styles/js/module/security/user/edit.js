@@ -24,9 +24,9 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
         //修改页面结束
 
         //页面特殊要求
-        $("#username").val(($("#email").val()));
-        $("#email").change(function(){
-            $("#username").val(($("#email").val()));
+        $("#username").val(($("#phone").val()));
+        $("#phone").change(function(){
+            $("#username").val(($("#phone").val()));
         });
 
         //状态插件
