@@ -42,8 +42,6 @@ import java.util.List;
 @RequestMapping("/generator")
 @SuppressWarnings("unchecked")
 public class GeneratorController extends BaseAction {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-
     private static final String T_LIST = "generator/list";
     private static final String T_EDIT = "generator/edit";
     @Autowired
@@ -388,6 +386,7 @@ public class GeneratorController extends BaseAction {
             editPageJSTemplate = StringUtils.replace(editPageJSTemplate, "{lowerModuleCode}", lowerModuleCode);
             FileUtil.createFile(javaScriptPath + "/edit.js", editPageJSTemplate, "UTF-8");
             logger.info("---------------edit js---------------");
+
 
             Module module = new Module();
             module.setName(moduleName);

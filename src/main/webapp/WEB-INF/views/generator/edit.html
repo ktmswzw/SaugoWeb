@@ -3,6 +3,7 @@
 <html class="fuelux" >
 <@headEdit/>
 <link href="${base}/styles/css/bootstrap-table.min.css" rel="stylesheet">
+<link href="${base}/styles/css/bootstrap-switch.min.css" rel="stylesheet">
 <body>
 <div class="container">
     <form role="form" id="formSubmit" commandName="tables" class="form-horizontal"
@@ -54,8 +55,6 @@
                                minlength="10">
                     </div>
                 </div>
-
-
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
                         <label class="control-label" >图标</label>
@@ -94,7 +93,6 @@
                     </div>
                 </div>
 
-
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
                         <label class="control-label" for="moduleCodeUrl">查询HTML</label>
@@ -129,31 +127,31 @@
                     </div>
                 </div>
 
-                    <div class="container">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">字段信息</div>
-                            <div class="panel-body">
-                                <table id="tableB" class="table-hover table-condensed table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th data-field="state" data-radio="true">ID</th>
-                                        <th data-field="columnCode" class="col-xs-1" >编码</th>
-                                        <th data-field="columnName" class="col-xs-1" >列名</th>
-                                        <th data-field="dataType" class="col-xs-1" >类型</th>
-                                        <th data-field="characterMaximumLength" class="col-xs-1"  >长度</th>
-                                        <th data-field="isNullable" class="col-xs-1"  >可空</th>
-                                        <th data-field="key" class="col-xs-1" >主键</th>
-                                        <th data-field="type" class="col-xs-1"  >from类型</th>
-                                        <th data-field="list" class="col-xs-1" >字典</th>
-                                        <th data-field="essential" class="col-xs-1">必填</th>
-                                        <th data-field="validate" class="col-xs-1" >验证</th>
-                                        <th data-field="query" class="col-xs-1" >查询</th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </div>
+                <div class="container">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">字段信息</div>
+                        <div class="panel-body">
+                            <table id="tableB" class="table-hover table-condensed table-striped">
+                                <thead>
+                                <tr>
+                                    <th data-field="state" data-radio="true">ID</th>
+                                    <th data-field="columnCode" class="col-xs-1" >编码</th>
+                                    <th data-field="columnName" class="col-xs-1" >列名</th>
+                                    <th data-field="dataType" class="col-xs-1" >类型</th>
+                                    <th data-field="characterMaximumLength" class="col-xs-1"  >长度</th>
+                                    <th data-field="isNullable" class="col-xs-1"  >可空</th>
+                                    <th data-field="key" class="col-xs-1" >主键</th>
+                                    <th data-field="type" class="col-xs-1"  >from类型</th>
+                                    <th data-field="list" class="col-xs-1" >字典</th>
+                                    <th data-field="essential" class="col-xs-1">必填</th>
+                                    <th data-field="validate" class="col-xs-1" >验证</th>
+                                    <th data-field="query" class="col-xs-1" >查询</th>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
+                </div>
 
             </div>
 

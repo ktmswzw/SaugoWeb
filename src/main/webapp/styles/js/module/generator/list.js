@@ -1,5 +1,5 @@
 /**
- * Created by  moxz on 2015/3/1.
+ * Created by Vincent on 2015/3/1.
  */
 requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select','selectCN','tExport', 'tExportS', 'base64', 'comm', 'message'],
     function () {
@@ -38,7 +38,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select','selectCN','tExpo
         });
 
         //初始化下拉框 //可做异步下拉框选择
-        initSelect("search_tableSchema", WEB_GLOBAL_CTX+"/generator/dataBase", {description: ''}, 'websale'.split(","), "database", "database",false);
+        initSelect("search_tableSchema", WEB_GLOBAL_CTX+"/generator/dataBase", {description: ''}, ''.split(","), "database", "database",false);
 
         //查询动作
         $('#query').click(function () {
@@ -52,7 +52,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select','selectCN','tExpo
             parent.Loading.modal('show');
             var objects = $table.bootstrapTable('getSelections');
             $.each(objects, function () {
-                self.location = WEB_GLOBAL_CTX + "/generator/tablesEdit/"+this.tableName;
+                self.location = WEB_GLOBAL_CTX + "/generator/tablesEdit/"+this.tableName+"/"+this.tableSchema;
             });
 
         });

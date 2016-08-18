@@ -1,5 +1,5 @@
 /**
- * Created by  moxz on 2015/2/25.
+ * Created by Vincent on 2015/2/25.
  */
 //加载插件
 
@@ -31,6 +31,16 @@ requirejs(['jquery','bootstrap','fuelux','table', 'tablezn','select','switchs','
             updateRowEdit(currentRow[0]);
         });
 
+        //初始树
+        meTreeInit('myTree',"","/console/security/module/findJsonById/",false,true,0);
+
+        //同步值
+        $('#myTree').on('updated.fu.tree', function (e, selected) {
+            asyncTreeValue("myTree","parentId");
+        });
+        $('#myTree').on('selected.fu.tree', function (e, info) {
+            asyncTreeValue("myTree","parentId");
+        });
         //修改
         $('#ok').click(function () {
             currentIndex=currentRow[0].number;
@@ -52,7 +62,7 @@ requirejs(['jquery','bootstrap','fuelux','table', 'tablezn','select','switchs','
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
         $table = $('#tableB').bootstrapTable({
-            url: WEB_GLOBAL_CTX + '/generator/columnsDataList/'+tableName,
+            url: WEB_GLOBAL_CTX + '/generator/columnsDataList/'+tableName+"/"+schema,
             dataType: 'json',
             cache:false,
             showRefresh:true,
@@ -71,20 +81,19 @@ requirejs(['jquery','bootstrap','fuelux','table', 'tablezn','select','switchs','
         }).on('page-change.bs.table', function (e, size, number) {
             setHeightSelf(500);
         }).on('load-success.bs.table', function (e, data) {
-            //状态插件
-            $("input[type=\"checkbox\"]").not("[data-switch-no-init]").bootstrapSwitch()
-                .on('switchChange.bootstrapSwitch', function(event, state) {
-                    //console.log(state); // true | false
-                });
             setHeightSelf(1000);
             parent.Loading.modal('hide');
         });
 
-
+        //状态插件
+        $("input[type=\"checkbox\"], input[type=\"radio\"]").not("[data-switch-no-init]").bootstrapSwitch()
+            .on('switchChange.bootstrapSwitch', function(event, state) {
+                //console.log(state); // true | false
+            });
 
         $("#moduleName").val(tableComment);
         $("#moduleCode").val(tableName);
-        $("#moduleCodeUrl").val("com.habit.business");
+        $("#moduleCodeUrl").val("com.ssm.business");
         $("#indexPageName").val("list");
         $("#editPageName").val("edit");
 
@@ -98,7 +107,7 @@ requirejs(['jquery','bootstrap','fuelux','table', 'tablezn','select','switchs','
             locale: 'zh_CN',
             excluded: ':disabled',
             fields: {
-            'indexPageName': {
+                'indexPageName': {
                     validators: {
                         regexp: {
                             regexp: /^[a-zA-Z0-9]+$/,
@@ -129,6 +138,12 @@ requirejs(['jquery','bootstrap','fuelux','table', 'tablezn','select','switchs','
                             message: '不要包含特殊字符'
                         }
                     }
+                },
+                'parentId': {
+                    validators: {
+                        notEmpty: {
+                        }
+                    }
                 }
             }
         }).on('success.field.fv', function(e, data) {
@@ -148,22 +163,24 @@ requirejs(['jquery','bootstrap','fuelux','table', 'tablezn','select','switchs','
             codeTable += ","+"\"moduleCodeUrl\":\"" + $("#moduleCodeUrl").val() + "\"";
             codeTable += ","+"\"indexPageName\":\"" + $("#indexPageName").val() + "\"";
             codeTable += ","+"\"editPageName\":\"" + $("#editPageName").val() + "\"";
+            codeTable += ","+"\"parentId\":\"" + $("#parentId").val() + "\"";
+            codeTable += ","+"\"className\":\"" + $("#className").val() + "\"";
 
             effectRow["codeTable"] = JSON.stringify(JSON.parse("{"+codeTable+"}"));
             console.debug(JSON.stringify(effectRow));
             $.post(WEB_GLOBAL_CTX+"/generator/saveTableList/"+$('#override').is(':checked'), effectRow, function(rsp) {
-                    if (rsp.successful) {
-                        $.scojs_message(rsp.msg, $OK);
-                        $("#save").toggleClass("disabled");
-                        //setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/generator/list'", 1000);
-                    } else {
-                        $.scojs_message(rsp.msg, $ERROR);
-                        return false;
-                    }
-                }).error(function () {
-                });
-                return true;
+                if (rsp.successful) {
+                    $.scojs_message(rsp.msg, $OK);
+                    $("#save").toggleClass("disabled");
+                    //setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/generator/list'", 1000);
+                } else {
+                    $.scojs_message(rsp.msg, $ERROR);
+                    return false;
+                }
+            }).error(function () {
             });
+            return true;
+        });
 
     });
 
@@ -182,16 +199,16 @@ function nameRule(name)
 
 function updateRowEdit(row)
 {
-        $("#state").val(row.state);
-        $("#columnCode").val(row.columnCode);
-        $("#columnName").val(row.columnName);
-        $("#type").append(typeFormatter(row.type));
-        $("#list").val(row.list);
-        $("#validate").val(row.validate);
-        $("#isNullable").bootstrapSwitch('state', (row.isNullable == 'YES') ? true : false);
-        $("#key").bootstrapSwitch('state', row.key);
-        $("#essential").bootstrapSwitch('state', row.essential);
-        $("#query").bootstrapSwitch('state', row.query);
+    $("#state").val(row.state);
+    $("#columnCode").val(row.columnCode);
+    $("#columnName").val(row.columnName);
+    $("#type").append(typeFormatter(row.type));
+    $("#list").val(row.list);
+    $("#validate").val(row.validate);
+    $("#isNullable").bootstrapSwitch('state', (row.isNullable == 'YES') ? true : false);
+    $("#key").bootstrapSwitch('state', row.key);
+    $("#essential").bootstrapSwitch('state', row.essential);
+    $("#query").bootstrapSwitch('state', row.query);
 }
 
 
