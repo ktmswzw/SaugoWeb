@@ -18,14 +18,17 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  * Duser.name = 224911261@qq.com
  * SaugoWeb
  */
+@SuppressWarnings("unchecked")
 public class ObjListToExcel {
+    @SuppressWarnings("unchecked")
     public static String[] objListToExcel(String name, Map data) {
+
         Map<String, String> FieldList = (Map<String, String>) data.get("FieldList");
         List listData = (List) data.get("listData");
         Object[] keys = FieldList.keySet().toArray();
         String[] FieldListKeys = new String[keys.length];
-        for (int k = 0; k < keys.length; k++) {
-            String temp = keys[k].toString();
+        for (Object key : keys) {
+            String temp = key.toString();
             int xuHao = Integer.valueOf(temp.substring(0, 1));
             FieldListKeys[xuHao] = temp.substring(1);
         }
@@ -60,7 +63,7 @@ public class ObjListToExcel {
                         for (Method m : methods) {
                             mat = pattern.matcher(m.getName());
                             if (mat.find()) {
-                                Object shuXing = m.invoke(obj, null);
+                                Object shuXing = m.invoke(obj);
                                 if (shuXing != null) {
                                     cell.setCellValue(shuXing.toString());//这里可以做数据格式处理
                                 } else {
@@ -83,6 +86,7 @@ public class ObjListToExcel {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void main(String args[]) {
         try {
             List listData = new ArrayList();
@@ -90,7 +94,9 @@ public class ObjListToExcel {
                 User vo = new User();//要导出的数据类
                 vo.setRolesName("abc");
                 vo.setAddress("123123123");
-                listData.add(vo);
+                try {
+                    listData.add(vo);
+                }catch (Exception ignored){}
             }
             Map<String, String> FieldList = new HashMap<String, String>();
             FieldList.put("0rolesName", "房间号");//属性前边的数字代表字段的先后顺序。
