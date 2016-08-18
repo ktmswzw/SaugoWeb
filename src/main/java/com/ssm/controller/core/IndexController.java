@@ -30,6 +30,7 @@ import java.util.List;
 public class IndexController extends BaseAction{
 
 	private static final String INDEX = "console/index/index";
+	private static final String AGENT = "console/index/agent";
 	private static final String PORTAL = "console/index/portal";
 	private static final String LOADING = "console/layout/loading";
 

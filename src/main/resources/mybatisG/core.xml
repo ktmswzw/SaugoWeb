@@ -9,7 +9,7 @@
 
 
 <generatorConfiguration>
-    <classPathEntry location="D:\Code\jar\mysql-connector-java-5.1.31.jar" />
+    <classPathEntry location="/Users/vincent/Downloads/data/mysql-connector-java-5.1.31.jar" />
 
     <context id="TeamTables" targetRuntime="MyBatis3">
 
@@ -24,9 +24,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/ssm"
-                        userId="vincent"
-                        password="123qwe">
+                        connectionURL="jdbc:mysql://localhost:3306/saugo"
+                        userId="saugo"
+                        password="123qwe$R">
         </jdbcConnection>
         <!--
 		默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，
@@ -49,15 +49,9 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.ssm.mapper"  targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-<!--
-      <table schema="ssm" tableName="test" domainObjectName="test"  >
-          <property name="useActualColumnNames" value="true"/>
-            <columnOverride column="create_time" property="createTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
-          <generatedKey column="ID" sqlStatement="SELECT UUID()" identity="true"/>
-        </table>-->
 
-        <table schema="ssm" tableName="security_portal_report" domainObjectName="SecurityPortalReport"  ></table><!--
-        <table schema="ssm" tableName="security_portal_role" domainObjectName="SecurityPortalRole"  ></table>-->
+        <table schema="saugo" tableName="security_user" domainObjectName="User"  >
+        </table>
 
 
     </context>

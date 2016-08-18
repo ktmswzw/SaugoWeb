@@ -9,7 +9,7 @@
 
 
 <generatorConfiguration>
-    <classPathEntry location="F:\code\Code\jar\mysql-connector-java-5.1.31.jar" />
+    <classPathEntry location="/Users/vincent/Downloads/data/mysql-connector-java-5.1.31.jar" />
 
     <context id="TeamTables" targetRuntime="MyBatis3">
 
@@ -24,9 +24,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/recruits"
-                        userId="vincent"
-                        password="123qwe">
+                        connectionURL="jdbc:mysql://localhost:3306/saugo"
+                        userId="saugo"
+                        password="123qwe$R">
         </jdbcConnection>
 
         <javaTypeResolver>
