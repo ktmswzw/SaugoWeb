@@ -64,6 +64,7 @@
         <hessian.version>4.0.38</hessian.version>
         <codecraft.version>0.5.2</codecraft.version>
         <httpclient.version>4.4.1</httpclient.version>
+        <cms.weka>1.0.5</cms.weka>
 
         <jedis.version>2.7.0</jedis.version>
         <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
@@ -469,11 +470,10 @@
             <version>${snaker.version}</version>
         </dependency>
 
-        <!--dbf file read -->
         <dependency>
-            <groupId>com.linuxense</groupId>
-            <artifactId>javadbf</artifactId>
-            <version>${linuxense.javadbf}</version>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>WekaExcel</artifactId>
+            <version>${cms.weka}</version>
         </dependency>
 
     </dependencies>
