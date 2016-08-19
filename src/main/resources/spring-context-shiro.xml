@@ -60,7 +60,7 @@
         <property name="authorizationCachingEnabled" value="false"/>
         <property name="authorizationCacheName" value="authorizationCache"/>
 		<!-- 是否使用验证码 -->
-		<property name="useCaptcha" value="true"/>
+		<property name="useCaptcha" value="false"/>
 		<!-- 是否激活超级用户，生成环境建议关闭该功能 -->
 		<property name="activeRoot" value="true"/>
 	</bean>

@@ -120,11 +120,11 @@ public class UserController extends BaseAction{
                     return result;
                 }
 
-                if (userService.getByEmail(user.getEmail()) != null) {
-                    result.setSuccessful(false);
-                    result.setMsg("用户添加失败，登录邮箱：" + user.getEmail() + "已存在。");
-                    return result;
-                }
+//                if (userService.getByEmail(user.getEmail()) != null) {
+//                    result.setSuccessful(false);
+//                    result.setMsg("用户添加失败，登录邮箱：" + user.getEmail() + "已存在。");
+//                    return result;
+//                }
                 userService.save(user);
             }
             else

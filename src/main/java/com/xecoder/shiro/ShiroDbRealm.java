@@ -115,7 +115,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			
 			byte[] salt = Encodes.decodeHex(user.getSalt());
 			
-			ShiroUser shiroUser = new ShiroUser(user.getId(), user.getEmail(), user);
+			ShiroUser shiroUser = new ShiroUser(user.getId(), user.getUsername(), user);
 			// 这里可以缓存认证
 			return new SimpleAuthenticationInfo(shiroUser, user.getPassword(),
 					ByteSource.Util.bytes(salt), getName());
@@ -150,7 +150,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		Collection<String> hasPermissions = null;
 		Collection<String> hasRoles = null;
 		// 是否启用超级管理员 && id==1为超级管理员，构造所有权限 
-		if (activeRoot || isSuperRole(shiroUser.getUser().getUserRoles())) {
+		if (activeRoot && isSuperRole(shiroUser.getUser().getUserRoles())) {
 			hasRoles = new HashSet<String>();
 			List<Role> roles = roleService.findAll();
 			for (Role role : roles) {

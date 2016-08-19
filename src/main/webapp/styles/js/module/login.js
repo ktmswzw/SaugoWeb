@@ -7,55 +7,6 @@ if (top != self) {
         top.location = self.location;
 }
 
-function GoApp() {
-   /* var msg,appUrl = "weixin://";
-
-
-    if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
-        msg = "iphone url";
-    }
-    else if (navigator.userAgent.match(/android/i)) {
-        msg = "android url";
-    }
-    else
-    {
-        msg = "who are u";
-    }
-    window.location=appUrl;//打开某手机上的某个app应用
-    setTimeout(function(){
-        //window.location=the_href;//如果超时就跳转到app下载页
-        alert(msg);
-    },500);
-*/
-
-    var openUrl = window.location.search,appOpen = "weixin://";
-    try {
-        openUrl = openUrl.substring(1, openUrl.length);
-    } catch (e) {}
-    var isiOS = navigator.userAgent.match(/(iPhone|iPod|iPad);?/i),
-        isAndroid = navigator.userAgent.match(/android/i),
-        isDesktop = !isiOS && !isAndroid;
-    if (isiOS) {
-        setTimeout(function () {
-            //window.location = "itms-apps://itunes.apple.com/app/[name]/[id]?mt=8"; ios 下载地址
-            alert("去下载ios");
-        }, 1000);
-        //window.location = "[scheme]://[host]?url=" + openUrl; 直接打开
-        window.location = appOpen;
-    } else if (isAndroid) {
-        setTimeout(function () {
-            //window.location = "intent://[host]/" + "url=" + openUrl + "#Intent;scheme=[scheme];package=[package_name];end"; 下载地址
-            alert("去下载android");
-        }, 1000);
-        //window.location = "[scheme]://[host]?url=" + openUrl; 直接打开
-        window.location = appOpen;
-    } else {
-        //window.location.href = openUrl;//pc or mac
-        alert("我是电脑，我自豪");
-    }
-
-}
-
 requirejs(['jquery', 'ie10', 'comm'],
     function () {
         requirejs(['bootstrap', 'switchs', 'hideShowPassword'], function () {

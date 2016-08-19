@@ -116,7 +116,7 @@ public class LoginController {
             ShiroDbRealm shiroDbRealm = new ShiroDbRealm();
 
             try {
-                if (!doCaptchaValidate(token)) {//忽略大小写。
+                if (shiroDbRealm.isUseCaptcha()&&!doCaptchaValidate(token)) {//忽略大小写。
                     throw new IncorrectCaptchaException("验证码错误");
                 }
             } catch (Exception e) {
