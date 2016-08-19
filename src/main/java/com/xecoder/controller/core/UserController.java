@@ -42,8 +42,9 @@ public class UserController extends BaseAction{
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     
     private static final String LIST = "console/security/user/list";
-    private static final String SHOW = "console/security/user/show";
     private static final String ADDEDIT = "console/security/user/edit";
+    private static final String AGENTLIST = "console/security/user/agentList";
+    private static final String AGENTADDEDIT = "console/security/user/agentEdit";
 
     @Autowired
     private UserService userService;
@@ -58,30 +59,33 @@ public class UserController extends BaseAction{
     private EhCacheCacheManager ehCacheCacheManager;
 
     @RequiresPermissions("User:show")
-    @RequestMapping(value="/list", method= RequestMethod.GET)
+    @RequestMapping(value="/list")
     public String list(HttpServletRequest request) {
         return LIST;
     }
 
-    @RequestMapping(value="/show", method= RequestMethod.GET)
-    public String show(HttpServletRequest request) {
-        return SHOW;
+
+    @RequiresPermissions("Agent:show")
+    @RequestMapping(value="/agentList")
+    public String agentList(HttpServletRequest request) {
+        return AGENTLIST;
     }
 
     @RequestMapping(value="/userList")
     @ResponseBody
-    public GridModel userList(){/*
-        Dictionary dictionary = new Dictionary();
-        dictionary.setDicName("USER-STATUS");
-        List<Dictionary> list_sql  = dictionaryService.findAll(null,dictionary);
+    public GridModel userList(){
+        User user = form(User.class);
+        user.setEmail("1");
+        Page info = userService.findByPage(page(), user);
+        GridModel m = new GridModel();
+        m.setRows(info.getRows());
+        m.setTotal(info.getCount());
+        return m;
+    }
 
-        List<Dictionary> list_eache  = dictionaryService.findAll(null,dictionary);
-
-        dictionaryService.delete(79);
-
-        List<Dictionary> list_eache_after_delete  = dictionaryService.findAll(null,dictionary);
-
-*/
+    @RequestMapping(value="/agentUserList")
+    @ResponseBody
+    public GridModel agentUserList(){
         User user = form(User.class);
         Page info = userService.findByPage(page(), user);
         GridModel m = new GridModel();
@@ -93,19 +97,14 @@ public class UserController extends BaseAction{
     @RequestMapping(value="/userEdit")
     @ResponseBody
     public ModelAndView userEdit() {
-        ModelAndView mav = new ModelAndView(ADDEDIT);
-        User user = new User();
-        try {
-            ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString(user);
-            mav.addObject("message", "success");
-            mav.addObject("user",json);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return mav;
+        return getView(ADDEDIT,"user", new User());
+    }
+
+
+    @RequestMapping(value="/agentUserEdit")
+    @ResponseBody
+    public ModelAndView agentUserEdit() {
+        return getView(AGENTADDEDIT,"user", new User());
     }
 
     @RequestMapping(value="/saveUser")
@@ -132,7 +131,7 @@ public class UserController extends BaseAction{
                 userService.update(user);
             }
             result.setSuccessful(true);
-            result.setMsg("ok");
+            result.setMsg("保存成功");
         }
         catch (Exception e)
         {
@@ -146,167 +145,8 @@ public class UserController extends BaseAction{
     @RequestMapping(value="/editUser/{id}")
     @ResponseBody
     public ModelAndView editUser(@PathVariable Integer id) {
-        ModelAndView mav = new ModelAndView(ADDEDIT);
-        try {
-            User user = userService.get(Long.parseLong(id + ""));
-            ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString(user);
-            mav.addObject("message", "success");
-            mav.addObject("user",json);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return mav;
-    }
-
-    @RequestMapping(value="/saveUserList")
-    @ResponseBody
-    @Transactional
-    public Result saveUserList(HttpServletRequest req){
-        //设置请求编码
-        try {
-            req.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        //获取编辑数据 这里获取到的是json字符串
-        String deleted = req.getParameter("deleted");
-        String inserted = req.getParameter("inserted");
-        String updated = req.getParameter("updated");
-
-        Result result = new Result();
-        User user_temp = new User();
-        Page info;
-
-        //删除
-        if(deleted != null){
-            //把json字符串转换成对象
-            List<User> listDeleted = JSON.parseArray(deleted, User.class);
-            for(User ur : listDeleted){
-                if(ur.getId() != null){
-                    logger.debug("ur.getId()=============="+ur.getId());
-                    if(ur.getId()==1) {
-                        logger.debug("ADMIN=====DELETE=====ERROR====");
-                        result.setMsg("ADMIN=====DELETE=====ERROR====");
-                        result.setSuccessful(false);
-                        break;
-                    }
-                    else {
-                        //TODO 下面就可以根据转换后的对象进行相应的操作了
-                        List<UserRole> list = userRoleService.find(ur.getId());
-                        for(UserRole role : list)
-                        {
-                            userRoleService.delete(role.getId());
-                        }
-                        userService.delete(ur.getId());
-                        result.setMsg("删除成功");
-                        result.setSuccessful(true);
-                    }
-                }
-            }
-        }
-
-        //添加
-
-        if(inserted != null){
-            List<User> listInserted = JSON.parseArray(inserted, User.class);
-            for(User ur : listInserted){
-                if(ur.getId() != null){
-                    logger.debug("ur.getId()=============="+ur.getId());
-                    user_temp.setUsername(ur.getUsername());
-                    info = userService.findByPage(page(), user_temp);
-                    if(info.getCount()>0) {
-                        logger.debug("USER=NAME=repeat======ERROR====");
-
-                        result.setMsg("USER=NAME=repeat======ERROR====");
-                        result.setSuccessful(false);
-                        result.setMsg("OK");
-                        break;
-                    }
-
-                    user_temp.setUsername(null);
-                    user_temp.setEmail(ur.getEmail());
-                    info = userService.findByPage(page(), user_temp);
-                    if(info.getCount()>0) {
-                        logger.debug("USER=EMAIL=repeat======ERROR====");
-                        result.setMsg("USER=EMAIL=repeat======ERROR====");
-                        result.setSuccessful(false);
-                        result.setMsg("OK");
-                        break;
-                    }
-
-                    user_temp.setEmail(null);
-                    user_temp.setPhone(ur.getPhone());
-                    info = userService.findByPage(page(), user_temp);
-                    if(info.getCount()>0) {
-                        logger.debug("USER=Phone=repeat======ERROR====");
-                        result.setMsg("USER=Phone=repeat======ERROR====");
-                        result.setSuccessful(false);
-                        result.setMsg("OK");
-                        break;
-                    }
-
-                    if(ur.getUserRoles().size()>0) {
-
-                    }
-                    //TODO 下面就可以根据转换后的对象进行相应的操作了
-                    result.setMsg("OK");
-                    result.setSuccessful(true);
-                    userService.save(ur);
-                }
-            }
-        }
-
-        //修改
-        if(updated != null){
-            //把json字符串转换成对象
-            List<User> listUpdated = JSON.parseArray(updated, User.class);
-            for(User ur : listUpdated){
-                if(ur.getId() != null&&ur.getId()!=1){
-                    logger.debug("ur.getId()=============="+ur.getId());
-                    user_temp.setUsername(ur.getUsername());
-                    info = userService.findByPage(page(), user_temp);
-                    if(info.getCount()>1) {
-                        logger.debug("USER=NAME=repeat======ERROR====");
-
-                        result.setMsg("USER=NAME=repeat======ERROR====");
-                        result.setSuccessful(false);
-                        result.setMsg("OK");
-                        break;
-                    }
-                    user_temp.setUsername(null);
-                    user_temp.setEmail(ur.getEmail());
-                    info = userService.findByPage(page(), user_temp);
-                    if(info.getCount()>1) {
-                        logger.debug("USER=EMAIL=repeat======ERROR====");
-                        result.setMsg("USER=EMAIL=repeat======ERROR====");
-                        result.setSuccessful(false);
-                        result.setMsg("OK");
-                        break;
-                    }
-
-                    user_temp.setEmail(null);
-                    user_temp.setPhone(ur.getPhone());
-                    info = userService.findByPage(page(), user_temp);
-                    if(info.getCount()>1) {
-                        logger.debug("USER=Phone=repeat======ERROR====");
-                        result.setMsg("USER=Phone=repeat======ERROR====");
-                        result.setSuccessful(false);
-                        result.setMsg("OK");
-                        break;
-                    }
-                    //TODO 下面就可以根据转换后的对象进行相应的操作了
-                    result.setMsg("OK");
-                    result.setSuccessful(true);
-                    userService.update(ur);
-                }
-            }
-        }
-
-        return result;
-
+        User user = userService.get(Long.parseLong(id + ""));
+        return getView(ADDEDIT,"user",user);
     }
 
     @RequestMapping(value="/editinfo/{id}", method=RequestMethod.POST)

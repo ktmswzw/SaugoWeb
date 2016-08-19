@@ -60,7 +60,7 @@ public class RolePermissionServiceImpl extends BaseService implements RolePermis
 		for(RolePermission rp:list){
 			if(rp.getPermissionId() != null){
 				rp.setPermission(permissionService.get(rp.getPermissionId()));
-				rp.setRolePermissionDataControls(rolePermissionDataControlService.findByRolePermissionId(rp.getPermissionId()));
+				//rp.setRolePermissionDataControls(rolePermissionDataControlService.findByRolePermissionId(rp.getPermissionId()));
 			}
 		}
 		return list;
@@ -91,7 +91,7 @@ public class RolePermissionServiceImpl extends BaseService implements RolePermis
 				for(RolePermission rp:list)
 					if (null != rp.getPermissionId()) {
 						rp.setPermission(permissionService.get(rp.getPermissionId()));
-						rp.setRolePermissionDataControls(rolePermissionDataControlService.findByRolePermissionId(rp.getPermissionId()));
+						//rp.setRolePermissionDataControls(rolePermissionDataControlService.findByRolePermissionId(rp.getPermissionId()));
 					}
 			}
 			catch (Exception e)

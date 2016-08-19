@@ -68,8 +68,8 @@ body {
 .btn-danger:focus,
 .btn-danger.focus {
     color: #fff;
-    background-color: #d81149;
-    border-color: #d80b44;
+    background-color: #d86c88;
+    border-color: #d82059;
 }
 .btn-danger:hover {
     color: #fff;

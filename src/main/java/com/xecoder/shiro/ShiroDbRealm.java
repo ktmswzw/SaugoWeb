@@ -242,7 +242,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 				shiroUser.getHasModules().put(resource, permission.getModule());
 				
 				StringBuilder dcBuilder = new StringBuilder();
-				for (RolePermissionDataControl rpdc : rolePermission.getRolePermissionDataControls()) {
+				List<RolePermissionDataControl> list = rolePermission.getRolePermissionDataControls();
+				if(list!=null)
+				for (RolePermissionDataControl rpdc : list) {
 					DataControl dataControl = rpdc.getDataControl();
 					dcBuilder.append(dataControl.getName() + ",");
 					

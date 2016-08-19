@@ -70,7 +70,7 @@ public class ExtMsgController  extends BaseAction {
         }
 
         Result result = new Result();
-        result.setMsg("ok");
+        result.setMsg("保存成功");
         result.setSuccessful(true);
         return result;
     }

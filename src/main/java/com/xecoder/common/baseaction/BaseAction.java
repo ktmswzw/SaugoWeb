@@ -90,6 +90,23 @@ public class BaseAction {
         return ip;
     }
 
+	public ModelAndView getView(String view,String name,Object obj)
+	{
+		ModelAndView mav = new ModelAndView(view);
+		try {
+			ObjectMapper mapper = JacksonMapper.getInstance();
+			String json =mapper.writeValueAsString(obj);
+			mav.addObject("message", "success");
+			mav.addObject(name,json);
+			return mav;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+
     public Page page() {
 		
 	    	return new Page(

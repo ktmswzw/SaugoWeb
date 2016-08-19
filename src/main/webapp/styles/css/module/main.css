@@ -20,3 +20,20 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
 .pgme{
     margin-bottom:0px;
 }
+
+.btn-primary {
+    color: #fff;
+    background-color: #d82059;
+    border-color: #d81a54;
+}
+.btn-primary:focus,
+.btn-primary.focus {
+    color: #fff;
+    background-color: #d86c88;
+    border-color: #d82059;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #d82059;
+    border-color: #d81a54;
+}

@@ -16,7 +16,9 @@
             <div class="panel-body">
                 <div class="control-group">
                     <input type="hidden" name="id" id="id"/>
+                    <input type="hidden" name="email" id="email" value="1"/>
                     <input type="hidden" name="salt" id="salt">
+                    <input type="hidden" name="status" id="status">
                     <input type="hidden" name="username" id="username">
                 </div>
 
@@ -93,12 +95,12 @@
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="status">状态</label>
+                        <label class="control-label" for="state">状态1</label>
                     </div>
                     <div class="col-sm-8 controls">
                         <div class="pull-left">
                         <div class="switch" >
-                            <input type="checkbox" id="status" name="status" data-size="small" value="enabled" checked="true" data-on-color="success" data-off-color="warning" data-on-text="在用" data-off-text="注销">
+                            <input type="checkbox" id="state" name="state" data-size="small" checked="true" data-on-color="success" data-off-color="warning" data-on-text="在用" data-off-text="注销">
                         </div>
                     </div>
                     </div>

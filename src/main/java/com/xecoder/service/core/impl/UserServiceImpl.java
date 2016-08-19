@@ -103,10 +103,10 @@ public class UserServiceImpl extends BaseService implements UserService {
             if(StringUtils.isNotBlank(user.getStatus())){
                 cri.andStatusEqualTo(user.getStatus());
             }
-            else
-            {
-                cri.andStatusEqualTo("enabled");
-            }
+//            else
+//            {
+//                cri.andStatusEqualTo("enabled");
+//            }
             if(user.getOrgId() != null){
                 cri.andOrgIdEqualTo(user.getOrgId());
             }
@@ -165,7 +165,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		if(user != null && user.getOrgId() != null){
 			user.setOrganization(baseDao.getMapper(OrganizationMapper.class).selectByPrimaryKey(user.getOrgId()));
 		}
-        setTheme(user);
+        //setTheme(user);
 	}
 
 
