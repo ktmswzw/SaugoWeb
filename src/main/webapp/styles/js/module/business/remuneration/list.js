@@ -1,6 +1,6 @@
 
 /**
- * Created by xecoder on Sat Aug 20 17:41:38 CST 2016.
+ * Created by xecoder on Sat Aug 20 23:09:18 CST 2016.
  */
 
 requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'base64', 'comm', 'message'],
@@ -13,7 +13,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
 
         //列表
         var $table = $('#tableB').bootstrapTable({
-            url: WEB_GLOBAL_CTX + '/business/produce/list',
+            url: WEB_GLOBAL_CTX + '/business/remuneration/list/'+produceId,
             dataType: 'json',
             cache:false,
             showToggle:true,
@@ -42,7 +42,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
         //查询动作
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {
-                url: WEB_GLOBAL_CTX + '/business/produce/list',
+                url: WEB_GLOBAL_CTX + '/business/remuneration/list/'+produceId,
                 queryParams: 'queryParamsF'
             });
         });
@@ -51,43 +51,49 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
         $('#delete').click(function () {
             var objects = $table.bootstrapTable('getSelections');
             $.each(objects, function () {
-                parent.Loading.modal('show');
-                self.location = WEB_GLOBAL_CTX + "/business/remuneration/index/"+this.id;
+                $.post(WEB_GLOBAL_CTX + "/business/remuneration/delete/" + this.id, function (rsp) {
+                    if (rsp.successful) {
+                        $.scojs_message(rsp.msg, $OK);
+                        flashTable('tableB', '/business/remuneration/list/'+produceId);
+                    } else {
+                        $.scojs_message(rsp.msg, $ERROR);
+                    }
+                }).error(function () {
+                    $.scojs_message("更新失败,请重新登陆!", $ERROR);
+                });
             });
         });
 
         //添加
         $('#add').click(function () {
             parent.Loading.modal('show');
-            self.location = WEB_GLOBAL_CTX + "/business/produce/add";
+            self.location = WEB_GLOBAL_CTX + "/business/remuneration/add/"+produceId;
         });
 
         //修改
         $('#modify').click(function () {
+            parent.Loading.modal('show');
             var objects = $table.bootstrapTable('getSelections');
             $.each(objects, function () {
-                parent.Loading.modal('show');
-                self.location = WEB_GLOBAL_CTX + "/business/produce/edit/"+this.id;
+                self.location = WEB_GLOBAL_CTX + "/business/remuneration/edit/"+this.id;
             });
+        });
+
+        //回退
+        $('#back').click(function () {
+            parent.Loading.modal('show');
+            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/business/produce/index'", 500);
+
         });
 
         parent.Loading.modal('hide');
 
     });
 
-var statusList = [{id: 'enabled', name: '可用'}, {id: 'disabled', name: '不可用'}];
-function stateFormatter(value, row, index) {
-    for (var i = 0; !(i >= statusList.length); i++) {
-        if (statusList[i].id == value) return statusList[i].name;
-    }
-    return value;
-}
 
 //本页查询拼装
 function queryParamsF(params) {
-    var name = $("#search_select").val();
-    var value = $("#search").val();
-    var str = "{\"" + name + "\":\"" + value + "\"}";
+    var str = "{}";
     var data = eval('(' + str + ')');
     //params.sortName = "";
     //params.sortOrder = "";

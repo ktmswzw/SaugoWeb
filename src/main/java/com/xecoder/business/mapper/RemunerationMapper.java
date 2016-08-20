@@ -10,7 +10,7 @@ public interface RemunerationMapper {
 
     int deleteByExample(RemunerationCriteria example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Remuneration record);
 
@@ -18,7 +18,7 @@ public interface RemunerationMapper {
 
     List<Remuneration> selectByExample(RemunerationCriteria example);
 
-    Remuneration selectByPrimaryKey(Integer id);
+    Remuneration selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Remuneration record, @Param("example") RemunerationCriteria example);
 

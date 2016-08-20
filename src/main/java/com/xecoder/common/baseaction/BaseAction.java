@@ -96,7 +96,7 @@ public class BaseAction {
 		try {
 			ObjectMapper mapper = JacksonMapper.getInstance();
 			String json =mapper.writeValueAsString(obj);
-			mav.addObject("message", "success");
+			mav.addObject("message", "成功");
 			mav.addObject(name,json);
 			return mav;
 		}

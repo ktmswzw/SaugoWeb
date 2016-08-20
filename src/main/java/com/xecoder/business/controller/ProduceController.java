@@ -63,19 +63,7 @@ public class ProduceController extends BaseAction {
     @RequestMapping(value="/add")
     @ResponseBody
     public ModelAndView add() {
-        ModelAndView mav = new ModelAndView(EDIT);
-        Produce produce = new Produce();
-        try {
-            ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString(produce);
-            mav.addObject("message", "完成");
-            mav.addObject("produce",json);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return mav;
+        return getView(EDIT,"produce", new Produce());
     }
 
     /**
@@ -85,20 +73,8 @@ public class ProduceController extends BaseAction {
     @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView edit(@PathVariable Long id) {
-        logger.debug("edit id = " + id);
-        ModelAndView mav = new ModelAndView(EDIT);
-        try {
-            Produce produce =  produceService.get(id);
-            ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString(produce);
-            mav.addObject("message", "完成");
-            mav.addObject("produce",json);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return mav;
+        Produce produce = produceService.get(Long.parseLong(id + ""));
+        return getView(EDIT,"produce",produce);
     }
 
 

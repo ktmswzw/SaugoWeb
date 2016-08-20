@@ -48,7 +48,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
         //删除
         $('#delete').click(function () {
             var objects = $table.bootstrapTable('getSelections');
-            console.debug('Selected values: ' + objects.length);
+            //console.debug('Selected values: ' + objects.length);
             $.each(objects, function () {
                 $.post(WEB_GLOBAL_CTX + "/console/security/organization/deleteInfo/" + this.id, function (rsp) {
                     if (rsp.successful) {

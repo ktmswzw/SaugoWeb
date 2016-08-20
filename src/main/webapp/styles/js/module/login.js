@@ -47,16 +47,16 @@ requirejs(['jquery', 'ie10', 'comm'],
                 }
             });
 
-            $("#captcha").focus(function () {
-                if ($("#captcha").val().length == 0)
-                    randomKey();
-                return false;
-            });
+            // $("#captcha").focus(function () {
+            //     if ($("#captcha").val().length == 0)
+            //         randomKey();
+            // });
 
             $("#Kaptcha, #refresh").click(function () {
                 randomKey();
-                return false;
             });
+
+            randomKey();
 
             $('#show-password').on('switchChange.bootstrapSwitch', function (event, state) {
                 $('#password').hideShowPassword(state);

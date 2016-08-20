@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<#include "/console/layout/main.html"/>
+<html class="fuelux">
+<@headEdit/>
+<body>
+<div class="container">
+    <form role="form" id="formSubmit" commandName="remuneration" class="form-horizontal"
+          data-fv-framework="bootstrap"
+          data-fv-message="This value is not valid"
+          data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+          data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+          data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+        <!-- Modal -->
+        <div class="panel panel-default">
+            <div class="panel-heading">酬金配置</div>
+            <div class="panel-body">
+                <div class="control-group">
+                    <input type="hidden" name="id" id="id"/>
+                    <input type="hidden" name="produceId" id="produceId"/>
+
+                </div>
+
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="level">层级</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <select class="selectpicker form-control" required data-live-search="true" id="level"
+                                name="level" placeholder="选择层级">
+                            <option value="1">一级</option>
+                            <option value="2">二级</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="remuneration">酬金</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="number" class="form-control" id="remuneration" name="remuneration" maxlength="9"
+                               placeholder="输入酬金" size="100" required/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="panel-footer">
+                <div class="row control-group">
+                    <div class="col-sm-4 col-sm-offset-5">
+                        <div style="align-content: center">
+                            <button type="submit" id="save" class="btn btn-primary">保存</button>
+                            <button type="button" id="back" class="btn btn-default">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+<!-- /.container -->
+
+</body>
+<@foot/>
+<script src="${base}/styles/js/module/business/remuneration/edit.js"></script>
+<script type="text/javascript">
+    var remuneration = JSON.parse(JSON.stringify(${remuneration}));
+    var produceId = "${produceId}";
+</script>
+</html>
+

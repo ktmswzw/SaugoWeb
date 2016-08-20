@@ -45,7 +45,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'bas
         //删除
         $('#confirm').click(function () {
             var objects = $table.bootstrapTable('getSelections');
-            console.debug('Selected values: ' + objects.length);
+            //console.debug('Selected values: ' + objects.length);
             $('#myModal').modal('hide');
             $.each(objects, function () {
 

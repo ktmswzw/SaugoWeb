@@ -384,6 +384,7 @@ public class GeneratorController extends BaseAction {
             editPageJSTemplate = StringUtils.replace(editPageJSTemplate, "{moduleName}", moduleName);
             editPageJSTemplate = StringUtils.replace(editPageJSTemplate, "{comboboxJavaScript}", comboboxJavaScript);
             editPageJSTemplate = StringUtils.replace(editPageJSTemplate, "{lowerModuleCode}", lowerModuleCode);
+            editPageJSTemplate = StringUtils.replace(editPageJSTemplate, "{tableKeyColumn}", StringUtil.firstCharacterToLower(tableKeyColumn));
             FileUtil.createFile(javaScriptPath + "/edit.js", editPageJSTemplate, "UTF-8");
             logger.info("---------------edit js---------------");
 

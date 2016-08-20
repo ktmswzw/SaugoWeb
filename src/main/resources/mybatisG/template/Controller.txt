@@ -34,7 +34,7 @@ public class {controllerName} extends BaseAction {
     private static final String INDEX = "/business/{lowerModuleCode}/{indexPage}";
     private static final String EDIT = "/business/{lowerModuleCode}/{editPage}";
 
-    @RequestMapping(value="/index", method= RequestMethod.GET)
+    @RequestMapping(value="/index")
     public String index() {
         return INDEX;
     }
@@ -44,7 +44,7 @@ public class {controllerName} extends BaseAction {
      * 表格{moduleName}
      * @return GridModel
      */
-    @RequestMapping(value="/list", method= RequestMethod.GET)
+    @RequestMapping(value="/list")
     @ResponseBody
     public GridModel list() {
         {moduleCode} {lowerModuleCode} = SearchForm({moduleCode}.class);
@@ -63,42 +63,18 @@ public class {controllerName} extends BaseAction {
     @RequestMapping(value="/add")
     @ResponseBody
     public ModelAndView add() {
-        ModelAndView mav = new ModelAndView(EDIT);
-        {moduleCode} {lowerModuleCode} = new {moduleCode}();
-        try {
-            ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString({lowerModuleCode});
-            mav.addObject("message", "完成");
-            mav.addObject("{lowerModuleCode}",json);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return mav;
+        return getView(EDIT,"{lowerModuleCode}", new {moduleCode}());
     }
 
     /**
      * 编辑{moduleName}
      * @return ModelAndView
      */
-    @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/edit/{id}")
     @ResponseBody
     public ModelAndView edit(@PathVariable Long id) {
-        logger.debug("edit id = " + id);
-        ModelAndView mav = new ModelAndView(EDIT);
-        try {
-            {moduleCode} {lowerModuleCode} =  {lowerModuleCode}Service.get(id);
-            ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString({lowerModuleCode});
-            mav.addObject("message", "完成");
-            mav.addObject("{lowerModuleCode}",json);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return mav;
+        {moduleCode} {lowerModuleCode} = {lowerModuleCode}Service.get(id);
+        return getView(EDIT,"{lowerModuleCode}",{lowerModuleCode});
     }
 
 

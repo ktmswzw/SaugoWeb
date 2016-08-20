@@ -1,7 +1,7 @@
 package com.xecoder.business.entity;
 
 public class Remuneration {
-    private Integer id;
+    private Long id;
 
     private Long produceId;
 
@@ -9,11 +9,11 @@ public class Remuneration {
 
     private Long remuneration;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

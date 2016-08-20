@@ -46,8 +46,8 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table schema="recruits" tableName="business_produce" domainObjectName="Produce" >
-        </table>
+        <!--<table schema="recruits" tableName="business_produce" domainObjectName="Produce" >-->
+        <!--</table>-->
 
         <table schema="recruits" tableName="business_remuneration" domainObjectName="Remuneration" ></table>
     </context>

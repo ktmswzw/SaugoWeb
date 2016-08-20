@@ -5,15 +5,14 @@
 <body>
 <div class="container">
     <div class="panel panel-default">
-        <div class="panel-heading">产品管理管理</div>
+        <div class="panel-heading">酬金配置管理</div>
         <div class="panel-body">
             <table id="tableB" class="table-hover table-condensed table-striped">
                 <thead>
                 <tr>
                     <th data-field="state" data-radio="true"></th>
-                    <th data-field="name" class="col-md-8">产品名称</th>
-                    <th data-field="number" class="col-md-2">数量</th>
-                    <th data-field="status" class="col-md-2" data-formatter="stateFormatter">状态</th>
+                    <th data-field="level" class="col-md-5" data-formatter="Level">层级</th>
+                    <th data-field="remuneration" class="col-md-5">酬金</th>
 
                 </tr>
                 </thead>
@@ -21,28 +20,18 @@
         </div>
     </div>
 </div><!--/.container-->
+
+
 <div id="custom-toolbar">
     <form role="form" name="form" id="form1">
         <div class="form-inline" role="form">
             <div class="row">
-                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                    <select class="form-control " id="search_select" name="search_select">
-                        <option value="search_name">产品名称</option>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
 
-                    </select>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="输入查询条件" id="search"
-                               name="search_username">
-                        <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" id="back" name="back" title="返回"><span
+                            class="glyphicon glyphicon-menu-left"></span></button>
                             <button type="button" class="btn btn-default" id="query" name="query" title="查询"><span
                                     class="glyphicon glyphicon-search"></span></button>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
                     <div class="btn-group" id="do">
                         <@shiro.hasPermission name="Produce:save">
                         <button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span
@@ -54,18 +43,24 @@
     </form>
 </div>
 
+
 <div id="to" style="display:none;">
-    <@shiro.hasPermission name="Produce:edit">
+    <@shiro.hasPermission name="Remuneration:edit">
     <button type="button" class="btn btn-default" id="modify" name="modify" title="修改"><span
             class="glyphicon glyphicon-edit"></span></button>
-</@shiro.hasPermission>
-<@shiro.hasPermission name="Produce:delete">
-<button type="button" class="btn btn-default" id="delete" name="delete" title="酬金配置"><span
-        class="glyphicon glyphicon-yen"></span></button>
-</@shiro.hasPermission>
+    </@shiro.hasPermission>
+    <@shiro.hasPermission name="Remuneration:delete">
+    <button type="button" class="btn btn-default" id="delete" name="delete" title="删除"><span
+            class="glyphicon glyphicon-remove"></span></button>
+    </@shiro.hasPermission>
 </div>
+
 </body>
 <@foot/>
-<script src="${base}/styles/js/module/business/produce/list.js"></script>
+<script src="${base}/styles/js/module/business/remuneration/list.js"></script>
+<script language="JavaScript">
+    var produceId = "${produceId}";
+</script>
+
 </html>
 

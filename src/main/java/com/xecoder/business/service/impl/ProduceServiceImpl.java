@@ -49,10 +49,8 @@ public class ProduceServiceImpl  extends BaseService implements ProduceService {
         ProduceCriteria.Criteria cri = criteria.createCriteria();
         if (produce != null) {
             if (StringUtils.isNotBlank(produce.getName())) {
-                cri.andNameEqualTo(produce.getName());
+                cri.andNameLike("%"+produce.getName()+"%");
             }
-
-
         }
         if (page != null && page.getSort() != null && page.getOrder() != null) {
             criteria.setOrderByClause(page.getSort() + " " + page.getOrder());
