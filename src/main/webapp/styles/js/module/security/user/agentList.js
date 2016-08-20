@@ -1,4 +1,4 @@
-requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'base64', 'comm', 'message'],
+requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'base64', 'comm', 'message'],
     function () {
 
         //导出编码
@@ -8,7 +8,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
 
         //列表
         var $table = $('#tableB').bootstrapTable({
-            url: WEB_GLOBAL_CTX + '/console/security/user/userList',
+            url: WEB_GLOBAL_CTX + '/console/security/user/agentUserList',
             dataType: 'json',
             cache:false,
             showToggle:true,
@@ -37,46 +37,65 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
         //查询动作
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {
-                url: WEB_GLOBAL_CTX + '/console/security/user/userList',
+                url: WEB_GLOBAL_CTX + '/console/security/user/agentUserList',
                 queryParams: 'queryParamsF'
             });
         });
 
         //删除
-        $('#delete').click(function () {
+        $('#confirm').click(function () {
             var objects = $table.bootstrapTable('getSelections');
             console.debug('Selected values: ' + objects.length);
+            $('#myModal').modal('hide');
             $.each(objects, function () {
-                $.post(WEB_GLOBAL_CTX + "/console/security/user/deleteInfo/" + this.id, function (rsp) {
-                    if (rsp.successful) {
-                        $.scojs_message(rsp.msg, $OK);
-                        flashTable('tableB', '/console/security/user/userList');
-                    } else {
-                        $.scojs_message(rsp.msg, $ERROR);
-                    }
-                }).error(function () {
-                    $.scojs_message("更新失败,请重新登陆!", $ERROR);
-                });
+
+                var state = this.status;
+                if(state=="disabled")
+                {
+                    $.scojs_message("已注销无法启用,请重新注册", $ERROR);
+                }
+                else{
+                    $.post(WEB_GLOBAL_CTX + "/console/security/user/deleteInfo/" + this.id, function (rsp) {
+                        if (rsp.successful) {
+                            $.scojs_message(rsp.msg, $OK);
+                            flashTable('tableB', '/console/security/user/agentUserList');
+                        } else {
+                            $.scojs_message(rsp.msg, $ERROR);
+                        }
+                    }).error(function () {
+                        $.scojs_message("更新失败,请重新登陆!", $ERROR);
+                    });
+                }
+
+
             });
         });
 
         //添加
         $('#add').click(function () {
             parent.Loading.modal('show');
-            self.location = WEB_GLOBAL_CTX + "/console/security/user/userEdit";
+            self.location = WEB_GLOBAL_CTX + "/console/security/user/agentUserEdit";
         });
 
         //修改
         $('#modify').click(function () {
-            parent.Loading.modal('show');
             var objects = $table.bootstrapTable('getSelections');
             $.each(objects, function () {
-                self.location = WEB_GLOBAL_CTX + "/console/security/user/editUser/"+this.id;
+                var state = this.status;
+                if(state=="disabled")
+                {
+                    $.scojs_message("已注销无法启用,请重新注册", $ERROR);
+                }
+                else{
+                    parent.Loading.modal('show');
+                    self.location = WEB_GLOBAL_CTX + "/console/security/user/editAgentUser/"+this.id;
+                }
             });
 
         });
 
-        //parent.Loading.modal('hide');
+
+        parent.Loading.modal('hide');
 
     });
 

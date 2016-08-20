@@ -1,10 +1,14 @@
 package com.xecoder.controller.core;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
+import com.xecoder.common.util.DataAttributes;
+import com.xecoder.common.util.FuelueTree;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.Result;
 import com.xecoder.entity.Role;
@@ -118,12 +122,6 @@ public class UserController extends BaseAction{
                     result.setMsg("用户添加失败，登录名：" + user.getUsername() + "已存在。");
                     return result;
                 }
-
-//                if (userService.getByEmail(user.getEmail()) != null) {
-//                    result.setSuccessful(false);
-//                    result.setMsg("用户添加失败，登录邮箱：" + user.getEmail() + "已存在。");
-//                    return result;
-//                }
                 userService.save(user);
             }
             else
@@ -149,19 +147,14 @@ public class UserController extends BaseAction{
         return getView(ADDEDIT,"user",user);
     }
 
-    @RequestMapping(value="/editinfo/{id}", method=RequestMethod.POST)
+
+    @RequestMapping(value="/editAgentUser/{id}")
     @ResponseBody
-    public Result editingUser(@ModelAttribute User user, @PathVariable Integer id) {
-        logger.debug("id = " + id);
-        Result result = new Result();
-        if(!Strings.isNullOrEmpty(id+""))
-        userService.update(user);
-        else
-        userService.save(user);
-        result.setMsg("操作成功");
-        result.setSuccessful(true);
-        return result;
+    public ModelAndView ededitAgentUseritUser(@PathVariable Integer id) {
+        User user = userService.get(Long.parseLong(id + ""));
+        return getView(AGENTADDEDIT,"user",user);
     }
+
 
 
     @RequestMapping(value="/deleteInfo/{id}", method=RequestMethod.POST)
@@ -170,6 +163,7 @@ public class UserController extends BaseAction{
         logger.debug("id = " + id);
         Result result = new Result();
         user.setStatus("disabled");
+        user.setUsername("");
         userService.delete(user);
         result.setMsg("操作成功");
         result.setSuccessful(true);
@@ -199,6 +193,28 @@ public class UserController extends BaseAction{
         role.setDescription(description);
         List<Role> list = roleService.find(null,role);
         return list;
+    }
+
+
+    @RequestMapping(value = "/findJsonById/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject findJsonById(@PathVariable Long id) {
+        System.out.println("id = " + id);
+        List<User> list = userService.findByParentId(id);
+        String json = "";
+        JSONObject jsonobject = new JSONObject();
+        JSONArray jarray = new JSONArray();
+        for (User o : list) {
+            FuelueTree fuelueTree = new FuelueTree();
+            fuelueTree.setText(o.getRealname());
+            fuelueTree.setType(o.getNodes() > 0 ? "folder" : "item");
+            DataAttributes dataAttributes =  new DataAttributes();
+            dataAttributes.setId(o.getId().toString());
+            fuelueTree.setAttr(dataAttributes);
+            jarray.add(fuelueTree);
+        }
+        jsonobject.put("data", jarray);
+        return jsonobject;
     }
 
     @RequestMapping(value="/findAllRoleSelect/{id}/{roles}")

@@ -52,6 +52,9 @@ public class User {
     @Transient
     private String rolesName;
 
+    @Transient
+    private String parentName;
+
     public Long getId() {
         return id;
     }
@@ -220,5 +223,24 @@ public class User {
 
     public void setRolesName(String rolesName) {
         this.rolesName = rolesName;
+    }
+
+
+    private int nodes;
+
+    public int getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(int nodes) {
+        this.nodes = nodes;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 }

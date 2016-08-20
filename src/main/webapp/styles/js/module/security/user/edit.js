@@ -34,6 +34,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
         }
         else{
             $("#status").val("enabled");
+            $("#state").bootstrapSwitch('state', true);
         }
         //修改页面结束
 
@@ -49,7 +50,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
 
         //动态调整ifream页面高度
         $('#myTree').on('loaded.fu.tree', function (e) {
-            console.log('Loaded');
+            //console.log('Loaded');
             setHeight();
         });
 
@@ -62,7 +63,8 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
         });
 
         //初始树
-        meTreeInit('myTree',orgIdVal.split(""),"/console/security/organization/findJsonById/",false,false,1);
+        meTreeInit('myTree',orgIdVal.split(""),"/console/security/organization/findJsonById/",false,true,1);
+
 
 
         //提交

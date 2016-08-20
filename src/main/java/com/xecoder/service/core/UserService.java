@@ -45,11 +45,13 @@ public interface UserService {
 	 * @param username
 	 * @return
 	 */
-	public User getByUsername(String username);
+	User getByUsername(String username);
 	/**
 	 * 按邮箱
 	 * @param email
 	 * @return
 	 */
-	public User getByEmail(String email);
+	User getByEmail(String email);
+
+	List<User> findByParentId(Long parentId);
 }

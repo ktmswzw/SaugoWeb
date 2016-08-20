@@ -15,6 +15,7 @@
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="identity_cards" jdbcType="VARCHAR" property="identityCards" />
+    <result column="nodes" property="nodes" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, create_time, email, password, phone, realname, salt, status, username, org_id, 
-    parent_id, address, identity_cards
+    parent_id, address, identity_cards,(select count(1) from security_user oo where oo.parent_id = nn.id) as nodes
   </sql>
   <select id="selectByExample" parameterType="com.xecoder.entity.UserCriteria" resultMap="BaseResultMap">
     select
@@ -84,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from security_user
+    from security_user nn
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,7 +96,7 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from security_user
+    from security_user nn
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

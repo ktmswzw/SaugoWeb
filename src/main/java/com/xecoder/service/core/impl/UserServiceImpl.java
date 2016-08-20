@@ -114,6 +114,12 @@ public class UserServiceImpl extends BaseService implements UserService {
             if(StringUtils.isNotBlank(user.getPhone())){
                 cri.andPhoneEqualTo(user.getPhone());
             }
+
+            if(StringUtils.isNotBlank(user.getEmail())){
+                cri.andEmailEqualTo(user.getEmail());
+            }
+            else
+                cri.andEmailEqualTo("");
         }
 
         if(page != null && page.getSort() != null && page.getOrder() != null){
@@ -143,6 +149,18 @@ public class UserServiceImpl extends BaseService implements UserService {
 		return page.setRows(list);
 	}
 
+
+    @Override
+    public List<User> findByParentId(Long parentId) {
+        UserCriteria criteria = new UserCriteria();
+        UserCriteria.Criteria cri = criteria.createCriteria();
+        if(parentId != null){
+            cri.andParentIdEqualTo(parentId);
+        }
+        List<User> list =   baseDao.getMapper(UserMapper.class).selectByExample(criteria);
+        return list;
+    }
+
 	@Override
 	public User get(String username) {
 		UserCriteria criteria = new UserCriteria();
@@ -166,8 +184,17 @@ public class UserServiceImpl extends BaseService implements UserService {
 			user.setOrganization(baseDao.getMapper(OrganizationMapper.class).selectByPrimaryKey(user.getOrgId()));
 		}
         //setTheme(user);
+        setParentName(user);
 	}
 
+	public void setParentName(User user)
+    {
+        if(user != null && user.getParentId() != null){
+            User pUser = baseDao.getMapper(UserMapper.class).selectByPrimaryKey(user.getParentId());
+            if(pUser!=null)
+            user.setParentName(pUser.getRealname());
+        }
+    }
 
     public  void setTheme(User user)
     {

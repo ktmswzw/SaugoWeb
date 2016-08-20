@@ -19,6 +19,7 @@
                     <input type="hidden" name="salt" id="salt">
                     <input type="hidden" name="email" id="email" value=""/>
                     <input type="hidden" name="status" id="status">
+                    <input type="hidden" name="roles" id="roles">
                     <input type="hidden" name="username" id="username">
                 </div>
 
@@ -56,17 +57,27 @@
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" >角色</label>
+                        <label class="control-label" for="identityCards">身份证号</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <select id="roles" name="roles" class="form-control" multiple required>
-                        </select>
+                        <input type="text" class="form-control" id="identityCards" name="identityCards" minlength="18" maxlength="18"
+                               placeholder="输入18位身份证号" required>
                     </div>
                 </div>
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="parentId">上级</label>
+                        <label class="control-label" for="address">收货地址</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="text" class="form-control" id="address" name="address"
+                               placeholder="" required>
+                    </div>
+                </div>
+
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <label class="control-label" for="parentId">上级代理</label>
                     </div>
                     <div class="col-sm-8 controls">
                         <input type="hidden" class="form-control" id="parentId" name="parentId" maxlength="15"
@@ -93,18 +104,6 @@
                     </div>
                 </div>
 
-                <div class="row control-group">
-                    <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="state">状态</label>
-                    </div>
-                    <div class="col-sm-8 controls">
-                        <div class="pull-left">
-                            <div class="switch" >
-                                <input type="checkbox" id="state" name="state" data-size="small" value="enabled" data-on-color="success" data-off-color="warning" data-on-text="在用" data-off-text="注销">
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>
@@ -129,7 +128,7 @@
 
 </body>
 <@foot/>
-<script src="${base}/styles/js/module/security/user/edit.js"></script>
+<script src="${base}/styles/js/module/security/user/agentEdit.js"></script>
 <script type="text/javascript">
     var user = JSON.parse(JSON.stringify(${user}));
 </script>

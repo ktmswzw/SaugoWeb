@@ -35,6 +35,7 @@ require.config({
         form: '../module/form',
         async: '../libs/async',
         scomodal:'../../sco/js/sco.modal',
+        scoconfirm:'../../sco/js/sco.confirm',
         newsbox: '../libs/jquery.bootstrap.newsbox',
         ie10: '../libs/ie10-viewport-bug-workaround',
         summernote: '../summernote/summernote',

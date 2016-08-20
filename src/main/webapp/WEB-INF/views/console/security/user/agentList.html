@@ -11,11 +11,12 @@
                 <thead>
                 <tr>
                     <th data-field="state"  data-radio="true"  >ID</th>
-                    <th data-field="realname" class="col-md-3">姓名</th>
-                    <th data-field="phone" class="col-md-2">手机/帐号</th>
-                    <th data-field="address" class="col-md-3" data-sortable="true">收货地址</th>
-                    <th data-field="identityCards" class="col-md-3">身份证号</th>
-                    <th data-field="createTime" class="col-md-3">创建时间</th>
+                    <th data-field="realname" class="col-md-1">姓名</th>
+                    <th data-field="parentName" class="col-md-1">上级</th>
+                    <th data-field="phone" class="col-md-1">手机/帐号</th>
+                    <th data-field="address" class="col-md-4" data-sortable="true">收货地址</th>
+                    <th data-field="identityCards" class="col-md-2">身份证号</th>
+                    <th data-field="createTime" class="col-md-2">创建时间</th>
                     <th data-field="status" class="col-md-1" data-formatter="stateFormatter">状态</th>
                 </tr>
                 </thead>
@@ -64,11 +65,30 @@
             class="glyphicon glyphicon-edit"></span></button>
 </@shiro.hasPermission>
 <@shiro.hasPermission name="User:delete">
-<button type="button" class="btn btn-default" id="delete" name="delete" title="删除"><span
-        class="glyphicon glyphicon-remove"></span></button>
+<button type="button" class="btn btn-default" id="delete" name="delete" title="注销"><span
+        class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#myModal" ></span></button>
 </@shiro.hasPermission>
 </div>
+
+<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog  modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">确认</h4>
+            </div>
+            <div class="modal-body">
+                <p>是否确认注销该用户，此操作影响巨大且不可以还原，你确认注销？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">点错了</button>
+                <button type="button" class="btn btn-primary" id="confirm" name="confirm">朕意已决</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 </body>
 <@foot/>
-<script src="${base}/styles/js/module/security/user/list.js"></script>
+<script src="${base}/styles/js/module/security/user/agentList.js"></script>
 </html>

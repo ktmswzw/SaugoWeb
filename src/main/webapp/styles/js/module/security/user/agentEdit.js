@@ -12,16 +12,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
 
-        var rolesVal='',orgIdVal='';
-
-        //状态插件
-        $("input[type=\"checkbox\"], input[type=\"radio\"]").not("[data-switch-no-init]").bootstrapSwitch()
-            .on('switchChange.bootstrapSwitch', function(event, state) {
-                if(state)
-                    $("#status").val("enabled");
-                else
-                    $("#status").val("disabled");
-            });
+        var rolesVal='',parentIdVal='';
 
 
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
@@ -29,8 +20,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
             delete user["roles"];
             //初始化页面
             meForm($('#formSubmit'), user);
-            orgIdVal=user.orgId+"";
-            $("#state").bootstrapSwitch('state', user.status == "enabled");
+            parentIdVal=user.parentId+"";
         }
         else{
             $("#status").val("enabled");
@@ -43,31 +33,27 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
             $("#username").val(($("#phone").val()));
         });
 
-        //初始化下拉框 //可做异步下拉框选择
-        initSelect("roles", WEB_GLOBAL_CTX+"/console/security/user/findRole", {description: ''}, rolesVal.split(","), "id", "description",true);
-
-
         //动态调整ifream页面高度
         $('#myTree').on('loaded.fu.tree', function (e) {
-            console.log('Loaded');
+            //console.log('Loaded');
             setHeight();
         });
 
         //同步值
         $('#myTree').on('updated.fu.tree', function (e, selected) {
-            asyncTreeValue("myTree","orgId");
+            asyncTreeValue("myTree","parentId");
         });
         $('#myTree').on('selected.fu.tree', function (e, info) {
-            asyncTreeValue("myTree","orgId");
+            asyncTreeValue("myTree","parentId");
         });
 
         //初始树
-        meTreeInit('myTree',orgIdVal.split(""),"/console/security/organization/findJsonById/",false,false,1);
+        meTreeInit('myTree',parentIdVal.split(""),"/console/security/user/findJsonById/",false,true,1);
 
 
         //提交
         var roles = $('#roles');
-        var orgId = $('#orgId');
+        var parentId = $('#parentId');
 
 
         $('#formSubmit').formValidation({
@@ -87,11 +73,8 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
             .on('success.form.fv', function (e) {
                 e.preventDefault();
                 var $form = $(e.target);
-                var fv = $form.data('formValidation');
-
-                if (roles.val() == '' || roles.val() == null || orgId.val() == '' || orgId.val() == null) {
-                    highlight_error(roles);
-                    highlight_error(orgId);
+                if (parentId.val() == '' || parentId.val() == null) {
+                    highlight_error(parentId);
                     return false;
                 } else {
                     var params = $form.serialize();
@@ -99,7 +82,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
                         if (rsp.successful) {
                             $.scojs_message(rsp.msg, $OK);
                             $("#save").toggleClass("disabled");
-                            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/list'", 1000);
+                            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 1000);
                         } else {
                             $.scojs_message(rsp.msg, $ERROR);
                         }
