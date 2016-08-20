@@ -63,7 +63,7 @@ public class {serviceImplName}  extends BaseService implements {serviceName} {
     }
 
     @Override
-    public {moduleCode} get(int id) {
+    public {moduleCode} get(Long id) {
         return baseDao.getMapper({moduleCode}Mapper.class).selectByPrimaryKey(id);
     }
 
@@ -73,7 +73,7 @@ public class {serviceImplName}  extends BaseService implements {serviceName} {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         baseDao.getMapper({moduleCode}Mapper.class).deleteByPrimaryKey(id);
     }
 }

@@ -1,11 +1,11 @@
-package {javaPath}.controller;
+package com.xecoder.business.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonEncoding;
-import {javaPath}.entity.{moduleCode};
-import {javaPath}.service.{serviceName};
+import com.xecoder.business.entity.Produce;
+import com.xecoder.business.service.ProduceService;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.JacksonMapper;
@@ -20,19 +20,19 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 /**
- * Created by xecoder on {Sysdate}.
+ * Created by xecoder on Sat Aug 20 17:41:38 CST 2016.
  */
 @Controller
 @SuppressWarnings("unchecked")
-@RequestMapping(value = "/business/{lowerModuleCode}")
-public class {controllerName} extends BaseAction {
+@RequestMapping(value = "/business/produce")
+public class ProduceController extends BaseAction {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    {serviceName} {lowerModuleCode}Service;
+    ProduceService produceService;
 
-    private static final String INDEX = "/business/{lowerModuleCode}/{indexPage}";
-    private static final String EDIT = "/business/{lowerModuleCode}/{editPage}";
+    private static final String INDEX = "/business/produce/list";
+    private static final String EDIT = "/business/produce/edit";
 
     @RequestMapping(value="/index", method= RequestMethod.GET)
     public String index() {
@@ -41,14 +41,14 @@ public class {controllerName} extends BaseAction {
 
 
     /**
-     * 表格{moduleName}
+     * 表格产品管理
      * @return GridModel
      */
     @RequestMapping(value="/list", method= RequestMethod.GET)
     @ResponseBody
     public GridModel list() {
-        {moduleCode} {lowerModuleCode} = SearchForm({moduleCode}.class);
-        Page info = {lowerModuleCode}Service.findByPage(page(), {lowerModuleCode});
+        Produce produce = SearchForm(Produce.class);
+        Page info = produceService.findByPage(page(), produce);
         GridModel m = new GridModel();
         m.setRows(info.getRows());
         m.setTotal(info.getCount());
@@ -57,19 +57,19 @@ public class {controllerName} extends BaseAction {
 
 
     /**
-     * 添加{moduleName}
+     * 添加产品管理
      * @return ModelAndView
      */
     @RequestMapping(value="/add")
     @ResponseBody
     public ModelAndView add() {
         ModelAndView mav = new ModelAndView(EDIT);
-        {moduleCode} {lowerModuleCode} = new {moduleCode}();
+        Produce produce = new Produce();
         try {
             ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString({lowerModuleCode});
+            String json =mapper.writeValueAsString(produce);
             mav.addObject("message", "完成");
-            mav.addObject("{lowerModuleCode}",json);
+            mav.addObject("produce",json);
         }
         catch (Exception e)
         {
@@ -79,7 +79,7 @@ public class {controllerName} extends BaseAction {
     }
 
     /**
-     * 编辑{moduleName}
+     * 编辑产品管理
      * @return ModelAndView
      */
     @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
@@ -88,11 +88,11 @@ public class {controllerName} extends BaseAction {
         logger.debug("edit id = " + id);
         ModelAndView mav = new ModelAndView(EDIT);
         try {
-            {moduleCode} {lowerModuleCode} =  {lowerModuleCode}Service.get(id);
+            Produce produce =  produceService.get(id);
             ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString({lowerModuleCode});
+            String json =mapper.writeValueAsString(produce);
             mav.addObject("message", "完成");
-            mav.addObject("{lowerModuleCode}",json);
+            mav.addObject("produce",json);
         }
         catch (Exception e)
         {
@@ -104,24 +104,24 @@ public class {controllerName} extends BaseAction {
 
 
     /**
-     * 保存{moduleName}
-     * @param {lowerModuleCode}
+     * 保存产品管理
+     * @param produce
      * @return Result
      */
     @RequestMapping(value="/save")
     @ResponseBody
-    public Result saveAdd{moduleCode}(@ModelAttribute {moduleCode} {lowerModuleCode}) {
+    public Result saveAddProduce(@ModelAttribute Produce produce) {
         Result result = new Result();
         try {
-            if ({lowerModuleCode}.get{tableKeyColumn}() != null)
+            if (produce.getId() != null)
             {
-                {lowerModuleCode}Service.update({lowerModuleCode});
+                produceService.update(produce);
                 result.setMsg("成功");
                 result.setSuccessful(true);
             }
             else
             {
-                {lowerModuleCode}Service.save({lowerModuleCode});
+                produceService.save(produce);
                 result.setMsg("成功");
                 result.setSuccessful(true);
             }
@@ -135,18 +135,18 @@ public class {controllerName} extends BaseAction {
     }
 
     /**
-     * 查询单个{moduleName}
+     * 查询单个产品管理
      * @param id
      * @return
      */
     @RequestMapping(value="/get/{id}")
     @ResponseBody
-    public {moduleCode} getInfo(@PathVariable Long id) {
-        return  {lowerModuleCode}Service.get(id);
+    public Produce getInfo(@PathVariable Long id) {
+        return  produceService.get(id);
     }
 
     /**
-     * 删除{moduleName}
+     * 删除产品管理
      * @param id
      * @return
      */
@@ -154,9 +154,10 @@ public class {controllerName} extends BaseAction {
     @ResponseBody
     public Result deleteInfo(@PathVariable Long id) {
         Result result = new Result();
-        {lowerModuleCode}Service.delete(id);
+        produceService.delete(id);
         result.setSuccessful(true);
         result.setMsg("删除成功");
         return result;
     }
 }
+

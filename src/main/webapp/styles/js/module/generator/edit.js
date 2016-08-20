@@ -196,12 +196,13 @@ function nameRule(name)
     else
         return true;
 }
-
+var flagType = 1;
 function updateRowEdit(row)
 {
     $("#state").val(row.state);
     $("#columnCode").val(row.columnCode);
     $("#columnName").val(row.columnName);
+    if(flagType==1)
     $("#type").append(typeFormatter(row.type));
     $("#list").val(row.list);
     $("#validate").val(row.validate);
@@ -209,6 +210,7 @@ function updateRowEdit(row)
     $("#key").bootstrapSwitch('state', row.key);
     $("#essential").bootstrapSwitch('state', row.essential);
     $("#query").bootstrapSwitch('state', row.query);
+    flagType = 2;
 }
 
 

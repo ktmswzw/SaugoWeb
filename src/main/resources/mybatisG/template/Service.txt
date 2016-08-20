@@ -20,10 +20,10 @@ public interface {serviceName} {
 
     void save({moduleCode} {lowerModuleCode});
 
-    {moduleCode} get(int id);
+    {moduleCode} get(Long id);
 
     void update({moduleCode} {lowerModuleCode});
 
-    void delete(int id);
+    void delete(Long id);
 
 }

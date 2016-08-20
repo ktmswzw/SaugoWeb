@@ -215,7 +215,7 @@ public class GeneratorController extends BaseAction {
             tableKeyColumn = findKeyColumn(codeColumnList);
 
             //目录信息
-            String basePath = this.getClass().getResource("/").toString().replaceAll("file:", "").replaceFirst("/", ""), fileNameExt = "New", rootPath = "";
+            String basePath = "/"+this.getClass().getResource("/").toString().replaceAll("file:", "").replaceFirst("/", ""), fileNameExt = "New", rootPath = "";
             basePath = URLDecoder.decode(basePath, "utf-8");
             File f = new File(basePath);
             rootPath = f.getParentFile().getParentFile().getParentFile().getParentFile().getPath() + File.separator;

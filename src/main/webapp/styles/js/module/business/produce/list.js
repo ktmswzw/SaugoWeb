@@ -1,6 +1,6 @@
 
 /**
- * Created by xecoder on {Sysdate}.
+ * Created by xecoder on Sat Aug 20 17:41:38 CST 2016.
  */
 
 requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'base64', 'comm', 'message'],
@@ -13,7 +13,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
 
         //列表
         var $table = $('#tableB').bootstrapTable({
-            url: WEB_GLOBAL_CTX + '/business/{lowerModuleCode}/list',
+            url: WEB_GLOBAL_CTX + '/business/produce/list',
             dataType: 'json',
             cache:false,
             showToggle:true,
@@ -42,7 +42,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
         //查询动作
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {
-                url: WEB_GLOBAL_CTX + '/business/{lowerModuleCode}/list',
+                url: WEB_GLOBAL_CTX + '/business/produce/list',
                 queryParams: 'queryParamsF'
             });
         });
@@ -50,11 +50,12 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
         //删除
         $('#delete').click(function () {
             var objects = $table.bootstrapTable('getSelections');
+            console.debug('Selected values: ' + objects.length);
             $.each(objects, function () {
-                $.post(WEB_GLOBAL_CTX + "/business/{lowerModuleCode}/delete/" + this.{tableKeyColumn}, function (rsp) {
+                $.post(WEB_GLOBAL_CTX + "/business/produce/delete/" + this.id, function (rsp) {
                     if (rsp.successful) {
                         $.scojs_message(rsp.msg, $OK);
-                        flashTable('tableB', '/business/{lowerModuleCode}/list');
+                        flashTable('tableB', '/business/produce/list');
                     } else {
                         $.scojs_message(rsp.msg, $ERROR);
                     }
@@ -67,7 +68,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
         //添加
         $('#add').click(function () {
             parent.Loading.modal('show');
-            self.location = WEB_GLOBAL_CTX + "/business/{lowerModuleCode}/add";
+            self.location = WEB_GLOBAL_CTX + "/business/produce/add";
         });
 
         //修改
@@ -75,7 +76,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
             parent.Loading.modal('show');
             var objects = $table.bootstrapTable('getSelections');
             $.each(objects, function () {
-                self.location = WEB_GLOBAL_CTX + "/business/{lowerModuleCode}/edit/"+this.{tableKeyColumn};
+                self.location = WEB_GLOBAL_CTX + "/business/produce/edit/"+this.id;
             });
         });
 
@@ -83,6 +84,13 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
 
     });
 
+var statusList = [{id: 'enabled', name: '可用'}, {id: 'disabled', name: '不可用'}];
+function stateFormatter(value, row, index) {
+    for (var i = 0; !(i >= statusList.length); i++) {
+        if (statusList[i].id == value) return statusList[i].name;
+    }
+    return value;
+}
 
 //本页查询拼装
 function queryParamsF(params) {
@@ -94,4 +102,5 @@ function queryParamsF(params) {
     //params.sortOrder = "";
     return $.extend({}, params, data);
 }
+
 

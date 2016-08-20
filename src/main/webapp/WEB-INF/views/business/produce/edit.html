@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<#include "/console/layout/main.html"/>
+<html class="fuelux">
+<@headEdit/>
+<body>
+<div class="container">
+    <form role="form" id="formSubmit" commandName="produce" class="form-horizontal"
+          data-fv-framework="bootstrap"
+          data-fv-message="This value is not valid"
+          data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+          data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+          data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+        <!-- Modal -->
+        <div class="panel panel-default">
+            <div class="panel-heading">产品管理</div>
+            <div class="panel-body">
+                <div class="control-group">
+                    <input type="hidden" name="id" id="id"/>
+
+                    <input type="hidden" name="status" id="status">
+                </div>
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="name">产品名称</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="text" class="form-control" id="name" name="name" maxlength="50"
+                               placeholder="输入产品名称" size="100" required/>
+                    </div>
+                </div>
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="number">数量</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="number" class="form-control" id="number" name="number" maxlength="50"
+                               placeholder="输入数量" size="100" required/>
+                    </div>
+                </div>
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <label class="control-label" for="state">状态</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <div class="pull-left">
+                            <div class="switch">
+                                <input type="checkbox" id="state" name="state" data-size="small" checked="true"
+                                       data-on-color="success" data-off-color="warning" data-on-text="在用"
+                                       data-off-text="注销">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row control-group">
+                    <div class="col-sm-4 col-sm-offset-5">
+                        <div style="align-content: center">
+                            <button type="submit" id="save" class="btn btn-primary">保存</button>
+                            <button type="button" id="back" class="btn btn-default">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+<!-- /.container -->
+
+</body>
+<@foot/>
+<script src="${base}/styles/js/module/business/produce/edit.js"></script>
+<script type="text/javascript">
+    var produce = JSON.parse(JSON.stringify(${produce}));
+</script>
+</html>
+
