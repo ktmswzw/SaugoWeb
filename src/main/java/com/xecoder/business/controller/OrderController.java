@@ -12,6 +12,7 @@ import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.Result;
 import com.xecoder.common.util.UploadUtils;
 import com.xecoder.entity.User;
+import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.shiro.ShiroDbRealm;
 import com.xecoder.viewModel.GridModel;
@@ -37,6 +38,10 @@ public class OrderController extends BaseAction {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    UserService userService;
+
     private static final String INDEX = "/business/order/list";
     private static final String EDIT = "/business/order/edit";
 
@@ -107,9 +112,17 @@ public class OrderController extends BaseAction {
         try {
 
             if (!file.isEmpty()) {
-                order.setBankMemo(file.getName());
+//                order.setBankMemo(file.getOriginalFilename());
                 order.setUrl(UploadUtils.upload(file, request));
             }
+            if(order.getAgentId()!=null&&order.getAgentId()!=0){
+                User u = userService.get(order.getAgentId());
+                order.setParentId(u.getParentId());
+                order.setParendName(u.getParentName());
+            }
+
+            order.setStatus(1);
+            order.setInputTime(new Date());
             orderService.save(order);
             result.setMsg("成功");
             result.setSuccessful(true);
@@ -175,14 +188,14 @@ public class OrderController extends BaseAction {
         Result result = new Result();
         User  user = SecurityUtils.getLoginUser();
         Order order = orderService.get(id);
-        if(order.getStatus()==9) {
+        if(order.getStatus()!=9) {
             order.setStatus(9);
             if(!order.getInputId().equals(user.getId())){
                 order.setCheckId(user.getId());
                 order.setCheckName(user.getRealname());
             }
             order.setCheckTime(new Date());
-            orderService.save(order);
+            orderService.update(order);
             result.setSuccessful(true);
             result.setMsg("撤销成功");
         }
@@ -207,12 +220,12 @@ public class OrderController extends BaseAction {
         User  user = SecurityUtils.getLoginUser();
         if(order.getStatus()!=1) {
             order.setStatus(2);
-            orderService.save(order);
-            result.setSuccessful(true);
-            result.setMsg("确认成功");
             order.setCheckId(user.getId());
             order.setCheckName(user.getRealname());
             order.setCheckTime(new Date());
+            orderService.update(order);
+            result.setSuccessful(true);
+            result.setMsg("确认成功");
         }
         else{
             result.setSuccessful(false);

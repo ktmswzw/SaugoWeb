@@ -35,7 +35,8 @@
                     <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="produceId">产品</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <select id="produceId" name="produceId" class="form-control" required>
+                        <select id="produceId" name="produceId" class="form-control" data-live-search="true"
+                                required class="selectpicker show-tick">
                         </select>
                     </div>
                 </div>
@@ -43,12 +44,12 @@
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="state">自定义</label>
+                        <label class="control-label" for="state">手工输入</label>
                     </div>
                     <div class="col-sm-8 controls">
                         <div class="pull-left">
                             <div class="switch">
-                                <input type="checkbox" id="state" name="state" data-size="small" checked="false"
+                                <input type="checkbox" id="state" name="state" data-size="small"
                                        data-on-color="success" data-off-color="warning" data-on-text="自定"
                                        data-off-text="定制">
                             </div>
@@ -69,7 +70,8 @@
                     <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="agentName">代理</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <select id="agentId" name="agentId" class="form-control" required>
+                        <select id="agentId" name="agentId" class="form-control" data-live-search="true" required
+                                class="selectpicker show-tick">
                         </select>
                     </div>
                 </div>
@@ -77,11 +79,22 @@
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="file">图片</label>
+                        <label class="control-label" for="file">水单</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <input type="file" class="form-control" id="file" name="file" maxlength="50"
-                               placeholder="选择图片" size="100"/>
+                        <input type="file" class="form-control" id="file" name="file"
+                               placeholder="选择图片" size="100" required />
+                    </div>
+                </div>
+
+                <div class="row control-group" id="pic">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <label class="control-label" for="image">水单</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <a href="#" class="thumbnail">
+                            <img src="" id="image">
+                        </a>
                     </div>
                 </div>
 
@@ -91,7 +104,7 @@
                     </div>
                     <div class="col-sm-8 controls">
                         <input type="text" class="form-control" readonly id="inputName" name="inputName" maxlength="50"
-                               size="100" required/>
+                               size="100"/>
                     </div>
                 </div>
 
@@ -100,7 +113,7 @@
                     </div>
                     <div class="col-sm-8 controls">
                         <input type="text" class="form-control" readonly id="checkName" name="checkName" maxlength="50"
-                               size="100" required/>
+                               size="100"/>
                     </div>
                 </div>
 
@@ -110,7 +123,7 @@
                     </div>
                     <div class="col-sm-8 controls">
                         <input type="text" class="form-control" id="bankMemo" name="bankMemo" maxlength="50"
-                               placeholder="备注" size="100" required/>
+                               placeholder="备注" size="100" />
                     </div>
                 </div>
 

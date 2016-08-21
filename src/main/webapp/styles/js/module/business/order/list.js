@@ -64,7 +64,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
                     });
                 }
                 else{
-                    $.scojs_message("已撤销状态订单无法再次撤销!", $ERROR);
+                    $.scojs_message("[已撤销] 状态订单无法再次撤销!", $ERROR);
                 }
             });
         });
@@ -84,7 +84,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
                     self.location = WEB_GLOBAL_CTX + "/business/order/edit/" + this.id;
                 }
                 else{
-                    $.scojs_message("非待确认状态订单无法修改!", $ERROR);
+                    $.scojs_message("非 [待确认] 状态订单无法修改!", $ERROR);
                 }
             });
         });
@@ -93,6 +93,14 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
 
     });
 
+var orderStatusList = [{id: 1, name: '未确认'}, {id: 2, name: '已确认'}, {id: 9, name: '已撤销'}];
+function orderStateFormatter(value, row, index) {
+    for (var i = 0; !(i >= orderStatusList.length); i++) {
+        if (orderStatusList[i].id == value) return orderStatusList[i].name;
+    }
+    return value;
+}
+
 
 //本页查询拼装
 function queryParamsF(params) {
@@ -100,8 +108,8 @@ function queryParamsF(params) {
     var value = $("#search").val();
     var str = "{\"" + name + "\":\"" + value + "\"}";
     var data = eval('(' + str + ')');
-    //params.sortName = "";
-    //params.sortOrder = "";
+    params.sortName = "input_time";
+    params.sortOrder = "desc";
     return $.extend({}, params, data);
 }
 

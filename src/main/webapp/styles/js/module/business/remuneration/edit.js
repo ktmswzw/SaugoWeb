@@ -15,12 +15,14 @@ requirejs(['jquery',  'bootstrap', 'fuelux', 'select', 'selectCN', 'validator', 
             //初始化页面
             meForm($('#formSubmit'), remuneration);
             $('.selectpicker').selectpicker(remuneration.level);
-            $('.selectpicker').selectpicker('refresh');
 
         }
         else {
 
         }
+
+        $('.selectpicker').selectpicker('refresh');
+
         $("#produceId").val(produceId);
         //修改页面结束
         parent.Loading.modal('hide');

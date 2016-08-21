@@ -1,5 +1,5 @@
 //加载插件
-requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validator','vb','validatorLAG','comm','form','message'],
+requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','validator','vb','validatorLAG','comm','form','message'],
     function ($,_) {
 
         //返回
@@ -23,6 +23,10 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
                     $("#status").val("disabled");
             });
 
+
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+            $('.selectpicker').selectpicker('mobile');
+        }
 
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
             rolesVal = user.roles;
