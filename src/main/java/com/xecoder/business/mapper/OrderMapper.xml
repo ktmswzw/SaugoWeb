@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xecoder.business.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.xecoder.business.entity.Order" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="input_id" property="inputId" jdbcType="BIGINT" />
+    <result column="input_time" property="inputTime" jdbcType="TIMESTAMP" />
+    <result column="check_id" property="checkId" jdbcType="BIGINT" />
+    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="produce_id" property="produceId" jdbcType="BIGINT" />
+    <result column="produce_number" property="produceNumber" jdbcType="BIGINT" />
+    <result column="input_name" property="inputName" jdbcType="VARCHAR" />
+    <result column="check_name" property="checkName" jdbcType="VARCHAR" />
+    <result column="produce_name" property="produceName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="agent_id" property="agentId" jdbcType="BIGINT" />
+    <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="parend_name" property="parendName" jdbcType="VARCHAR" />
+    <result column="bank_memo" property="bankMemo" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, input_id, input_time, check_id, check_time, produce_id, produce_number, input_name, 
+    check_name, produce_name, status, agent_id, agent_name, parent_id, parend_name, bank_memo, 
+    url
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xecoder.business.entity.OrderCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from business_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from business_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from business_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xecoder.business.entity.OrderCriteria" >
+    delete from business_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xecoder.business.entity.Order" >
+    insert into business_order (id, input_id, input_time, 
+      check_id, check_time, produce_id, 
+      produce_number, input_name, check_name, 
+      produce_name, status, agent_id, 
+      agent_name, parent_id, parend_name, 
+      bank_memo, url)
+    values (#{id,jdbcType=BIGINT}, #{inputId,jdbcType=BIGINT}, #{inputTime,jdbcType=TIMESTAMP}, 
+      #{checkId,jdbcType=BIGINT}, #{checkTime,jdbcType=TIMESTAMP}, #{produceId,jdbcType=BIGINT}, 
+      #{produceNumber,jdbcType=BIGINT}, #{inputName,jdbcType=VARCHAR}, #{checkName,jdbcType=VARCHAR}, 
+      #{produceName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{agentId,jdbcType=BIGINT}, 
+      #{agentName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{parendName,jdbcType=VARCHAR}, 
+      #{bankMemo,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xecoder.business.entity.Order" >
+    insert into business_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="inputId != null" >
+        input_id,
+      </if>
+      <if test="inputTime != null" >
+        input_time,
+      </if>
+      <if test="checkId != null" >
+        check_id,
+      </if>
+      <if test="checkTime != null" >
+        check_time,
+      </if>
+      <if test="produceId != null" >
+        produce_id,
+      </if>
+      <if test="produceNumber != null" >
+        produce_number,
+      </if>
+      <if test="inputName != null" >
+        input_name,
+      </if>
+      <if test="checkName != null" >
+        check_name,
+      </if>
+      <if test="produceName != null" >
+        produce_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="agentId != null" >
+        agent_id,
+      </if>
+      <if test="agentName != null" >
+        agent_name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="parendName != null" >
+        parend_name,
+      </if>
+      <if test="bankMemo != null" >
+        bank_memo,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="inputId != null" >
+        #{inputId,jdbcType=BIGINT},
+      </if>
+      <if test="inputTime != null" >
+        #{inputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkId != null" >
+        #{checkId,jdbcType=BIGINT},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="produceId != null" >
+        #{produceId,jdbcType=BIGINT},
+      </if>
+      <if test="produceNumber != null" >
+        #{produceNumber,jdbcType=BIGINT},
+      </if>
+      <if test="inputName != null" >
+        #{inputName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkName != null" >
+        #{checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="produceName != null" >
+        #{produceName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="agentId != null" >
+        #{agentId,jdbcType=BIGINT},
+      </if>
+      <if test="agentName != null" >
+        #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="parendName != null" >
+        #{parendName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankMemo != null" >
+        #{bankMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xecoder.business.entity.OrderCriteria" resultType="java.lang.Integer" >
+    select count(*) from business_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update business_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.inputId != null" >
+        input_id = #{record.inputId,jdbcType=BIGINT},
+      </if>
+      <if test="record.inputTime != null" >
+        input_time = #{record.inputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkId != null" >
+        check_id = #{record.checkId,jdbcType=BIGINT},
+      </if>
+      <if test="record.checkTime != null" >
+        check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.produceId != null" >
+        produce_id = #{record.produceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.produceNumber != null" >
+        produce_number = #{record.produceNumber,jdbcType=BIGINT},
+      </if>
+      <if test="record.inputName != null" >
+        input_name = #{record.inputName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkName != null" >
+        check_name = #{record.checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.produceName != null" >
+        produce_name = #{record.produceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.agentId != null" >
+        agent_id = #{record.agentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agentName != null" >
+        agent_name = #{record.agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parendName != null" >
+        parend_name = #{record.parendName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankMemo != null" >
+        bank_memo = #{record.bankMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update business_order
+    set id = #{record.id,jdbcType=BIGINT},
+      input_id = #{record.inputId,jdbcType=BIGINT},
+      input_time = #{record.inputTime,jdbcType=TIMESTAMP},
+      check_id = #{record.checkId,jdbcType=BIGINT},
+      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      produce_id = #{record.produceId,jdbcType=BIGINT},
+      produce_number = #{record.produceNumber,jdbcType=BIGINT},
+      input_name = #{record.inputName,jdbcType=VARCHAR},
+      check_name = #{record.checkName,jdbcType=VARCHAR},
+      produce_name = #{record.produceName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      agent_id = #{record.agentId,jdbcType=BIGINT},
+      agent_name = #{record.agentName,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      parend_name = #{record.parendName,jdbcType=VARCHAR},
+      bank_memo = #{record.bankMemo,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xecoder.business.entity.Order" >
+    update business_order
+    <set >
+      <if test="inputId != null" >
+        input_id = #{inputId,jdbcType=BIGINT},
+      </if>
+      <if test="inputTime != null" >
+        input_time = #{inputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkId != null" >
+        check_id = #{checkId,jdbcType=BIGINT},
+      </if>
+      <if test="checkTime != null" >
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="produceId != null" >
+        produce_id = #{produceId,jdbcType=BIGINT},
+      </if>
+      <if test="produceNumber != null" >
+        produce_number = #{produceNumber,jdbcType=BIGINT},
+      </if>
+      <if test="inputName != null" >
+        input_name = #{inputName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkName != null" >
+        check_name = #{checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="produceName != null" >
+        produce_name = #{produceName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="agentId != null" >
+        agent_id = #{agentId,jdbcType=BIGINT},
+      </if>
+      <if test="agentName != null" >
+        agent_name = #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="parendName != null" >
+        parend_name = #{parendName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankMemo != null" >
+        bank_memo = #{bankMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xecoder.business.entity.Order" >
+    update business_order
+    set input_id = #{inputId,jdbcType=BIGINT},
+      input_time = #{inputTime,jdbcType=TIMESTAMP},
+      check_id = #{checkId,jdbcType=BIGINT},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      produce_id = #{produceId,jdbcType=BIGINT},
+      produce_number = #{produceNumber,jdbcType=BIGINT},
+      input_name = #{inputName,jdbcType=VARCHAR},
+      check_name = #{checkName,jdbcType=VARCHAR},
+      produce_name = #{produceName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      agent_id = #{agentId,jdbcType=BIGINT},
+      agent_name = #{agentName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      parend_name = #{parendName,jdbcType=VARCHAR},
+      bank_memo = #{bankMemo,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
