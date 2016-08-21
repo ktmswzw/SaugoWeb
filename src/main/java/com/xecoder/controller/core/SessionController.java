@@ -37,7 +37,7 @@ public class SessionController extends BaseAction {
     @Autowired
     private SessionDAO sessionDAO;
 
-    @RequestMapping(value="/list", method= RequestMethod.GET)
+    @RequestMapping(value="/list")
     public String list(HttpServletRequest request) {
         return LIST;
     }

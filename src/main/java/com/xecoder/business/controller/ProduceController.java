@@ -34,7 +34,7 @@ public class ProduceController extends BaseAction {
     private static final String INDEX = "/business/produce/list";
     private static final String EDIT = "/business/produce/edit";
 
-    @RequestMapping(value="/index", method= RequestMethod.GET)
+    @RequestMapping(value="/index")
     public String index() {
         return INDEX;
     }
@@ -44,7 +44,7 @@ public class ProduceController extends BaseAction {
      * 表格产品管理
      * @return GridModel
      */
-    @RequestMapping(value="/list", method= RequestMethod.GET)
+    @RequestMapping(value="/list")
     @ResponseBody
     public GridModel list() {
         Produce produce = SearchForm(Produce.class);
@@ -53,6 +53,22 @@ public class ProduceController extends BaseAction {
         m.setRows(info.getRows());
         m.setTotal(info.getCount());
         return m;
+    }
+
+    /**
+     * 表格产品管理
+     * @return GridModel
+     */
+    @RequestMapping(value="/chooseList")
+    @ResponseBody
+    public List<Produce> chooseList(@RequestParam String name) {
+        Produce produce = new Produce();
+        produce.setName(name);
+        List<Produce> list = produceService.findAll(page(), produce);
+        for(Produce p:list){
+            p.setName(p.getName()+"||"+p.getNumber());
+        }
+        return list;
     }
 
 

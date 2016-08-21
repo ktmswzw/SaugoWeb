@@ -49,6 +49,6 @@
         <!--<table schema="recruits" tableName="business_produce" domainObjectName="Produce" >-->
         <!--</table>-->
 
-        <table schema="recruits" tableName="business_remuneration" domainObjectName="Remuneration" ></table>
+        <table schema="recruits" tableName="business_order" domainObjectName="Order" ></table>
     </context>
 </generatorConfiguration>

@@ -59,7 +59,7 @@ public class OrganizationController extends BaseAction {
     }
 
 
-    @RequestMapping(value="add", method= RequestMethod.GET)
+    @RequestMapping(value="add")
     public ModelAndView add() {
 
         ModelAndView mav = new ModelAndView(EDIT);

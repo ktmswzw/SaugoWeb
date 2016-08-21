@@ -98,6 +98,23 @@ public class UserController extends BaseAction{
         return m;
     }
 
+    /**
+     * 表格产品管理
+     * @return GridModel
+     */
+    @RequestMapping(value="/chooseList")
+    @ResponseBody
+    public List<User> chooseList(@RequestParam String name) {
+        User user = new User();
+        user.setRealname(name);
+        List<User> list = userService.find(user);
+        list.stream().filter(u -> u.getParentId() != null).forEach(u -> {
+            User in = userService.get(u.getParentId());
+            u.setRealname(u.getRealname() + "-上级" + "[" + in.getRealname() + "]");
+        });
+        return list;
+    }
+
     @RequestMapping(value="/userEdit")
     @ResponseBody
     public ModelAndView userEdit() {
@@ -162,6 +179,12 @@ public class UserController extends BaseAction{
     public Result deleteInfo(@ModelAttribute User user, @PathVariable Integer id) {
         logger.debug("id = " + id);
         Result result = new Result();
+        if(id==1)
+        {
+            result.setMsg("操作失败,此帐号未超级管理员,不可删除");
+            result.setSuccessful(false);
+            return result;
+        }
         user.setStatus("disabled");
         user.setUsername("");
         userService.delete(user);

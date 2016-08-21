@@ -54,7 +54,7 @@ public class RoleController extends BaseAction {
     private ModuleService moduleService;
 
     @RequiresPermissions("Role:show")
-    @RequestMapping(value="/list", method= RequestMethod.GET)
+    @RequestMapping(value="/list")
     public String list() {
         return LIST;
     }

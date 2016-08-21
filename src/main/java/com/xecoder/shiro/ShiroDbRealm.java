@@ -38,7 +38,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	private static final String ALGORITHM = "SHA-1";
 
 	// 是否启用超级管理员
-	protected boolean activeRoot = false;
+	protected boolean activeRoot = true;
 	
 	// 是否使用验证码
 	protected boolean useCaptcha = false;

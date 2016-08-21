@@ -33,7 +33,7 @@ public class DictionaryController extends BaseAction {
     private static final String INDEX = "/business/dictionary/list";
     private static final String EDIT = "/business/dictionary/edit";
 
-    @RequestMapping(value="/index/{type}", method= RequestMethod.GET)
+    @RequestMapping(value="/index/{type}")
     public ModelAndView index(@PathVariable String type) {
         ModelAndView mav = new ModelAndView(INDEX);
         mav.addObject("type", type);
@@ -45,7 +45,7 @@ public class DictionaryController extends BaseAction {
      * 表格字典维护
      * @return GridModel
      */
-    @RequestMapping(value="/list/{type}", method= RequestMethod.GET)
+    @RequestMapping(value="/list/{type}")
     @ResponseBody
     public GridModel list(@PathVariable String type) {
         Dictionary dictionary = SearchForm(Dictionary.class);

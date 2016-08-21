@@ -65,8 +65,6 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         }
         Session session = subject.getSession();
 
-        if(subject.getPrincipal()==null)
-            LOG.debug("wo cao");
         ShiroUser shiroUser = (ShiroUser)subject.getPrincipal();
         String username = shiroUser.getLoginName();
         Serializable sessionId = session.getId();

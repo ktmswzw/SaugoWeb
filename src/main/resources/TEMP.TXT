@@ -1,0 +1,6 @@
+'14','','订单审核','1','Check','/business/order/check','13','glyphicon glyphicon-check'
+'15','','订单统计','1','Report','/business/order/report','13','glyphicon glyphicon-blackboard'
+'16','','订单代录','1','Check','/business/order/check','13','glyphicon glyphicon-pencil'
+'17','','超代统计','1','SuperReport','/business/order/superReport','13','glyphicon glyphicon-stats'
+'18','','订单查询','1','Query','/business/order/query','13','glyphicon glyphicon-search'
+'19','','订单撤销','1','Revoke','/business/order/revoke','13','glyphicon glyphicon-repeat'

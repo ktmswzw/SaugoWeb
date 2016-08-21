@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xecoder.common.util.DateConverter;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.entity.LogEntity;
+import com.xecoder.entity.User;
 import com.xecoder.service.core.LogEntityService;
 import com.xecoder.shiro.SecurityUtils;
 import org.apache.commons.beanutils.BeanUtils;
