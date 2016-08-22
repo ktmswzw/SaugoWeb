@@ -123,7 +123,11 @@ public class OrderController extends BaseAction {
 
             order.setStatus(1);
             order.setInputTime(new Date());
-            orderService.save(order);
+            if(order.getId().equals(""))
+                orderService.save(order);
+            else
+                orderService.update(order);
+
             result.setMsg("成功");
             result.setSuccessful(true);
         } catch (Exception e) {

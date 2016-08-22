@@ -30,7 +30,7 @@ public class DownloadController   extends BaseAction {
         logBean.setUsername(com.xecoder.shiro.SecurityUtils.getLoginUser().getUsername());
         log.save(logBean);
 
-        filePath = filePath.replace("/", "\\");
+//        filePath = filePath.replace("/", "\\");
 
         if (StringUtils.isEmpty(filePath) || filePath.contains("\\.\\.")) {
             response.setContentType("text/html;charset=utf-8");
@@ -49,7 +49,7 @@ public class DownloadController   extends BaseAction {
             HttpServletRequest request, HttpServletResponse response,
             @RequestParam(value = "filePath") String filePath) throws Exception {
 
-        filePath = filePath.replace("/", "\\");
+//        filePath = filePath.replace("/", "\\");
 
         if (StringUtils.isEmpty(filePath) || filePath.contains("\\.\\.")) {
             response.setContentType("text/html;charset=utf-8");

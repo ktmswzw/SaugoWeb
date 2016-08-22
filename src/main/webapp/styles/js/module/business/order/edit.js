@@ -28,7 +28,8 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'va
             delete order["produceId"];
             agentId = order.agentId;
             delete order["agentId"];
-            $("#image").attr("src",WEB_GLOBAL_CTX + "/download/getImg"+order.url);
+            $("#href").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url);
+            $("#href").append('<button type="button" class="btn btn-link">下载</button>');
         }
         else {
             $("#inputId").val(order.inputId);
@@ -60,7 +61,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'va
             var v = $('#agentId').find("option:selected").text();
             $("#agentName").val(v.split("-上级")[0]);
         });
-
+        setHeightSelf(1000);
         $('#formSubmit').formValidation({
             framework: 'bootstrap',
             icon: {
