@@ -75,7 +75,7 @@
         <mysql.jdbc.driver.artifactId>mysql-connector-java</mysql.jdbc.driver.artifactId>
         <mysql.jdbc.driver.version>5.1.31</mysql.jdbc.driver.version>
 
-        <google.zxing>2.2</google.zxing>
+        <google.zxing>3.2.1</google.zxing>
         <linuxense.javadbf>0.4.0</linuxense.javadbf>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,6 +90,12 @@
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
+            <version>${google.zxing}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
             <version>${google.zxing}</version>
         </dependency>
 

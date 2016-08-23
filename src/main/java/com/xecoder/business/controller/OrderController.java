@@ -1,20 +1,15 @@
 package com.xecoder.business.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonEncoding;
 import com.xecoder.business.entity.Order;
 import com.xecoder.business.service.OrderService;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
-import com.xecoder.common.util.JacksonMapper;
+import com.xecoder.common.util.ImageReader;
 import com.xecoder.common.util.Result;
 import com.xecoder.common.util.UploadUtils;
 import com.xecoder.entity.User;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
-import com.xecoder.shiro.ShiroDbRealm;
 import com.xecoder.viewModel.GridModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by xecoder on Sun Aug 21 15:24:09 CST 2016.
@@ -113,7 +107,10 @@ public class OrderController extends BaseAction {
 
             if (!file.isEmpty()) {
 //                order.setBankMemo(file.getOriginalFilename());
-                order.setUrl(UploadUtils.upload(file, request));
+                String path = UploadUtils.upload(file, request);
+                order.setUrl(path);
+                String code = ImageReader.getCode(path);
+                order.setProduceName(code);
             }
             if(order.getAgentId()!=null&&order.getAgentId()!=0){
                 User u = userService.get(order.getAgentId());
