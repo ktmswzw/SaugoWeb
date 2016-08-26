@@ -21,6 +21,14 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
             //初始化页面
             meForm($('#formSubmit'), user);
             parentIdVal=user.parentId+"";
+
+
+            $("#href1").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsFront);
+            $("#href1").append('<button type="button" class="btn btn-link">下载</button>');
+
+
+            $("#href2").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsBack);
+            $("#href2").append('<button type="button" class="btn btn-link">下载</button>');
         }
         else{
             $("#status").val("enabled");
@@ -65,32 +73,71 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
             },
             locale: 'zh_CN',
             excluded: ':disabled'
-        }).on('success.field.fv', function(e, data) {
-            if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
-                data.fv.disableSubmitButtons(true);
+        }).on('success.field.fv', function (e, data) {
+            if (data.fv.getInvalidFields().length > 0) {
+
             }
-        })
-            .on('success.form.fv', function (e) {
-                e.preventDefault();
-                var $form = $(e.target);
-                if (parentId.val() == '' || parentId.val() == null) {
-                    highlight_error(parentId);
-                    return false;
-                } else {
-                    var params = $form.serialize();
-                    $.post(WEB_GLOBAL_CTX + "/console/security/user/saveUser", params, function (rsp) {
+        }).on('success.form.fv', function (e) {
+            e.preventDefault();
+
+            var $form = $(e.target);
+            var params = $form.serializeArray();
+            if (($("#cardsFront").val() == '' ) && ( $("#file1").val() == '')) {
+                highlight_error($("#file1"));
+                return false;
+            }
+            else if (($("#cardsBack").val() == '' ) && ( $("#file2").val() == '')) {
+                highlight_error($("#file2"));
+                return false;
+            }
+            else if ($("#file1").val() != '' && $("#file2").val() != '') {
+                var formData = new FormData(),
+                    files1 = $form.find('[name="file"]')[0].files,
+                    files2 = $form.find('[name="file"]')[1].files;
+
+                $.each(files1, function (i, file) {
+                    formData.append('file1', file);
+                });
+
+                $.each(files2, function (i, file) {
+                    formData.append('file2', file);
+                });
+                $.each(params, function (i, val) {
+                    formData.append(val.name, val.value);
+                });
+                $.ajax({
+                    url: WEB_GLOBAL_CTX + "/console/security/user/save",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (rsp) {
                         if (rsp.successful) {
-                            $.scojs_message(rsp.msg, $OK);
                             $("#save").toggleClass("disabled");
+                            $.scojs_message(rsp.msg, $OK);
                             setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 1000);
                         } else {
                             $.scojs_message(rsp.msg, $ERROR);
                         }
-                    }).error(function () {
-                    });
-                    return true;
-                }
-            });
-
+                    }
+                });
+                return true;
+            }
+            else {
+                params = $form.serialize();
+                $.post(WEB_GLOBAL_CTX + "/console/security/user/saveUser", params, function (rsp) {
+                    if (rsp.successful) {
+                        $.scojs_message(rsp.msg, $OK);
+                        $("#save").toggleClass("disabled");
+                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 1000);
+                    } else {
+                        $.scojs_message(rsp.msg, $ERROR);
+                    }
+                }).error(function () {
+                });
+                return true;
+            }
+        });
     });
 

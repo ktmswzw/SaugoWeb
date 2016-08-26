@@ -39,6 +39,16 @@ public class User {
 
     private String identityCards;
 
+    private String cardsFront;
+
+    private String cardsBack;
+
+    private String bank;
+
+    private String bankAccount;
+
+    private String bankName;
+
     @Transient
     private String plainPassword;
 
@@ -54,6 +64,16 @@ public class User {
 
     @Transient
     private String parentName;
+
+    private int nodes;
+
+    public int getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(int nodes) {
+        this.nodes = nodes;
+    }
 
     public Long getId() {
         return id;
@@ -159,6 +179,62 @@ public class User {
         this.identityCards = identityCards == null ? null : identityCards.trim();
     }
 
+    public String getCardsFront() {
+        return cardsFront;
+    }
+
+    public void setCardsFront(String cardsFront) {
+        this.cardsFront = cardsFront == null ? null : cardsFront.trim();
+    }
+
+    public String getCardsBack() {
+        return cardsBack;
+    }
+
+    public void setCardsBack(String cardsBack) {
+        this.cardsBack = cardsBack == null ? null : cardsBack.trim();
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank == null ? null : bank.trim();
+    }
+
+    public String getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(String bankAccount) {
+        this.bankAccount = bankAccount == null ? null : bankAccount.trim();
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName == null ? null : bankName.trim();
+    }
+
+    public String getPlainPassword() {
+        return plainPassword;
+    }
+
+    public void setPlainPassword(String plainPassword) {
+        this.plainPassword = plainPassword;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
     public List<UserRole> getUserRoles() {
         return userRoles;
     }
@@ -184,7 +260,6 @@ public class User {
         this.setRoles(role_s);
     }
 
-
     public String getTheme() {
         return theme;
     }
@@ -201,39 +276,12 @@ public class User {
         this.roles = roles;
     }
 
-    public String getPlainPassword() {
-        return plainPassword;
-    }
-
-    public void setPlainPassword(String plainPassword) {
-        this.plainPassword = plainPassword;
-    }
-
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
-
     public String getRolesName() {
         return rolesName;
     }
 
     public void setRolesName(String rolesName) {
         this.rolesName = rolesName;
-    }
-
-
-    private int nodes;
-
-    public int getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(int nodes) {
-        this.nodes = nodes;
     }
 
     public String getParentName() {

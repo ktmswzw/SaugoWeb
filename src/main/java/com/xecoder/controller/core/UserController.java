@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
-import com.xecoder.common.util.DataAttributes;
-import com.xecoder.common.util.FuelueTree;
-import com.xecoder.common.util.JacksonMapper;
-import com.xecoder.common.util.Result;
+import com.xecoder.common.util.*;
 import com.xecoder.entity.Role;
 import com.xecoder.entity.RoleSelect;
 import com.xecoder.entity.User;
@@ -31,6 +28,7 @@ import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -136,7 +134,49 @@ public class UserController extends BaseAction{
             if(user.getId()==null) {
                 if (userService.getByUsername(user.getUsername()) != null) {
                     result.setSuccessful(false);
-                    result.setMsg("用户添加失败，登录名：" + user.getUsername() + "已存在。");
+                    result.setMsg("用户  添加失败，登录名：" + user.getUsername() + "已存在。");
+                    return result;
+                }
+                userService.save(user);
+            }
+            else
+            {
+                userService.update(user);
+            }
+            result.setSuccessful(true);
+            result.setMsg("保存成功");
+        }
+        catch (Exception e)
+        {
+            result.setSuccessful(false);
+            result.setMsg("error");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    /**
+     * 保存修改和新增用户照片的数据
+     *
+     * @param user
+     * @return Result
+     */
+    @RequestMapping(value = "/save")
+    @ResponseBody
+    public Result save(@ModelAttribute User user,
+                            @RequestParam("file1") MultipartFile file1,
+                            @RequestParam("file2") MultipartFile file2) {
+        Result result = new Result();
+        try {
+            if (!file1.isEmpty()) {
+                user.setCardsFront(UploadUtils.upload(file1, request));
+                user.setCardsBack(UploadUtils.upload(file2, request));
+            }
+            if(user.getId()==null) {
+                if (userService.getByUsername(user.getUsername()) != null) {
+                    result.setSuccessful(false);
+                    result.setMsg("代理添加失败，登录名：" + user.getUsername() + "已存在。");
                     return result;
                 }
                 userService.save(user);

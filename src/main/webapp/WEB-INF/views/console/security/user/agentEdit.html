@@ -9,7 +9,8 @@
           data-fv-message="This value is not valid"
           data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
           data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
-          data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+          data-fv-feedbackicons-validating="glyphicon glyphicon-refresh"
+          enctype='multipart/form-data'>
         <!-- Modal -->
         <div class="panel panel-default">
             <div class="panel-heading">用户管理</div>
@@ -21,6 +22,10 @@
                     <input type="hidden" name="status" id="status">
                     <input type="hidden" name="roles" id="roles">
                     <input type="hidden" name="username" id="username">
+
+                    <input type="hidden" name="cardsFront" id="cardsFront">
+                    <input type="hidden" name="cardsBack" id="cardsBack">
+
                 </div>
 
                 <div class="row control-group">
@@ -38,7 +43,7 @@
                         <label class="control-label" for="phone">手机/帐号</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <input type="number" class="form-control" id="phone" name="phone" maxlength="15"
+                        <input type="number" class="form-control" id="phone" name="phone" maxlength="11" minlength="11"
                                placeholder="输入移动电话" required>
                     </div>
                 </div>
@@ -62,6 +67,62 @@
                     <div class="col-sm-8 controls">
                         <input type="text" class="form-control" id="identityCards" name="identityCards" minlength="18" maxlength="18"
                                placeholder="输入18位身份证号" required>
+                    </div>
+                </div>
+
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <label class="control-label" for="file1">身份证正面</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="file" class="form-control" id="file1" name="file"
+                               placeholder="选择身份证正面" size="100" required />
+                    </div>
+                    <div class="col-sm-1">
+                        <a href="" target="_blank" id="href1"></a>
+                    </div>
+                </div>
+
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <label class="control-label" for="file1">身份证背面</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="file" class="form-control" id="file2" name="file"
+                               placeholder="选择身份证背面" size="100" required />
+                    </div>
+                    <div class="col-sm-1">
+                        <a href="" target="_blank" id="href2"></a>
+                    </div>
+                </div>
+
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <label class="control-label" for="address">开户银行</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="text" class="form-control" id="bank" name="bank"
+                               placeholder="" required>
+                    </div>
+                </div>
+
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <label class="control-label" for="address">银行帐号</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="number" class="form-control" id="bankAccount" name="bankAccount"
+                               placeholder="" required>
+                    </div>
+                </div>
+
+                <div class="row control-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <label class="control-label" for="address">户名</label>
+                    </div>
+                    <div class="col-sm-8 controls">
+                        <input type="text" class="form-control" id="bankName" name="bankName"
+                               placeholder="" required>
                     </div>
                 </div>
 
