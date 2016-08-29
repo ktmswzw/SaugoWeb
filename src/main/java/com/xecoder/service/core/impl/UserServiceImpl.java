@@ -96,6 +96,9 @@ public class UserServiceImpl extends BaseService implements UserService {
                 cri.addCriterion(" email LIKE  '%"+user.getEmail()+ "%' ");
             }
 
+            if (StringUtils.isNotBlank(user.getBankAccount())) {
+                cri.andBankAccountEqualTo(user.getBankAccount());
+            }
             if(StringUtils.isNotBlank(user.getStatus())){
                 cri.andStatusEqualTo(user.getStatus());
             }
@@ -228,14 +231,37 @@ public class UserServiceImpl extends BaseService implements UserService {
 		if(StringUtils.isNotBlank(username)){
 			cri.andUsernameEqualTo(username);
 		}
-		User user =  baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria);
-        if(user!=null) {
-            setUserOrganization(user);
-            if(user.getId()!=null)
-            user.setUserRoles(userRoleService.find(user.getId()));
-        }
-        return user;
+        return baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria);
 	}
+
+    /**
+     * 按银行帐号
+     * @param account
+     * @return
+     */
+    public User getByBankAccount(String account) {
+        UserCriteria criteria = new UserCriteria();
+        UserCriteria.Criteria cri = criteria.createCriteria();
+        if(StringUtils.isNotBlank(account)){
+            cri.andBankAccountEqualTo(account);
+        }
+        return baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria);
+    }
+
+
+    /**
+     * 按身份证
+     * @param identityCards
+     * @return
+     */
+    public User getByIdentityCards(String identityCards) {
+        UserCriteria criteria = new UserCriteria();
+        UserCriteria.Criteria cri = criteria.createCriteria();
+        if(StringUtils.isNotBlank(identityCards)){
+            cri.andIdentityCardsEqualTo(identityCards);
+        }
+        return baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria);
+    }
 	
 	/**
 	 * 按邮箱

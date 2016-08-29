@@ -66,7 +66,7 @@ public class ProduceController extends BaseAction {
         produce.setName(name);
         List<Produce> list = produceService.findAll(page(), produce);
         for(Produce p:list){
-            p.setName(p.getName()+"||"+p.getNumber());
+            p.setName(p.getName());
         }
         return list;
     }

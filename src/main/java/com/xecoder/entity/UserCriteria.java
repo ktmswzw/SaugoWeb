@@ -1324,6 +1324,76 @@ public class UserCriteria {
             addCriterion("bank_name not between", value1, value2, "bankName");
             return (Criteria) this;
         }
+
+        public Criteria andBakIsNull() {
+            addCriterion("bak is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakIsNotNull() {
+            addCriterion("bak is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakEqualTo(String value) {
+            addCriterion("bak =", value, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakNotEqualTo(String value) {
+            addCriterion("bak <>", value, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakGreaterThan(String value) {
+            addCriterion("bak >", value, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakGreaterThanOrEqualTo(String value) {
+            addCriterion("bak >=", value, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakLessThan(String value) {
+            addCriterion("bak <", value, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakLessThanOrEqualTo(String value) {
+            addCriterion("bak <=", value, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakLike(String value) {
+            addCriterion("bak like", value, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakNotLike(String value) {
+            addCriterion("bak not like", value, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakIn(List<String> values) {
+            addCriterion("bak in", values, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakNotIn(List<String> values) {
+            addCriterion("bak not in", values, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakBetween(String value1, String value2) {
+            addCriterion("bak between", value1, value2, "bak");
+            return (Criteria) this;
+        }
+
+        public Criteria andBakNotBetween(String value1, String value2) {
+            addCriterion("bak not between", value1, value2, "bak");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

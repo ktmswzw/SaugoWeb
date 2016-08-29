@@ -20,6 +20,7 @@
     <result column="bank" jdbcType="VARCHAR" property="bank" />
     <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
     <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="bak" jdbcType="VARCHAR" property="bak" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -81,8 +82,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, create_time, email, password, phone, realname, salt, status, username, org_id, 
-    parent_id, address, identity_cards, cards_front, cards_back, bank, bank_account,
-    bank_name,(select count(1) from security_user oo where oo.parent_id = nn.id) as nodes
+    parent_id, address, identity_cards, cards_front, cards_back, bank, bank_account, 
+    bank_name, bak,(select count(1) from security_user oo where oo.parent_id = nn.id) as nodes
   </sql>
   <select id="selectByExample" parameterType="com.xecoder.entity.UserCriteria" resultMap="BaseResultMap">
     select
@@ -120,15 +121,15 @@
       salt, status, username, 
       org_id, parent_id, address, 
       identity_cards, cards_front, cards_back, 
-      bank, bank_account, bank_name
-      )
+      bank, bank_account, bank_name, 
+      bak)
     values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
       #{salt,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{orgId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
       #{identityCards,jdbcType=VARCHAR}, #{cardsFront,jdbcType=VARCHAR}, #{cardsBack,jdbcType=VARCHAR}, 
-      #{bank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}
-      )
+      #{bank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{bak,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xecoder.entity.User">
     insert into security_user
@@ -187,6 +188,9 @@
       <if test="bankName != null">
         bank_name,
       </if>
+      <if test="bak != null">
+        bak,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -243,10 +247,13 @@
       <if test="bankName != null">
         #{bankName,jdbcType=VARCHAR},
       </if>
+      <if test="bak != null">
+        #{bak,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xecoder.entity.UserCriteria" resultType="java.lang.Integer">
-    select count(*) from security_user nn
+    select count(*) from security_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -308,6 +315,9 @@
       <if test="record.bankName != null">
         bank_name = #{record.bankName,jdbcType=VARCHAR},
       </if>
+      <if test="record.bak != null">
+        bak = #{record.bak,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -332,7 +342,8 @@
       cards_back = #{record.cardsBack,jdbcType=VARCHAR},
       bank = #{record.bank,jdbcType=VARCHAR},
       bank_account = #{record.bankAccount,jdbcType=VARCHAR},
-      bank_name = #{record.bankName,jdbcType=VARCHAR}
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      bak = #{record.bak,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -391,6 +402,9 @@
       <if test="bankName != null">
         bank_name = #{bankName,jdbcType=VARCHAR},
       </if>
+      <if test="bak != null">
+        bak = #{bak,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -412,7 +426,8 @@
       cards_back = #{cardsBack,jdbcType=VARCHAR},
       bank = #{bank,jdbcType=VARCHAR},
       bank_account = #{bankAccount,jdbcType=VARCHAR},
-      bank_name = #{bankName,jdbcType=VARCHAR}
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bak = #{bak,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

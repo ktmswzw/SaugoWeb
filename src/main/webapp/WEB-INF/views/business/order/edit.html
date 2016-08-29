@@ -42,26 +42,26 @@
                 </div>
 
 
-                <div class="row control-group">
-                    <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="state">手工输入</label>
-                    </div>
-                    <div class="col-sm-8 controls">
-                        <div class="pull-left">
-                            <div class="switch">
-                                <input type="checkbox" id="state" name="state" data-size="small"
-                                       data-on-color="success" data-off-color="warning" data-on-text="自定"
-                                       data-off-text="定制">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--<div class="row control-group">-->
+                    <!--<div class="col-sm-2 col-sm-offset-1">-->
+                        <!--<label class="control-label" for="state">手工输入</label>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-8 controls">-->
+                        <!--<div class="pull-left">-->
+                            <!--<div class="switch">-->
+                                <!--<input type="checkbox" id="state" name="state" data-size="small"-->
+                                       <!--data-on-color="success" data-off-color="warning" data-on-text="自定"-->
+                                       <!--data-off-text="定制">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="produceNumber">产品数量</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <input type="number" class="form-control" readonly id="produceNumber" name="produceNumber" maxlength="50"
+                        <input type="number" class="form-control"  id="produceNumber" name="produceNumber" maxlength="8" min="1" max="10000000"
                                size="100" required/>
                     </div>
                 </div>
@@ -81,9 +81,9 @@
                     <div class="col-sm-2 col-sm-offset-1">
                         <label class="control-label" for="file">水单</label>
                     </div>
-                    <div class="col-sm-7 controls">
+                    <div class="col-sm-8 controls">
                         <input type="file" class="form-control" id="file" name="file"
-                               placeholder="选择图片" size="100" required />
+                               placeholder="选择图片" size="100" />
                     </div>
                     <div class="col-sm-1">
                         <a href="" target="_blank" id="href"></a>

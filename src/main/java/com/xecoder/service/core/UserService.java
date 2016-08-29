@@ -46,6 +46,10 @@ public interface UserService {
 	 * @return
 	 */
 	User getByUsername(String username);
+
+	User getByBankAccount(String account);
+
+	User getByIdentityCards(String identityCards);
 	/**
 	 * 按邮箱
 	 * @param email

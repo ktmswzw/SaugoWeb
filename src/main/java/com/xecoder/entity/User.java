@@ -49,6 +49,8 @@ public class User {
 
     private String bankName;
 
+    private String bak;
+
     @Transient
     private String plainPassword;
 
@@ -290,5 +292,13 @@ public class User {
 
     public void setParentName(String parentName) {
         this.parentName = parentName;
+    }
+
+    public String getBak() {
+        return bak;
+    }
+
+    public void setBak(String bak) {
+        this.bak = bak;
     }
 }

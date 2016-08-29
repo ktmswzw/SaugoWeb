@@ -109,8 +109,8 @@ public class OrderController extends BaseAction {
 //                order.setBankMemo(file.getOriginalFilename());
                 String path = UploadUtils.upload(file, request);
                 order.setUrl(path);
-                String code = ImageReader.getCode(path);
-                order.setProduceName(code);
+//                String code = ImageReader.getCode(path);
+//                order.setProduceName(code);
             }
             if(order.getAgentId()!=null&&order.getAgentId()!=0){
                 User u = userService.get(order.getAgentId());
@@ -120,7 +120,7 @@ public class OrderController extends BaseAction {
 
             order.setStatus(1);
             order.setInputTime(new Date());
-            if(order.getId().equals(""))
+            if(order.getId()==null)
                 orderService.save(order);
             else
                 orderService.update(order);
@@ -128,6 +128,7 @@ public class OrderController extends BaseAction {
             result.setMsg("成功");
             result.setSuccessful(true);
         } catch (Exception e) {
+            e.printStackTrace();
             result.setMsg("失败" + e.getMessage());
             result.setSuccessful(false);
         }

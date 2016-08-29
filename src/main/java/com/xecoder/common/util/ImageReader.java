@@ -94,7 +94,7 @@ public final class ImageReader {
         graphics2d.dispose();
 
 
-        ImageIO.write(img, "jpg", new File("/Users/vincent/Downloads/upload2016-08-26/22.jpg"));
+//        ImageIO.write(img, "jpg", new File("/Users/vincent/Downloads/upload2016-08-26/22.jpg"));
 
         return img;
     }

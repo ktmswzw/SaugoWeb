@@ -38,7 +38,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'va
             $('#agentId').append("<option ></option>");
         }
 
-        $("#state").bootstrapSwitch('state', false);
+        // $("#state").bootstrapSwitch('state', false);
         //修改页面结束
 
 
@@ -52,8 +52,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'va
 
         $("#produceId").change(function () {
             var v = $('#produceId').find("option:selected").text();
-            $("#produceNumber").val(v.split("||")[1]);
-            $("#produceName").val(v.split("||")[0]);
+            $("#produceName").val(v);
         });
 
         initSelect("agentId", WEB_GLOBAL_CTX + "/console/security/user/chooseList", {name: ''}, agentId, "id", "realname", true);

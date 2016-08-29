@@ -50,7 +50,7 @@ public class RemunerationController extends BaseAction {
 
 
     /**
-     * 表格酬金配置
+     * 表格积分配置
      * @return GridModel
      */
     @RequestMapping(value="/list/{produceId}")
@@ -67,7 +67,7 @@ public class RemunerationController extends BaseAction {
 
 
     /**
-     * 添加酬金配置
+     * 添加积分配置
      * @return ModelAndView
      */
     @RequestMapping(value="/add/{produceId}")
@@ -90,7 +90,7 @@ public class RemunerationController extends BaseAction {
     }
 
     /**
-     * 编辑酬金配置
+     * 编辑积分配置
      * @return ModelAndView
      */
     @RequestMapping(value="/edit/{id}")
@@ -114,7 +114,7 @@ public class RemunerationController extends BaseAction {
 
 
     /**
-     * 保存酬金配置
+     * 保存积分配置
      * @param remuneration
      * @return Result
      */
@@ -145,7 +145,7 @@ public class RemunerationController extends BaseAction {
     }
 
     /**
-     * 查询单个酬金配置
+     * 查询单个积分配置
      * @param id
      * @return
      */
@@ -156,7 +156,7 @@ public class RemunerationController extends BaseAction {
     }
 
     /**
-     * 删除酬金配置
+     * 删除积分配置
      * @param id
      * @return
      */

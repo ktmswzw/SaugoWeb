@@ -41,6 +41,10 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
             $("#username").val(($("#phone").val()));
         });
 
+        $("#realname").change(function(){
+            $("#bankName").val(($("#realname").val()));
+        });
+
         //动态调整ifream页面高度
         $('#myTree').on('loaded.fu.tree', function (e) {
             //console.log('Loaded');
@@ -82,12 +86,19 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
 
             var $form = $(e.target);
             var params = $form.serializeArray();
+            if (($("#parentId").val() == '' )) {
+                highlight_error($("#parentId"));
+                $.scojs_message("上级代理必须选择一个", $ERROR);
+                return false;
+            }
             if (($("#cardsFront").val() == '' ) && ( $("#file1").val() == '')) {
                 highlight_error($("#file1"));
+                $.scojs_message("身份证照片必须双面上传", $ERROR);
                 return false;
             }
             else if (($("#cardsBack").val() == '' ) && ( $("#file2").val() == '')) {
                 highlight_error($("#file2"));
+                $.scojs_message("身份证照片必须双面上传", $ERROR);
                 return false;
             }
             else if ($("#file1").val() != '' && $("#file2").val() != '') {
