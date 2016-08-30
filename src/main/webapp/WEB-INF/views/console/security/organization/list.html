@@ -55,11 +55,11 @@
 </div>
 
 <div id="to" style="display:none;">
-    <@shiro.hasPermission name="User:edit">
+    <@shiro.hasPermission name="Organization:edit">
     <button type="button" class="btn btn-default" id="modify" name="modify" title="修改"><span
             class="glyphicon glyphicon-edit"></span></button>
 </@shiro.hasPermission>
-<@shiro.hasPermission name="User:delete">
+<@shiro.hasPermission name="Organization:delete">
 <button type="button" class="btn btn-default" id="delete" name="delete" title="删除"><span
         class="glyphicon glyphicon-remove"></span></button>
 </@shiro.hasPermission>

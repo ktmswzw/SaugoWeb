@@ -121,6 +121,13 @@ public class UserController extends BaseAction{
     }
 
 
+    @RequiresPermissions("Agent:save")
+    @RequestMapping(value="/agentUserEdit")
+    @ResponseBody
+    public ModelAndView agentUserEdit() {
+        return getView(AGENTADDEDIT,"user", new User());
+    }
+
 
     @RequestMapping(value="/saveUser")
     @ResponseBody
