@@ -47,6 +47,7 @@ public class UserController extends BaseAction{
     private static final String ADDEDIT = "console/security/user/edit";
     private static final String AGENTLIST = "console/security/user/agentList";
     private static final String AGENTADDEDIT = "console/security/user/agentEdit";
+    private static final String AGENTCHECK = "console/security/user/agentCheck";
 
     @Autowired
     private UserService userService;
@@ -113,18 +114,13 @@ public class UserController extends BaseAction{
         return list;
     }
 
-    @RequestMapping(value="/userEdit")
+    @RequestMapping(value="/userAdd")
     @ResponseBody
-    public ModelAndView userEdit() {
+    public ModelAndView userAdd() {
         return getView(ADDEDIT,"user", new User());
     }
 
 
-    @RequestMapping(value="/agentUserEdit")
-    @ResponseBody
-    public ModelAndView agentUserEdit() {
-        return getView(AGENTADDEDIT,"user", new User());
-    }
 
     @RequestMapping(value="/saveUser")
     @ResponseBody
@@ -155,6 +151,43 @@ public class UserController extends BaseAction{
         return result;
     }
 
+    @RequestMapping(value="/saveAgentUser")
+    @ResponseBody
+    public Result saveAgentUser(@ModelAttribute User user) {
+        Result result = new Result();
+        try {
+            user.setStatus("check");
+                userService.update(user);
+            result.setSuccessful(true);
+            result.setMsg("保存成功");
+        }
+        catch (Exception e)
+        {
+            result.setSuccessful(false);
+            result.setMsg("error");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @RequestMapping(value="/check")
+    @ResponseBody
+    public Result checkUser(@ModelAttribute User user) {
+        Result result = new Result();
+        try {
+            user.setStatus("enabled");
+            userService.update(user);
+            result.setSuccessful(true);
+            result.setMsg("帐号已可使用");
+        }
+        catch (Exception e)
+        {
+            result.setSuccessful(false);
+            result.setMsg("错误");
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     /**
      * 保存修改和新增用户照片的数据
@@ -194,12 +227,12 @@ public class UserController extends BaseAction{
                     result.setMsg("代理添加失败，身份证号码："  + user3.getRealname() + "已经使用。");
                     return result;
                 }
-
-
+                user.setStatus("check");
                 userService.save(user);
             }
             else
             {
+                user.setStatus("check");
                 userService.update(user);
             }
             result.setSuccessful(true);
@@ -229,6 +262,13 @@ public class UserController extends BaseAction{
         return getView(AGENTADDEDIT,"user",user);
     }
 
+
+    @RequestMapping(value="/agentCheck/{id}")
+    @ResponseBody
+    public ModelAndView agentCheck(@PathVariable Integer id) {
+        User user = userService.get(Long.parseLong(id + ""));
+        return getView(AGENTCHECK,"user",user);
+    }
 
 
     @RequestMapping(value="/deleteInfo/{id}", method=RequestMethod.POST)

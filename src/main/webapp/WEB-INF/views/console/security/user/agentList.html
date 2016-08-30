@@ -35,7 +35,7 @@
                         <option value="search_realname">姓名</option>
                     </select>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
                     <div class="input-group">
                         <input class="form-control" type="text" placeholder="请输入查询内容" id="search"
                                name="search_username">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
                     <div class="btn-group" id="do">
                         <@shiro.hasPermission name="User:save">
                         <button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span
@@ -62,6 +62,10 @@
     <@shiro.hasPermission name="User:edit">
     <button type="button" class="btn btn-default" id="modify" name="modify" title="修改"><span
             class="glyphicon glyphicon-edit"></span></button>
+
+    <button type="button" class="btn btn-default" id="check" name="check" title="审核"><span
+            class="glyphicon glyphicon-check"></span></button>
+
 </@shiro.hasPermission>
 <@shiro.hasPermission name="User:delete">
 <button type="button" class="btn btn-default" id="delete" name="delete" title="注销"><span

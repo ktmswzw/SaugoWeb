@@ -12,12 +12,10 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
 
-        var rolesVal='',parentIdVal='';
+        var parentIdVal='';
 
 
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
-            rolesVal = user.roles;
-            delete user["roles"];
             //初始化页面
             meForm($('#formSubmit'), user);
             parentIdVal=user.parentId+"";
@@ -64,7 +62,6 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
 
 
         //提交
-        var roles = $('#roles');
         var parentId = $('#parentId');
 
 
@@ -89,6 +86,11 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
             if (($("#parentId").val() == '' )) {
                 highlight_error($("#parentId"));
                 $.scojs_message("上级代理必须选择一个", $ERROR);
+                return false;
+            }
+            if (($("#password").val() == '' ) && ( $("#plainPassword").val() == '')) {
+                highlight_error($("#plainPassword"));
+                $.scojs_message("密码为空", $ERROR);
                 return false;
             }
             if (($("#cardsFront").val() == '' ) && ( $("#file1").val() == '')) {
@@ -137,7 +139,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
             }
             else {
                 params = $form.serialize();
-                $.post(WEB_GLOBAL_CTX + "/console/security/user/saveUser", params, function (rsp) {
+                $.post(WEB_GLOBAL_CTX + "/console/security/user/saveAgentUser", params, function (rsp) {
                     if (rsp.successful) {
                         $.scojs_message(rsp.msg, $OK);
                         $("#save").toggleClass("disabled");

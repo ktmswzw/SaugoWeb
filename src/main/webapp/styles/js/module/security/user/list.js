@@ -63,7 +63,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'ba
         //添加
         $('#add').click(function () {
             parent.Loading.modal('show');
-            self.location = WEB_GLOBAL_CTX + "/console/security/user/userEdit";
+            self.location = WEB_GLOBAL_CTX + "/console/security/user/userAdd";
         });
 
         //修改

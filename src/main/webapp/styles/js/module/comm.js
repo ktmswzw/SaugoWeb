@@ -282,6 +282,8 @@ function serializeObject( formname )
 };
 
 
+var buttonArray = ["modify", "check", "delete", "close", "permission"];
+
 function showEdit(obj, editDivId, appendDivId) {
     var objects = obj.bootstrapTable('getSelections');
     var temp = "";
@@ -291,28 +293,10 @@ function showEdit(obj, editDivId, appendDivId) {
     if (objects.length == 0) {
         temp = editDivId;
     }
-    var buttonArray = ["modify", "push", "delete", "close", "comment", "info", "force", "permission", "compressed", "stickers", "notice", "record", "back", "fix"];
     $.each(buttonArray,function(i,val){
         if($("#"+val)!=undefined)
             $("#" + temp).append($("#"+val));
     });
-}
-
-function showEditV2(obj, editDivId, appendDivId) {
-    var objects = obj.bootstrapTable('getSelections');
-    var temp = "";
-    if (objects.length != 0 && $("#" + appendDivId + " button").children().length <= 2) {
-        temp=appendDivId;
-    }
-    if (objects.length == 0) {
-        temp = editDivId;
-    }
-    var buttonArray = ["modify", "push", "delete", "close", "comment", "info", "force", "permission", "compressed", "stickers", "notice", "record", "back"];
-    $.each(buttonArray,function(i,val){
-        if($("#"+val)!=undefined)
-            $("#" + temp).append($("#"+val));
-    });
-
 }
 
 
@@ -332,7 +316,7 @@ function setHeightSelf(height)
 
 //初始树
 function meTreeInit(treeid,initData,url,multiSelect,folderSelect,rootid) {
-    $('#'+treeid).tree({
+    var tree = $('#'+treeid).tree({
         dataSource: function(parentData, callback){
             setTimeout(function () {
                 rootid = (rootid==undefined||rootid==null)?1:rootid;
@@ -345,6 +329,7 @@ function meTreeInit(treeid,initData,url,multiSelect,folderSelect,rootid) {
         multiSelect: multiSelect,
         folderSelect: folderSelect
     });
+    tree.tree('discloseAll');
 }
 
 function sendFile(file, editor, obj) {

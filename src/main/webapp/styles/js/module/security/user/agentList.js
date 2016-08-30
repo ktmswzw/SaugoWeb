@@ -45,10 +45,8 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'bas
         //删除
         $('#confirm').click(function () {
             var objects = $table.bootstrapTable('getSelections');
-            //console.debug('Selected values: ' + objects.length);
             $('#myModal').modal('hide');
             $.each(objects, function () {
-
                 var state = this.status;
                 if(state=="disabled")
                 {
@@ -66,8 +64,6 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'bas
                         $.scojs_message("更新失败,请重新登陆!", $ERROR);
                     });
                 }
-
-
             });
         });
 
@@ -84,11 +80,28 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'bas
                 var state = this.status;
                 if(state=="disabled")
                 {
-                    $.scojs_message("已注销无法启用,请重新注册", $ERROR);
+                    $.scojs_message("已注销无法修改,请重新注册", $ERROR);
                 }
                 else{
                     parent.Loading.modal('show');
                     self.location = WEB_GLOBAL_CTX + "/console/security/user/editAgentUser/"+this.id;
+                }
+            });
+
+        });
+
+        //审核
+        $('#check').click(function () {
+            var objects = $table.bootstrapTable('getSelections');
+            $.each(objects, function () {
+                var state = this.status;
+                if(state!="check")
+                {
+                    $.scojs_message("审核状态不可用", $ERROR);
+                }
+                else{
+                    parent.Loading.modal('show');
+                    self.location = WEB_GLOBAL_CTX + "/console/security/user/agentCheck/"+this.id;
                 }
             });
 
@@ -100,7 +113,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'bas
     });
 
 
-var statusList = [{id: 'enabled', name: '可用'}, {id: 'disabled', name: '不可用'}];
+var statusList = [{id: 'enabled', name: '可用'}, {id: 'disabled', name: '注销'}, {id: 'check', name: '代审核'}];
 function stateFormatter(value, row, index) {
     for (var i = 0; !(i >= statusList.length); i++) {
         if (statusList[i].id == value) return statusList[i].name;
