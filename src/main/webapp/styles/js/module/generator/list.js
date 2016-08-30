@@ -18,7 +18,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select','selectCN','tExpo
             showExport:true,
             showRefresh:true,
             showColumns:true,
-            exportTypes:"['doc', 'excel']",
+            exportTypes:"['excel']",
             toolbar:'#custom-toolbar',
             toolbarAlign:'left',
             sidePagination:'server',

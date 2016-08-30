@@ -106,6 +106,7 @@ public class UserController extends BaseAction{
     public List<User> chooseList(@RequestParam String name) {
         User user = new User();
         user.setRealname(name);
+        user.setStatus("enabled");
         List<User> list = userService.find(user);
         list.stream().filter(u -> u.getParentId() != null).forEach(u -> {
             User in = userService.get(u.getParentId());

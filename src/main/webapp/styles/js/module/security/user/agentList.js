@@ -15,7 +15,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'bas
             showExport:true,
             showRefresh:true,
             showColumns:true,
-            exportTypes:"['doc', 'excel']",
+            exportTypes:"['excel']",
             toolbar:'#custom-toolbar',
             toolbarAlign:'left',
             sidePagination:'server',

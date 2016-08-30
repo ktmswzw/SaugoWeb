@@ -21,12 +21,12 @@
     <form role="form" name="form" id="form1">
         <div class="form-inline" role="form">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
                     <select class="form-control " id="search_select" name="search_select">
                     {searchTypeDiv}
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
                     <div class="input-group">
                         <input class="form-control" type="text" placeholder="输入查询条件" id="search"
                                name="search_username">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
                     <div class="btn-group" id="do">
                         <@shiro.hasPermission name="{moduleCode}:save">
                         <button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span

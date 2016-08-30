@@ -55,6 +55,8 @@ public class ProduceServiceImpl  extends BaseService implements ProduceService {
         if (page != null && page.getSort() != null && page.getOrder() != null) {
             criteria.setOrderByClause(page.getSort() + " " + page.getOrder());
         }
+
+        cri.andStatusEqualTo("enabled");
         return criteria;
     }
 
