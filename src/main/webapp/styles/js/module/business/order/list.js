@@ -3,11 +3,11 @@
  * Created by xecoder on Sun Aug 21 15:24:09 CST 2016.
  */
 
-requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'base64', 'comm', 'message'],
+requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'comm', 'message'],
     function () {
 
-        //导出编码
-        $.base64.utf8encode = true;
+
+
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 

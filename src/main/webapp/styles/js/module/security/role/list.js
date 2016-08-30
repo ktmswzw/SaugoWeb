@@ -1,11 +1,11 @@
 /**
  * Created by  moxz on 2015/3/1.
  */
-requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'base64', 'comm', 'message'],
+requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'comm', 'message'],
     function () {
 
-        //导出编码
-        $.base64.utf8encode = true;
+
+
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 

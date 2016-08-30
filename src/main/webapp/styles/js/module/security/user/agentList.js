@@ -1,8 +1,5 @@
-requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'base64', 'comm', 'message'],
+requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'comm', 'message'],
     function () {
-
-        //导出编码
-        $.base64.utf8encode = true;
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
@@ -15,7 +12,6 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'bas
             showExport:true,
             showRefresh:true,
             showColumns:true,
-            exportTypes:"['excel']",
             toolbar:'#custom-toolbar',
             toolbarAlign:'left',
             sidePagination:'server',
