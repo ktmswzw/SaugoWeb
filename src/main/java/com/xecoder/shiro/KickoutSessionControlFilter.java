@@ -104,7 +104,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
             //会话被踢出了
             try {
                 subject.logout();/*
-                throw new RepeatLoginException("已登陆");*/
+                throw new RepeatLoginException("已登录");*/
             } catch (Exception e) { //ignore
             }
             saveRequest(request);

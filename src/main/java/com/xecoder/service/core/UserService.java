@@ -21,6 +21,8 @@ public interface UserService {
 	List<User> find(User user);
 
 	void update(User user);
+
+	boolean newPwd(User user,String newPwd);
 	
 	void updatePwd(User user, String newPwd) throws ServiceException;
 	

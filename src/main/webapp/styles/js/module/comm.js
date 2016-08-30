@@ -29,18 +29,7 @@ function imgFormatter2(value, row, index) {
     }
     return temp;
 }
-function idFormatter2(value, row, index) {
-    var temp = "";
-    if (value.length > 0 && value != undefined) {
-        temp = '<button type="button" class="btn btn-primary btn-sm" onclick="viewInfo(\''+row.userId+'\')">'+value+'</button>';
-    }
-    return temp;
-}
-function viewInfo(id)
-{
-    window.location.href = WEB_GLOBAL_CTX+'/habit/user/userInfo/'+id;
-}
-//c
+
 function doMsg(msg,type)
 {
     var typeMsg = '';
@@ -93,7 +82,7 @@ function initSelect(id, ajaxUrl, ajaxDataParam, initData, sValue, sText,isQuery)
         url: ajaxUrl,
         data: ajaxDataParam,
         error: function () {// 请求失败处理函数
-            //$.scojs_message("更新失败,请重新登陆!", $ERROR);
+            //$.scojs_message("更新失败,请重新登录!", $ERROR);
         },
         success: function (result) {
             var options = "";
@@ -192,7 +181,7 @@ function initTree(ajaxUrl, ajaxDataParam, initData) {
         url: ajaxUrl,
         data: ajaxDataParam,
         error: function () {// 请求失败处理函数
-            //$.scojs_message("更新失败,请重新登陆!", $ERROR);
+            //$.scojs_message("更新失败,请重新登录!", $ERROR);
         },
         success: function (result) {
             $(result.data).each(function () {
@@ -432,5 +421,10 @@ function exportToExcel(title,name){
     link.download = title+".xls";
     link.href = uri + base64(format(template, ctx));
     link.click();
+}
+
+
+function exportValue(value, row, index) {
+     return '<div class="formatNumber" style="color: #3c4737; ">\''+value+'</div>';
 }
 

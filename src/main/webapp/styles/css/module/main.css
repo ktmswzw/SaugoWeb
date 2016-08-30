@@ -37,3 +37,8 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
     background-color: #d82059;
     border-color: #d81a54;
 }
+
+.formatNumber {
+    color: #00b050;
+    mso-number-format: '\@';
+}

@@ -379,6 +379,14 @@ public class UserServiceImpl extends BaseService implements UserService {
 		shiroRealm.clearCachedAuthorizationInfo(user.getUsername());
 	}
 
+	public boolean newPwd(User user,String newPwd){
+	    try{
+            updatePwd(user,newPwd);
+            return true;
+	    }catch (Exception e) {
+            return false;
+        }
+    }
 
 
 	@Override

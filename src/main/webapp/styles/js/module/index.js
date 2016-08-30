@@ -61,7 +61,7 @@ function getModuleList(id) {
         type: 'GET',
         url: WEB_GLOBAL_CTX + "/console/security/module/getModuleByP/"+id,
         error: function () {// 请求失败处理函数
-            //$.scojs_message("更新失败,请重新登陆!", $ERROR);
+            //$.scojs_message("更新失败,请重新登录!", $ERROR);
         },
         success: function (result) {
             obj = result;

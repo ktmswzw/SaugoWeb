@@ -49,7 +49,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
                         $.scojs_message(rsp.msg, $ERROR);
                     }
                 }).error(function () {
-                    $.scojs_message("更新失败,请重新登陆!", $ERROR);
+                    $.scojs_message("更新失败,请重新登录!", $ERROR);
                 });
             });
         });

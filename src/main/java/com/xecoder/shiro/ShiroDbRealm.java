@@ -104,7 +104,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         {
             doClearCache(SecurityUtils.getSubject().getPrincipals());
             SecurityUtils.getSubject().logout();
-            throw new RepeatLoginException("已登陆");
+            throw new RepeatLoginException("已登录");
         }*/
 
 		User user = userService.get(token.getUsername());

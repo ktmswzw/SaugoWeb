@@ -24,7 +24,7 @@ requirejs(['jquery', , 'bootstrap', 'fuelux', 'select', 'switchs','selectCN', 'v
             type: 'POST',
             url: WEB_GLOBAL_CTX + '/console/index/getMenuModule',
             error: function () {// 请求失败处理函数
-                $.scojs_message("查询数据失败,请重新登陆!", $ERROR);
+                $.scojs_message("查询数据失败,请重新登录!", $ERROR);
             },
             success: function (rsp) {
                 initP(rsp);

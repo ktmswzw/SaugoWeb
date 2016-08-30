@@ -48,6 +48,7 @@ public class UserController extends BaseAction{
     private static final String AGENTLIST = "console/security/user/agentList";
     private static final String AGENTADDEDIT = "console/security/user/agentEdit";
     private static final String AGENTCHECK = "console/security/user/agentCheck";
+    private static final String PASSWORD = "console/security/user/password";
 
     @Autowired
     private UserService userService;
@@ -65,6 +66,12 @@ public class UserController extends BaseAction{
     @RequestMapping(value="/list")
     public String list(HttpServletRequest request) {
         return LIST;
+    }
+
+
+    @RequestMapping(value="/password")
+    public String password() {
+        return PASSWORD;
     }
 
 
@@ -263,6 +270,25 @@ public class UserController extends BaseAction{
     }
 
 
+    @RequestMapping(value="/passwordUpdate")
+    @ResponseBody
+    public Result passwordUpdate(@RequestParam String plainPassword,@RequestParam String newPlainPassword) {
+        ShiroUser shiroUser = com.xecoder.shiro.SecurityUtils.getShiroUser();
+        User user = userService.get(shiroUser.getUser().getId());
+        Result result = new Result();
+        user.setPlainPassword(plainPassword);
+        if(!userService.newPwd(user,newPlainPassword))
+        {
+            result.setMsg("操作失败,原密码不正确");
+            result.setSuccessful(false);
+            return result;
+        }
+        result.setMsg("操作成功,请重新登录");
+        result.setSuccessful(true);
+        return result;
+    }
+
+
     @RequestMapping(value="/editAgentUser/{id}")
     @ResponseBody
     public ModelAndView ededitAgentUseritUser(@PathVariable Integer id) {
@@ -303,13 +329,6 @@ public class UserController extends BaseAction{
         return result;
     }
 
-    @RequestMapping(value="/userinfo")
-    @ResponseBody
-    public User userInfo(HttpServletRequest request) throws AuthenticationException {
-        ShiroUser shiroUser = com.xecoder.shiro.SecurityUtils.getShiroUser();
-        User user = userService.get(shiroUser.getUser().getId());
-        return user;
-    }
     @RequestMapping(value="/findAllRole/{id}")
     @ResponseBody
     public List<Role> findAllRole(@PathVariable Long id) {
