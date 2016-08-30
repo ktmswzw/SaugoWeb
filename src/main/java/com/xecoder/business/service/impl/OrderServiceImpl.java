@@ -7,6 +7,7 @@ import com.xecoder.business.service.OrderService;
 import com.xecoder.common.basedao.BaseDao;
 import com.xecoder.common.baseservice.BaseService;
 import com.xecoder.common.mybatis.Page;
+import com.xecoder.common.util.SimpleDate;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,41 +22,48 @@ import java.util.List;
 @Service("OrderService")
 @Transactional
 @SuppressWarnings("unchecked")
-public class OrderServiceImpl  extends BaseService implements OrderService {
+public class OrderServiceImpl extends BaseService implements OrderService {
 
 
     @Override
     public Page findByPage(Page page, Order order) {
-        page.setCount(countByExample(page,order));
-        List<Order> list= baseDao.selectByPage("com.xecoder.business.mapper.OrderMapper."+BaseDao.SELECT_BY_EXAMPLE, getCriteria(page,order),page);
-        if(list!=null)
+        page.setCount(countByExample(page, order));
+        List<Order> list = baseDao.selectByPage("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order), page);
+        if (list != null)
             return page.setRows(list);
         else
             return null;
     }
-    
+
     @Override
     public List<Order> findAll(Page page, Order order) {
-        return baseDao.selectList("com.xecoder.business.mapper.OrderMapper."+BaseDao.SELECT_BY_EXAMPLE, getCriteria(page,order));
+        return baseDao.selectList("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order));
     }
 
     @Override
     public int countByExample(Page page, Order order) {
-        return baseDao.getMapper(OrderMapper.class).countByExample(getCriteria(page,order));
+        return baseDao.getMapper(OrderMapper.class).countByExample(getCriteria(page, order));
     }
 
-    public OrderCriteria getCriteria(Page page,Order order)
-    {
+    public OrderCriteria getCriteria(Page page, Order order) {
         OrderCriteria criteria = new OrderCriteria();
         OrderCriteria.Criteria cri = criteria.createCriteria();
         if (order != null) {
-                               if(StringUtils.isNotBlank(order.getAgentName())) {
-                cri.andAgentNameEqualTo(order.getAgentName());
-               }
-
-
+            if (StringUtils.isNotBlank(order.getAgentName())) {
+                cri.addCriterion(" agent_name LIKE  '%"+order.getAgentName()+ "%' ");
+            }
+            if (order.getProduceId()!=null) {
+                cri.andProduceIdEqualTo(order.getProduceId());
+            }
+            if (order.getStatus()!=null) {
+                cri.andStatusEqualTo(order.getStatus());
+            }
+            if(order.getBeginDate()!=null)
+                cri.addCriterion(" Date(input_time) >=  '"+ SimpleDate.format(order.getBeginDate())+ "' ");
+            if(order.getEndDate()!=null)
+                cri.addCriterion(" Date(input_time) <=  '"+ SimpleDate.format(order.getEndDate())+ "' ");
         }
-        if(page != null && page.getSort() != null && page.getOrder() != null){
+        if (page != null && page.getSort() != null && page.getOrder() != null) {
             criteria.setOrderByClause(page.getSort() + " " + page.getOrder());
         }
         return criteria;

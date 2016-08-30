@@ -160,6 +160,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         if(parentId != null){
             cri.andParentIdEqualTo(parentId);
         }
+        cri.andStatusEqualTo("enabled");
         List<User> list =   baseDao.getMapper(UserMapper.class).selectByExample(criteria);
         return list;
     }

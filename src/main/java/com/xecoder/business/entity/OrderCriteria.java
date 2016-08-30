@@ -84,7 +84,7 @@ public class OrderCriteria {
             return criteria;
         }
 
-        protected void addCriterion(String condition) {
+        public void addCriterion(String condition) {
             if (condition == null) {
                 throw new RuntimeException("Value for condition cannot be null");
             }
@@ -985,73 +985,73 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andParendNameIsNull() {
-            addCriterion("parend_name is null");
+        public Criteria andParentNameIsNull() {
+            addCriterion("parent_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameIsNotNull() {
-            addCriterion("parend_name is not null");
+        public Criteria andParentNameIsNotNull() {
+            addCriterion("parent_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameEqualTo(String value) {
-            addCriterion("parend_name =", value, "parendName");
+        public Criteria andParentNameEqualTo(String value) {
+            addCriterion("parent_name =", value, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameNotEqualTo(String value) {
-            addCriterion("parend_name <>", value, "parendName");
+        public Criteria andParentNameNotEqualTo(String value) {
+            addCriterion("parent_name <>", value, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameGreaterThan(String value) {
-            addCriterion("parend_name >", value, "parendName");
+        public Criteria andParentNameGreaterThan(String value) {
+            addCriterion("parent_name >", value, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameGreaterThanOrEqualTo(String value) {
-            addCriterion("parend_name >=", value, "parendName");
+        public Criteria andParentNameGreaterThanOrEqualTo(String value) {
+            addCriterion("parent_name >=", value, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameLessThan(String value) {
-            addCriterion("parend_name <", value, "parendName");
+        public Criteria andParentNameLessThan(String value) {
+            addCriterion("parent_name <", value, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameLessThanOrEqualTo(String value) {
-            addCriterion("parend_name <=", value, "parendName");
+        public Criteria andParentNameLessThanOrEqualTo(String value) {
+            addCriterion("parent_name <=", value, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameLike(String value) {
-            addCriterion("parend_name like", value, "parendName");
+        public Criteria andParentNameLike(String value) {
+            addCriterion("parent_name like", value, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameNotLike(String value) {
-            addCriterion("parend_name not like", value, "parendName");
+        public Criteria andParentNameNotLike(String value) {
+            addCriterion("parent_name not like", value, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameIn(List<String> values) {
-            addCriterion("parend_name in", values, "parendName");
+        public Criteria andParentNameIn(List<String> values) {
+            addCriterion("parent_name in", values, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameNotIn(List<String> values) {
-            addCriterion("parend_name not in", values, "parendName");
+        public Criteria andParentNameNotIn(List<String> values) {
+            addCriterion("parent_name not in", values, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameBetween(String value1, String value2) {
-            addCriterion("parend_name between", value1, value2, "parendName");
+        public Criteria andParentNameBetween(String value1, String value2) {
+            addCriterion("parent_name between", value1, value2, "parentName");
             return (Criteria) this;
         }
 
-        public Criteria andParendNameNotBetween(String value1, String value2) {
-            addCriterion("parend_name not between", value1, value2, "parendName");
+        public Criteria andParentNameNotBetween(String value1, String value2) {
+            addCriterion("parent_name not between", value1, value2, "parentName");
             return (Criteria) this;
         }
 

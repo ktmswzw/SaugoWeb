@@ -428,3 +428,19 @@ function exportValue(value, row, index) {
      return '<div class="formatNumber" style="color: #3c4737; ">\''+value+'</div>';
 }
 
+function idFormatter(value, row, index) {
+    var temp = "";
+    if (value.length > 0 && value != undefined) {
+        temp = '<button type="button" class="btn btn-primary btn-sm" onclick="viewInfo(\''+row.id+'\')">查看</button>';
+    }
+    return temp;
+}
+function viewInfo(id)
+{
+    openWindow( WEB_GLOBAL_CTX+'/business/order/view/'+id);
+}
+function openWindow(url)
+{
+    window.open(url, '_blank');
+    window.focus();
+}

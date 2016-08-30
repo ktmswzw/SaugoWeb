@@ -1,14 +1,15 @@
+/**
+ * Created by vincent on 16/8/30.
+ */
 requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'comm', 'message'],
     function () {
-
-
 
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
         //列表
         var $table = $('#tableB').bootstrapTable({
-            url: WEB_GLOBAL_CTX + '/console/security/user/userList',
+            url: WEB_GLOBAL_CTX + '/business/order/list',
             dataType: 'json',
             cache:false,
             showToggle:true,
@@ -37,58 +38,59 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
         //查询动作
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {
-                url: WEB_GLOBAL_CTX + '/console/security/user/userList',
+                url: WEB_GLOBAL_CTX + '/business/order/list',
                 queryParams: 'queryParamsF'
             });
         });
 
-        //删除
-        $('#delete').click(function () {
+        //撤销
+        $('#confirm').click(function () {
             var objects = $table.bootstrapTable('getSelections');
-            //console.debug('Selected values: ' + objects.length);
+            $('#myModal').modal('hide');
             $.each(objects, function () {
-                $.post(WEB_GLOBAL_CTX + "/console/security/user/deleteInfo/" + this.id, function (rsp) {
-                    if (rsp.successful) {
-                        $.scojs_message(rsp.msg, $OK);
-                        flashTable('tableB', '/console/security/user/userList');
-                    } else {
-                        $.scojs_message(rsp.msg, $ERROR);
-                    }
-                }).error(function () {
-                    $.scojs_message("更新失败,请重新登录!", $ERROR);
-                });
+                if(this.status!=9) {
+                    $.post(WEB_GLOBAL_CTX + "/business/order/delete/" + this.id, function (rsp) {
+                        if (rsp.successful) {
+                            $.scojs_message(rsp.msg, $OK);
+                            flashTable('tableB', '/business/order/list');
+                        } else {
+                            $.scojs_message(rsp.msg, $ERROR);
+                        }
+                    }).error(function () {
+                        $.scojs_message("更新失败,请重新登录!", $ERROR);
+                    });
+                }
+                else{
+                    $.scojs_message("[已撤销] 状态订单无法再次撤销!", $ERROR);
+                }
             });
-        });
-
-        //添加
-        $('#add').click(function () {
-            parent.Loading.modal('show');
-            self.location = WEB_GLOBAL_CTX + "/console/security/user/userAdd";
         });
 
         //修改
-        $('#modify').click(function () {
-            parent.Loading.modal('show');
+        $('#check').click(function () {
             var objects = $table.bootstrapTable('getSelections');
             $.each(objects, function () {
-                    self.location = WEB_GLOBAL_CTX + "/console/security/user/editUser/"+this.id;
+                if(this.status==1) {
+                    parent.Loading.modal('show');
+                    self.location = WEB_GLOBAL_CTX + "/business/order/check/" + this.id;
+                }
+                else{
+                    $.scojs_message("非 [待确认] 状态订单无法确认!", $ERROR);
+                }
             });
-
         });
 
-        //parent.Loading.modal('hide');
+        parent.Loading.modal('hide');
 
     });
 
-
-var statusList = [{id: 'enabled', name: '可用'}, {id: 'disabled', name: '不可用'}];
-function stateFormatter(value, row, index) {
-    for (var i = 0; !(i >= statusList.length); i++) {
-        if (statusList[i].id == value) return statusList[i].name;
+var orderStatusList = [{id: 1, name: '未确认'}, {id: 2, name: '已确认'}, {id: 9, name: '已撤销'}];
+function orderStateFormatter(value, row, index) {
+    for (var i = 0; !(i >= orderStatusList.length); i++) {
+        if (orderStatusList[i].id == value) return orderStatusList[i].name;
     }
     return value;
 }
-
 
 //本页查询拼装
 function queryParamsF(params) {
@@ -96,7 +98,9 @@ function queryParamsF(params) {
     var value = $("#search").val();
     var str = "{\"" + name + "\":\"" + value + "\"}";
     var data = eval('(' + str + ')');
-    params.sortName = "create_time";
+    params.sortName = "input_time";
     params.sortOrder = "desc";
     return $.extend({}, params, data);
 }
+
+

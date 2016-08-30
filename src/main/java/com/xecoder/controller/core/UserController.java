@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -152,6 +153,7 @@ public class UserController extends BaseAction{
             }
             else
             {
+                user.setCreateTime(new Date());
                 userService.update(user);
             }
             result.setSuccessful(true);
@@ -172,6 +174,7 @@ public class UserController extends BaseAction{
         Result result = new Result();
         try {
             user.setStatus("check");
+            user.setCreateTime(new Date());
             userService.update(user);
             result.setSuccessful(true);
             result.setMsg("修改信息完成,需要确认后才可登录");
@@ -190,6 +193,7 @@ public class UserController extends BaseAction{
     public Result checkUser(@ModelAttribute User user) {
         Result result = new Result();
         try {
+            user.setCreateTime(new Date());
             user.setStatus("enabled");
             userService.update(user);
             result.setSuccessful(true);
@@ -221,6 +225,8 @@ public class UserController extends BaseAction{
                 user.setCardsFront(UploadUtils.upload(file1, request));
                 user.setCardsBack(UploadUtils.upload(file2, request));
             }
+            user.setCreateTime(new Date());
+            user.setStatus("check");
             if(user.getId()==null) {
                 User user1 = userService.getByUsername(user.getUsername());
                 if (user1 != null ) {
@@ -242,12 +248,10 @@ public class UserController extends BaseAction{
                     result.setMsg("代理添加失败，身份证号码："  + user3.getRealname() + "已经使用。");
                     return result;
                 }
-                user.setStatus("check");
                 userService.save(user);
             }
             else
             {
-                user.setStatus("check");
                 userService.update(user);
             }
             result.setSuccessful(true);
@@ -312,9 +316,10 @@ public class UserController extends BaseAction{
 
     @RequestMapping(value="/deleteInfo/{id}", method=RequestMethod.POST)
     @ResponseBody
-    public Result deleteInfo(@ModelAttribute User user, @PathVariable Integer id) {
+    public Result deleteInfo(@PathVariable Long id) {
         logger.debug("id = " + id);
         Result result = new Result();
+        User user = userService.get(id);
         if(id==1)
         {
             result.setMsg("操作失败,此帐号未超级管理员,不可删除");
@@ -322,19 +327,33 @@ public class UserController extends BaseAction{
             return result;
         }
         user.setStatus("disabled");
-        user.setUsername("");
+        user.setUsername("已注销"+user.getUsername());
+        user.setIdentityCards("DEL-"+user.getIdentityCards());
+        user.setBankAccount("DEL-"+user.getBankAccount());
         userService.delete(user);
         result.setMsg("操作成功");
+        updateParentId(user);
         result.setSuccessful(true);
         return result;
+    }
+
+    /**
+     * 更新注销的本级的下级的上级为注销的上级
+     * @param userDel
+     */
+    private void updateParentId(User userDel){
+        List<User> list = userService.findByParentId(userDel.getId());
+        for(User user:list){
+            user.setParentId(userDel.getParentId());
+            userService.update(user);
+        }
     }
 
     @RequestMapping(value="/findAllRole/{id}")
     @ResponseBody
     public List<Role> findAllRole(@PathVariable Long id) {
         logger.debug("id = " + id);
-        List<Role> list = roleService.findAll();
-        return list;
+        return roleService.findAll();
     }
 
 
@@ -343,17 +362,14 @@ public class UserController extends BaseAction{
     public List<Role> findAllRole(@RequestParam String description) {
         Role role = new Role();
         role.setDescription(description);
-        List<Role> list = roleService.find(null,role);
-        return list;
+        return roleService.find(null,role);
     }
 
 
     @RequestMapping(value = "/findJsonById/{id}", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject findJsonById(@PathVariable Long id) {
-        System.out.println("id = " + id);
         List<User> list = userService.findByParentId(id);
-        String json = "";
         JSONObject jsonobject = new JSONObject();
         JSONArray jarray = new JSONArray();
         for (User o : list) {

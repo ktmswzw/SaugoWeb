@@ -5,22 +5,21 @@
 <body>
 <div class="container">
     <div class="panel panel-default">
-        <div class="panel-heading">用户列表</div>
+        <div class="panel-heading">订单确认</div>
         <div class="panel-body">
-            <table id="tableB" class="table-hover table-condensed table-striped" data-show-export="true">
+            <table id="tableB" class="table-hover table-condensed table-striped">
                 <thead>
                 <tr>
-                    <th data-field="state"  data-radio="true"  >ID</th>
-                    <th data-field="realname" class="col-md-1">姓名</th>
+                    <th data-field="state" data-radio="true"></th>
+                    <th data-field="agentName" class="col-md-1">代理</th>
                     <th data-field="parentName" class="col-md-1">上级</th>
-                    <th data-field="phone" class="col-md-1">手机/帐号</th>
-                    <th data-field="address" class="col-md-2" data-sortable="true">收货地址</th>
-                    <th data-field="identityCards" class="col-md-1" data-formatter="exportValue">身份证号</th>
-                    <th data-field="bank" class="col-md-1">开户银行</th>
-                    <th data-field="bankAccount" class="col-md-2" data-formatter="exportValue">银行帐号</th>
-                    <th data-field="bankName" class="col-md-1">户名</th>
-                    <th data-field="createTime" class="col-md-1">创建时间</th>
-                    <th data-field="status" class="col-md-1" data-formatter="stateFormatter">状态</th>
+                    <th data-field="inputTime" class="col-md-2">申请时间</th>
+                    <th data-field="produceName" class="col-md-2">产品</th>
+                    <th data-field="produceNumber" class="col-md-1">数量</th>
+                    <th data-field="bankMemo" class="col-md-1">备注</th>
+                    <th data-field="checkName" class="col-md-1">确认人</th>
+                    <th data-field="checkTime" class="col-md-2">确认时间</th>
+                    <th data-field="status" class="col-md-1" data-formatter="orderStateFormatter">状态</th>
                 </tr>
                 </thead>
             </table>
@@ -29,18 +28,16 @@
 </div><!--/.container-->
 <div id="custom-toolbar">
     <form role="form" name="form" id="form1">
-        <div class="form-inline" role="form" >
+        <div class="form-inline" role="form">
             <div class="row">
-
                 <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
                     <select class="form-control " id="search_select" name="search_select">
-                        <option value="search_username">账号</option>
-                        <option value="search_realname">姓名</option>
+                        <option value="search_agentName">代理名称</option>
                     </select>
                 </div>
                 <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
                     <div class="input-group">
-                        <input class="form-control" type="text" placeholder="请输入查询内容" id="search"
+                        <input class="form-control" type="text" placeholder="输入查询条件" id="search"
                                name="search_username">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" id="query" name="query" title="查询"><span
@@ -51,10 +48,7 @@
 
                 <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
                     <div class="btn-group" id="do">
-                        <@shiro.hasPermission name="User:save">
-                        <button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span
-                                class="glyphicon glyphicon-plus"></span></button>
-                        </@shiro.hasPermission>
+
                     </div>
                 </div>
             </div>
@@ -63,17 +57,13 @@
 </div>
 
 <div id="to" style="display:none;">
-    <@shiro.hasPermission name="Agent:edit">
-    <button type="button" class="btn btn-default" id="modify" name="modify" title="修改"><span
-            class="glyphicon glyphicon-edit"></span></button>
-
-    <button type="button" class="btn btn-default" id="check" name="check" title="审核"><span
+    <@shiro.hasPermission name="Check:edit">
+    <button type="button" class="btn btn-default" id="check" name="check" title="确认"><span
             class="glyphicon glyphicon-check"></span></button>
-
 </@shiro.hasPermission>
-<@shiro.hasPermission name="Agent:delete">
-<button type="button" class="btn btn-default" id="delete" name="delete" title="注销"><span
-        class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#myModal" ></span></button>
+<@shiro.hasPermission name="Check:delete">
+<button type="button" class="btn btn-default" id="delete" name="delete" title="撤销"><span
+        class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#myModal"></span></button>
 </@shiro.hasPermission>
 </div>
 
@@ -85,7 +75,7 @@
                 <h4 class="modal-title">确认</h4>
             </div>
             <div class="modal-body">
-                <p>是否确认注销该用户，此操作影响巨大且不可以还原，你确认注销？</p>
+                <p>是否确认撤销该订单，此操作不可以还原，你确认撤销？</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">点错了</button>
@@ -97,5 +87,6 @@
 
 </body>
 <@foot/>
-<script src="${base}/styles/js/module/security/user/agentList.js"></script>
+<script src="${base}/styles/js/module/business/order/checkList.js"></script>
 </html>
+

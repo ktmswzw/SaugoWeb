@@ -16,7 +16,7 @@
     <result column="agent_id" property="agentId" jdbcType="BIGINT" />
     <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
-    <result column="parend_name" property="parendName" jdbcType="VARCHAR" />
+    <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
     <result column="bank_memo" property="bankMemo" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
@@ -80,7 +80,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, input_id, input_time, check_id, check_time, produce_id, produce_number, input_name, 
-    check_name, produce_name, status, agent_id, agent_name, parent_id, parend_name, bank_memo, 
+    check_name, produce_name, status, agent_id, agent_name, parent_id, parent_name, bank_memo,
     url
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xecoder.business.entity.OrderCriteria" >
@@ -118,13 +118,13 @@
       check_id, check_time, produce_id, 
       produce_number, input_name, check_name, 
       produce_name, status, agent_id, 
-      agent_name, parent_id, parend_name, 
+      agent_name, parent_id, parent_name,
       bank_memo, url)
     values (#{id,jdbcType=BIGINT}, #{inputId,jdbcType=BIGINT}, #{inputTime,jdbcType=TIMESTAMP}, 
       #{checkId,jdbcType=BIGINT}, #{checkTime,jdbcType=TIMESTAMP}, #{produceId,jdbcType=BIGINT}, 
       #{produceNumber,jdbcType=BIGINT}, #{inputName,jdbcType=VARCHAR}, #{checkName,jdbcType=VARCHAR}, 
       #{produceName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{agentId,jdbcType=BIGINT}, 
-      #{agentName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{parendName,jdbcType=VARCHAR}, 
+      #{agentName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{parentName,jdbcType=VARCHAR},
       #{bankMemo,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xecoder.business.entity.Order" >
@@ -172,8 +172,8 @@
       <if test="parentId != null" >
         parent_id,
       </if>
-      <if test="parendName != null" >
-        parend_name,
+      <if test="parentName != null" >
+        parent_name,
       </if>
       <if test="bankMemo != null" >
         bank_memo,
@@ -225,8 +225,8 @@
       <if test="parentId != null" >
         #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="parendName != null" >
-        #{parendName,jdbcType=VARCHAR},
+      <if test="parentName != null" >
+        #{parentName,jdbcType=VARCHAR},
       </if>
       <if test="bankMemo != null" >
         #{bankMemo,jdbcType=VARCHAR},
@@ -287,8 +287,8 @@
       <if test="record.parentId != null" >
         parent_id = #{record.parentId,jdbcType=BIGINT},
       </if>
-      <if test="record.parendName != null" >
-        parend_name = #{record.parendName,jdbcType=VARCHAR},
+      <if test="record.parentName != null" >
+        parent_name = #{record.parentName,jdbcType=VARCHAR},
       </if>
       <if test="record.bankMemo != null" >
         bank_memo = #{record.bankMemo,jdbcType=VARCHAR},
@@ -317,7 +317,7 @@
       agent_id = #{record.agentId,jdbcType=BIGINT},
       agent_name = #{record.agentName,jdbcType=VARCHAR},
       parent_id = #{record.parentId,jdbcType=BIGINT},
-      parend_name = #{record.parendName,jdbcType=VARCHAR},
+      parent_name = #{record.parentName,jdbcType=VARCHAR},
       bank_memo = #{record.bankMemo,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -366,8 +366,8 @@
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="parendName != null" >
-        parend_name = #{parendName,jdbcType=VARCHAR},
+      <if test="parentName != null" >
+        parent_name = #{parentName,jdbcType=VARCHAR},
       </if>
       <if test="bankMemo != null" >
         bank_memo = #{bankMemo,jdbcType=VARCHAR},
@@ -393,7 +393,7 @@
       agent_id = #{agentId,jdbcType=BIGINT},
       agent_name = #{agentName,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=BIGINT},
-      parend_name = #{parendName,jdbcType=VARCHAR},
+      parent_name = #{parentName,jdbcType=VARCHAR},
       bank_memo = #{bankMemo,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}

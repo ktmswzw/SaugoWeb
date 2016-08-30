@@ -3,6 +3,7 @@ package com.xecoder.business.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Transient;
 import java.util.Date;
 
 public class Order {
@@ -36,11 +37,21 @@ public class Order {
 
     private Long parentId;
 
-    private String parendName;
+    private String parentName;
 
     private String bankMemo;
 
     private String url;
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date beginDate;
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date endDate;
 
     public Long getId() {
         return id;
@@ -154,12 +165,12 @@ public class Order {
         this.parentId = parentId;
     }
 
-    public String getParendName() {
-        return parendName;
+    public String getParentName() {
+        return parentName;
     }
 
-    public void setParendName(String parendName) {
-        this.parendName = parendName == null ? null : parendName.trim();
+    public void setParentName(String parentName) {
+        this.parentName = parentName == null ? null : parentName.trim();
     }
 
     public String getBankMemo() {
@@ -176,5 +187,21 @@ public class Order {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public Date getBeginDate() {
+        return beginDate;
+    }
+
+    public void setBeginDate(Date beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

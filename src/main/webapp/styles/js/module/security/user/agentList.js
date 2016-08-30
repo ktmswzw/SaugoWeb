@@ -29,7 +29,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'com
         }).on('page-change.bs.table', function (e, size, number) {
             setHeightSelf(200*number/10);
         });
-
+        setHeightSelf(800);
         //查询动作
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {
@@ -125,7 +125,7 @@ function queryParamsF(params) {
     var value = $("#search").val();
     var str = "{\"" + name + "\":\"" + value + "\"}";
     var data = eval('(' + str + ')');
-    params.sortName = "username";
+    params.sortName = "create_time";
     params.sortOrder = "desc";
     return $.extend({}, params, data);
 }

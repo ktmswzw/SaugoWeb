@@ -37,11 +37,25 @@ public class OrderController extends BaseAction {
     UserService userService;
 
     private static final String INDEX = "/business/order/list";
+    private static final String CHECK = "/business/order/check";
     private static final String EDIT = "/business/order/edit";
+    private static final String CHECKEDIT = "/business/order/checkEdit";
+    private static final String INFO = "/business/order/info";
+    private static final String QUERY = "/business/order/query";
 
     @RequestMapping(value = "/index")
     public String index() {
         return INDEX;
+    }
+
+    @RequestMapping(value = "/check")
+    public String check() {
+        return CHECK;
+    }
+
+    @RequestMapping(value = "/query")
+    public String query() {
+        return QUERY;
     }
 
     /**
@@ -91,6 +105,33 @@ public class OrderController extends BaseAction {
         return getView(EDIT, "order", order);
     }
 
+    /**
+     * 确认订单
+     *
+     * @return ModelAndView
+     */
+    @RequestMapping(value = "/check/{id}")
+    @ResponseBody
+    public ModelAndView check(@PathVariable Long id) {
+        Order order = orderService.get(id);
+        User  user = SecurityUtils.getLoginUser();
+        order.setCheckId(user.getId());
+        order.setCheckName(user.getRealname());
+        return getView(CHECKEDIT, "order", order);
+    }
+
+    /**
+     * 查看订单
+     *
+     * @return ModelAndView
+     */
+    @RequestMapping(value = "/view/{id}")
+    @ResponseBody
+    public ModelAndView view(@PathVariable Long id) {
+        Order order = orderService.get(id);
+        return getView(INFO, "order", order);
+    }
+
 
     /**
      * 保存订单
@@ -115,7 +156,7 @@ public class OrderController extends BaseAction {
             if(order.getAgentId()!=null&&order.getAgentId()!=0){
                 User u = userService.get(order.getAgentId());
                 order.setParentId(u.getParentId());
-                order.setParendName(u.getParentName());
+                order.setParentName(u.getParentName());
             }
 
             order.setStatus(1);
@@ -211,16 +252,16 @@ public class OrderController extends BaseAction {
     /**
      * 审核订单
      *
-     * @param id
+     * @param orderO
      * @return
      */
-    @RequestMapping(value = "/check/{id}")
+    @RequestMapping(value = "/checkSave")
     @ResponseBody
-    public Result check(@PathVariable Long id) {
+    public Result checkSave(@ModelAttribute Order orderO) {
         Result result = new Result();
-        Order order = orderService.get(id);
+        Order order = orderService.get(orderO.getId());
         User  user = SecurityUtils.getLoginUser();
-        if(order.getStatus()!=1) {
+        if(order.getStatus()==1) {
             order.setStatus(2);
             order.setCheckId(user.getId());
             order.setCheckName(user.getRealname());

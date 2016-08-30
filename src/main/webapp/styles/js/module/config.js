@@ -9,10 +9,10 @@ require.config({
         }
     },
     paths: {
-        //jquery: '../libs/jquery-1.11.2.min',
         jquery: '../libs/jquery-2.1.4',
         fuelux: '../libs/fuelux',
         underscore: '../libs/underscore-min',
+        maskedInput: '../libs/jquery.maskedinput.min',
         bootstrap: '../libs/bootstrap.min',
         switchs: '../libs/bootstrap-switch.min',
         select: '../select/bootstrap-select.min',
@@ -51,6 +51,7 @@ require.config({
         bootstrap: { deps: ['jquery'] , exports : 'bootstrap' },
         validator: { deps: ['jquery'], exports : 'validator'},
         select: { deps: ['jquery'] , exports :'select'},
+        maskedInput: { deps: ['jquery'] , exports :'maskedInput'},
         select2: { deps: ['jquery'] , exports :'select2'},
         switchs: { deps: ['jquery'] , exports :'switchs'},
         fuelux: { deps: ['jquery'] , exports :'fuelux' },
