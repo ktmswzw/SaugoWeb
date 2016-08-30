@@ -23,7 +23,6 @@
                     <input type="hidden" name="roles" id="roles">
                     <input type="hidden" name="username" id="username">
                     <input type="hidden" name="plainPassword" id="plainPassword">
-
                     <input type="hidden" name="cardsFront" id="cardsFront">
                     <input type="hidden" name="cardsBack" id="cardsBack">
 
@@ -62,21 +61,17 @@
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" >身份证正面</label>
+                        <label class="control-label" >身份证正反面</label>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-4">
                         <a href="" target="_blank" id="href1"></a>
                     </div>
-                </div>
 
-                <div class="row control-group">
-                    <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" >身份证背面</label>
-                    </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-4">
                         <a href="" target="_blank" id="href2"></a>
                     </div>
                 </div>
+
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
@@ -120,30 +115,10 @@
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="parentId">上级代理</label>
+                        <label class="control-label" for="parentName">上级代理</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <input type="hidden" class="form-control" id="parentId" name="parentId" disabled="disabled"
-                               placeholder="上级选择">
-                        <ul class="tree tree-folder-select" role="tree" id="myTree">
-                            <li class="tree-branch hide" data-template="treebranch" role="treeitem" aria-expanded="false">
-                                <div class="tree-branch-header">
-                                    <button class="glyphicon icon-caret glyphicon-play"  type="button"><span class="sr-only">Open</span></button>
-                                    <button class="tree-branch-name" type="button">
-                                        <span class="glyphicon icon-folder glyphicon-folder-close"></span>
-                                        <span class="tree-label"></span>
-                                    </button>
-                                </div>
-                                <ul class="tree-branch-children" role="group"></ul>
-                                <div class="tree-loader" role="alert">加载...</div>
-                            </li>
-                            <li class="tree-item hide" data-template="treeitem" role="treeitem">
-                                <button class="tree-item-name" type="button">
-                                    <span class="glyphicon icon-item fueluxicon-bullet"></span>
-                                    <span class="tree-label"></span>
-                                </button>
-                            </li>
-                        </ul>
+                        <input type="text" class="form-control" id="parentName" name="parentName" disabled="disabled">
                     </div>
                 </div>
 

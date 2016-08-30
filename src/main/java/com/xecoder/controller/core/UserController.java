@@ -157,9 +157,9 @@ public class UserController extends BaseAction{
         Result result = new Result();
         try {
             user.setStatus("check");
-                userService.update(user);
+            userService.update(user);
             result.setSuccessful(true);
-            result.setMsg("保存成功");
+            result.setMsg("修改信息完成,需要确认后才可登录");
         }
         catch (Exception e)
         {
@@ -236,7 +236,7 @@ public class UserController extends BaseAction{
                 userService.update(user);
             }
             result.setSuccessful(true);
-            result.setMsg("保存成功");
+            result.setMsg("修改信息完成,需要确认后才可登录");
         }
         catch (Exception e)
         {
@@ -267,6 +267,11 @@ public class UserController extends BaseAction{
     @ResponseBody
     public ModelAndView agentCheck(@PathVariable Integer id) {
         User user = userService.get(Long.parseLong(id + ""));
+        if(user!=null&& user.getParentId()!=null)
+        {
+            User par = userService.get(user.getParentId());
+            user.setParentName(par.getRealname());
+        }
         return getView(AGENTCHECK,"user",user);
     }
 

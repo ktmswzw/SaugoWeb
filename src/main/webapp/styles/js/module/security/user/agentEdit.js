@@ -129,7 +129,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
                         if (rsp.successful) {
                             $("#save").toggleClass("disabled");
                             $.scojs_message(rsp.msg, $OK);
-                            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 1000);
+                            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 3000);
                         } else {
                             $.scojs_message(rsp.msg, $ERROR);
                         }
@@ -143,7 +143,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
                     if (rsp.successful) {
                         $.scojs_message(rsp.msg, $OK);
                         $("#save").toggleClass("disabled");
-                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 1000);
+                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 3000);
                     } else {
                         $.scojs_message(rsp.msg, $ERROR);
                     }

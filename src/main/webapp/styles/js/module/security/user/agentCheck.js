@@ -15,50 +15,18 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
 
-        var parentIdVal='';
-
 
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
             //初始化页面
             meForm($('#formSubmit'), user);
-            parentIdVal=user.parentId+"";
 
             $("#href1").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsFront);
-            $("#href1").append('<button type="button" class="btn btn-link">下载</button>');
-
+            $("#href1").append('<img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsFront+'" alt="正面" class="img-rounded img-responsive">');
 
             $("#href2").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsBack);
-            $("#href2").append('<button type="button" class="btn btn-link">下载</button>');
+            $("#href2").append('<img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsBack+'" alt="背面" class="img-rounded img-responsive">');
         }
-        else{
-            // $("#status").val("enabled");
-        }
-        //修改页面结束
-
-        //页面特殊要求
-        $("#username").val(($("#phone").val()));
-
-        //动态调整ifream页面高度
-        $('#myTree').on('loaded.fu.tree', function (e) {
-            //console.log('Loaded');
-            setHeight();
-        });
-
-        //同步值
-        $('#myTree').on('updated.fu.tree', function (e, selected) {
-            asyncTreeValue("myTree","parentId");
-        });
-        $('#myTree').on('selected.fu.tree', function (e, info) {
-            asyncTreeValue("myTree","parentId");
-        });
-
-        //初始树
-        meTreeInit('myTree',parentIdVal.split(""),"/console/security/user/findJsonById/",false,true,1);
-
-
-        //提交
-        var parentId = $('#parentId');
-
+        setHeightSelf(600);
 
         $('#formSubmit').formValidation({
             framework: 'bootstrap',
@@ -91,5 +59,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
                 return true;
 
         });
+
+        parent.Loading.modal('hide');
     });
 
