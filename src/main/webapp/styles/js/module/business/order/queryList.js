@@ -7,9 +7,14 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
+        $('#produceId').append("<option ></option>");
+        //初始化下拉框 //可做异步下拉框选择
+        initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, "", "id", "name", true);
+
+
         //列表
         var $table = $('#tableB').bootstrapTable({
-            url: WEB_GLOBAL_CTX + '/business/order/list',
+            url: '',
             dataType: 'json',
             cache:false,
             showToggle:true,
@@ -23,18 +28,13 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
             clickToSelect:true,
             singleSelect:true,
             smartDisplay: false,
-            queryParams: 'queryParamsF',
+            queryParams: 'queryParamsOrder',
             pagination: true,
             pageSize: 5,
             pageList: [5, 10, 20, 100]
         }).on('page-change.bs.table', function (e, size, number) {
             setHeightSelf(200*number/10);
         });
-
-        $('#produceId').append("<option ></option>");
-        //初始化下拉框 //可做异步下拉框选择
-        initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, "", "id", "name", true);
-
 
         //查询动作
         $('#query').click(function () {
@@ -61,53 +61,3 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
         parent.Loading.modal('hide');
 
     });
-
-var orderStatusList = [{id: 1, name: '未确认'}, {id: 2, name: '已确认'}, {id: 9, name: '已撤销'}];
-function orderStateFormatter(value, row, index) {
-    for (var i = 0; !(i >= orderStatusList.length); i++) {
-        if (orderStatusList[i].id == value) return orderStatusList[i].name;
-    }
-    return value;
-}
-
-//本页查询拼装
-function queryParamsF(params) {
-    var name = $("#search_agentName").val();
-    var begin = $("#search_beginDate").val();
-    var end = $("#search_endDate").val();
-    var produceId = $('#produceId').find("option:selected").val();
-    var status = $('#status').find("option:selected").val();
-    var str = "";
-    if(begin!="")
-        str = "\"search_beginDate\":\"" + begin+"\"";
-    if(end!="") {
-        if(str!="") {
-            str += ",";
-        }
-        str += "\"search_endDate\":\"" + end+ "\"";
-    }
-    if(name!="") {
-        if(str!="") {
-            str += ",";
-        }
-        str += "\"search_agentName\":\"" + name+ "\"";
-    }
-    if(produceId!="") {
-        if(str!="") {
-            str += ",";
-        }
-        str += "\"search_produceId\":\"" + produceId+ "\"";
-    }
-    if(status!="") {
-        if(str!="") {
-            str += ",";
-        }
-        str += "\"search_status\":\"" + status+ "\"";
-    }
-    var data = eval('({' + str.replace(new RegExp("/", 'g'),"-") + '})');
-    params.sortName = "input_time";
-    params.sortOrder = "desc";
-    return $.extend({}, params, data);
-}
-
-

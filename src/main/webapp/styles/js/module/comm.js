@@ -444,3 +444,53 @@ function openWindow(url)
     window.open(url, '_blank');
     window.focus();
 }
+
+
+var orderStatusList = [{id: 1, name: '待确认'}, {id: 2, name: '已确认'}, {id: 9, name: '已撤销'}];
+function orderStateFormatter(value, row, index) {
+    for (var i = 0; !(i >= orderStatusList.length); i++) {
+        if (orderStatusList[i].id == value) return orderStatusList[i].name;
+    }
+    return value;
+}
+
+//本页查询拼装
+function queryParamsOrder(params) {
+    var name = $("#search_agentName").val();
+    var begin = $("#search_beginDate").val();
+    var end = $("#search_endDate").val();
+    var produceId = $("#produceId").val();
+    var status = $('#status').val();
+    var str = "";
+    if(begin!="")
+        str = "\"search_beginDate\":\"" + begin+"\"";
+    if(end!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\"search_endDate\":\"" + end+ "\"";
+    }
+    if(name!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\"search_agentName\":\"" + name+ "\"";
+    }
+    if(produceId!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\"search_produceId\":\"" + produceId+ "\"";
+    }
+    if(status!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\"search_status\":\"" + status+ "\"";
+    }
+    var data = eval('({' + str.replace(new RegExp("/", 'g'),"-") + '})');
+    params.sortName = "input_time";
+    params.sortOrder = "desc";
+    return $.extend({}, params, data);
+}
+

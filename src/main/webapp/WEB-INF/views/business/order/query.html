@@ -14,7 +14,7 @@
                     <th data-field="agentName" class="col-md-1">代理</th>
                     <th data-field="parentName" class="col-md-1">上级</th>
                     <th data-field="inputTime" class="col-md-2">申请时间</th>
-                    <th data-field="produceName" class="col-md-2">产品</th>
+                    <th data-field="produceName" class="col-md-1">产品</th>
                     <th data-field="produceNumber" class="col-md-1">数量</th>
                     <th data-field="bankMemo" class="col-md-1">备注</th>
                     <th data-field="checkName" class="col-md-1">确认人</th>
@@ -27,31 +27,7 @@
     </div>
 </div><!--/.container-->
 <div id="custom-toolbar">
-    <form role="form" name="form" id="form1">
-        <div class="form-inline" role="form">
-            <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                    <input class="form-control" type="text" placeholder="代理名称" id="search_agentName"
-                           name="search_agentName">
-                    <input class="form-control" type="date" placeholder="开始日期" id="search_beginDate"
-                           name="search_beginDate"/>
-                    <input class="form-control" type="date" placeholder="结束日期" id="search_endDate"
-                           name="search_endDate"/>
-                    <select id="produceId" style="width: auto" name="produceId" data-live-search="true"
-                            class="selectpicker show-tick">
-                    </select>
-                    <select id="status" style="width: auto" name="status" class="form-control">
-                        <option ></option>
-                        <option value="1">待确认</option>
-                        <option value="2">确认</option>
-                        <option value="3">撤销</option>
-                    </select>
-                    <button type="button" class="btn btn-default" id="query" name="query" title="查询"><span
-                            class="glyphicon glyphicon-search"></span></button>
-                </div>
-            </div>
-        </div>
-    </form>
+                <@orderQuery/>
 </div>
 
 </body>

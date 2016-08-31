@@ -1,11 +1,20 @@
 /**
  * Created by vincent on 16/8/30.
  */
-requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'comm', 'message'],
+requirejs(['jquery', 'bootstrap', 'table', 'tablezn',  'select', 'selectCN','tExport', 'tExportS', 'comm', 'message'],
     function () {
 
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
+
+
+        //初始化下拉框 //可做异步下拉框选择
+        // initSelect("modState", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'PRIMOD-STATE'}, modState, "dicKey", "dicValue",true);
+
+        $('#produceId').append("<option ></option>");
+        //初始化下拉框 //可做异步下拉框选择
+        initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, "", "id", "name", true);
+
 
         //列表
         var $table = $('#tableB').bootstrapTable({
@@ -23,7 +32,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
             clickToSelect:true,
             singleSelect:true,
             smartDisplay: false,
-            queryParams: 'queryParamsF',
+            queryParams: 'queryParamsOrder',
             pagination: true,
             pageSize: 5,
             pageList: [5, 10, 20, 100]
@@ -83,24 +92,3 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
         parent.Loading.modal('hide');
 
     });
-
-var orderStatusList = [{id: 1, name: '未确认'}, {id: 2, name: '已确认'}, {id: 9, name: '已撤销'}];
-function orderStateFormatter(value, row, index) {
-    for (var i = 0; !(i >= orderStatusList.length); i++) {
-        if (orderStatusList[i].id == value) return orderStatusList[i].name;
-    }
-    return value;
-}
-
-//本页查询拼装
-function queryParamsF(params) {
-    var name = $("#search_select").val();
-    var value = $("#search").val();
-    var str = "{\"" + name + "\":\"" + value + "\"}";
-    var data = eval('(' + str + ')');
-    params.sortName = "input_time";
-    params.sortOrder = "desc";
-    return $.extend({}, params, data);
-}
-
-

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <title>淑格订单管理系统</title>
+        <!--<title>淑格订单管理系统</title>-->
         <link rel="icon" href="${base}/styles/images/logo/muyu.png" type="image/png">
         <link href="${base}/styles/css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="${base}/styles/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 
 <#macro headEdit>
     <meta charset="utf-8">
-    <title>淑格订单管理系统</title>
+    <!--<title>淑格订单管理系统</title>-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="${base}/styles/css/bootstrap.min.css" rel="stylesheet">
@@ -29,6 +29,36 @@
     <link href="${base}/styles/sco/css/sco.message.css" rel="stylesheet">
     <link href="${base}/styles/css/fuelux.min.css" rel="stylesheet">
     <link href="${base}/styles/css/module/edit.css" rel="stylesheet">
+</#macro>
+
+<#macro orderQuery>
+<form role="form" name="form" id="form1">
+    <div class="form-inline" role="form">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <input class="form-control" type="text" placeholder="代理名称" id="search_agentName"
+                       name="search_agentName">
+                <input class="form-control" type="date" placeholder="开始日期" id="search_beginDate"
+                       name="search_beginDate"/>
+                <input class="form-control" type="date" placeholder="结束日期" id="search_endDate"
+                       name="search_endDate"/>
+                <select id="produceId" style="width: auto" name="produceId" data-live-search="true"
+                        class="selectpicker show-tick">
+                </select>
+                <select id="status" style="width: auto" name="status" class="form-control">
+                    <option value="1" selected>待确认</option>
+                    <option value="2">已确认</option>
+                    <option value="9">已撤销</option>
+                </select>
+                <button type="button" class="btn btn-default" id="query" name="query" title="查询"><span
+                        class="glyphicon glyphicon-search"></span></button>
+                <div class="btn-group" id="do">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 </#macro>
 
 <!--east main-->
