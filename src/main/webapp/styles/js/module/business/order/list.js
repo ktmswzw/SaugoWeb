@@ -19,7 +19,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
 
         //列表
         var $table = $('#tableB').bootstrapTable({
-            url: '',
+            url: WEB_GLOBAL_CTX + '/business/order/list',
             dataType: 'json',
             cache:false,
             showToggle:true,
@@ -57,7 +57,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
         $('#delete').click(function () {
             var objects = $table.bootstrapTable('getSelections');
             $.each(objects, function () {
-                if(this.status!=9) {
+                if(this.status==1) {
                     $.post(WEB_GLOBAL_CTX + "/business/order/delete/" + this.id, function (rsp) {
                         if (rsp.successful) {
                             $.scojs_message(rsp.msg, $OK);
@@ -70,7 +70,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
                     });
                 }
                 else{
-                    $.scojs_message("[已撤销] 状态订单无法再次撤销!", $ERROR);
+                    $.scojs_message("非 [待确认] 状态订单无法撤销!", $ERROR);
                 }
             });
         });

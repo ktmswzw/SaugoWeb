@@ -457,6 +457,16 @@ function orderStateFormatter(value, row, index) {
     return value;
 }
 
+
+var levelList = [{id: 1, name: '直代'}, {id: 2, name: '次代'}];
+function levelFormatter(value, row, index) {
+    for (var i = 0; !(i >= levelList.length); i++) {
+        if (levelList[i].id == value) return levelList[i].name;
+    }
+    return value;
+}
+
+
 //本页查询拼装
 function queryParamsOrder(params) {
     var name = $("#search_agentName").val();

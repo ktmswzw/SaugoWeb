@@ -27,7 +27,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
             smartDisplay: false,
             queryParams: 'queryParamsF',
             pagination: true,
-            pageSize: 5,
+            pageSize: 10,
             pageList: [5, 10, 20, 100]
         }).on('check.bs.table', function (e, row) {
             showEdit($table, 'to', 'do', 'in');
