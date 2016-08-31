@@ -3,7 +3,7 @@
  * Created by xecoder on Sun Aug 21 15:24:09 CST 2016.
  */
 
-requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'comm', 'message'],
+requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExport', 'tExportS', 'comm', 'message'],
     function () {
 
 
@@ -11,8 +11,10 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
-        $('#produceId').append("<option ></option>");
+        $('#do').append('<button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span class="glyphicon glyphicon-plus"></span></button>');
         //初始化下拉框 //可做异步下拉框选择
+
+        $('#produceId').append("<option ></option>");
         initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, "", "id", "name", true);
 
         //列表

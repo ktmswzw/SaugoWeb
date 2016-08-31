@@ -11,6 +11,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn',  'select', 'selectCN','tEx
         //初始化下拉框 //可做异步下拉框选择
         // initSelect("modState", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'PRIMOD-STATE'}, modState, "dicKey", "dicValue",true);
 
+        $('#status').val("1");
         $('#produceId').append("<option ></option>");
         //初始化下拉框 //可做异步下拉框选择
         initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, "", "id", "name", true);
