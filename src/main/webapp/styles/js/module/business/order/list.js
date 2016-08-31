@@ -14,7 +14,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
         $('#do').append('<button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span class="glyphicon glyphicon-plus"></span></button>');
         //初始化下拉框 //可做异步下拉框选择
 
-        $('#produceId').append("<option ></option>");
+        initSelect("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'ORDER_STATUS'}, "", "dicKey", "dicValue",true);
         initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, "", "id", "name", true);
 
         //列表

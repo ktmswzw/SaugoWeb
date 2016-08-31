@@ -425,7 +425,10 @@ function exportToExcel(title,name){
 
 
 function exportValue(value, row, index) {
-     return '<div class="formatNumber" style="color: #3c4737; ">\''+value+'</div>';
+    if (value != null)
+        return '<div class="formatNumber" style="color: #3c4737; ">\'' + value + '</div>';
+    else
+        return "";
 }
 
 function idFormatter(value, row, index) {

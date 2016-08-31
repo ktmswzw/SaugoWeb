@@ -320,9 +320,9 @@ public class UserController extends BaseAction{
         logger.debug("id = " + id);
         Result result = new Result();
         User user = userService.get(id);
-        if(id==1)
+        if(id==1||id==2)
         {
-            result.setMsg("操作失败,此帐号未超级管理员,不可删除");
+            result.setMsg("操作失败,此帐号特殊,不可删除");
             result.setSuccessful(false);
             return result;
         }

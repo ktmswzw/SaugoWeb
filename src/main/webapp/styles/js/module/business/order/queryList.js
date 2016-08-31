@@ -7,7 +7,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
-        $('#produceId').append("<option ></option>");
+        initSelect("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'ORDER_STATUS'}, "", "dicKey", "dicValue",true);
         //初始化下拉框 //可做异步下拉框选择
         initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, "", "id", "name", true);
 

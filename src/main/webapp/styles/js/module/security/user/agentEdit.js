@@ -12,13 +12,9 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','maskedI
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
 
-        var parentIdVal='';
-
-
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
             //初始化页面
             meForm($('#formSubmit'), user);
-            parentIdVal=user.parentId+"";
 
 
             $("#href1").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsFront);
@@ -62,13 +58,10 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','maskedI
         });
 
         //初始树
-        meTreeInit('myTree',parentIdVal.split(""),"/console/security/user/findJsonById/",false,true,1);
+        meTreeInit('myTree',new Array(user.parentId+""),"/console/security/user/findJsonById/",false,true,1);
 
 
         //提交
-        var parentId = $('#parentId');
-
-
         $('#formSubmit').formValidation({
             framework: 'bootstrap',
             icon: {
@@ -87,6 +80,11 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','maskedI
 
             var $form = $(e.target);
             var params = $form.serializeArray();
+            if ($("#parentId").val() == $("#id").val() ) {
+                highlight_error($("#parentId"));
+                $.scojs_message("上级代理不能是自己", $ERROR);
+                return false;
+            }
             if (($("#parentId").val() == '' )) {
                 highlight_error($("#parentId"));
                 $.scojs_message("上级代理必须选择一个", $ERROR);
