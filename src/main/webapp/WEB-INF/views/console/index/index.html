@@ -19,5 +19,57 @@
 
 </div><!--/.container-->
 <@foot/>
+<script type="text/javascript">
+    //初始化第一菜单
+    function getModuleString(id) {
+        var temp = "";
+        var firstModuleGroup ={};
+        var secondModule ={};
+        firstModuleGroup = getModuleList(id);
+        $(firstModuleGroup).each(function () {
+            temp+='<div class="panel panel-default"><div class="panel-heading" role="tab" id="collapseListGroupHeading'+this.id
+                    +'"><div class="panel-title"><a class="collapsed" style="text-decoration-line: none" data-parent="#accordion" data-toggle="collapse" href="#collapseListGroup'+this.id
+                    +'" aria-expanded="false" aria-controls="collapseListGroup'+this.id
+                    +'"><span class="'+this.className
+                    +'"></span>&nbsp;<span class="text" style="font-size: small">'+this.name
+                    +'</span></a></div></div><div id="collapseListGroup'+this.id
+                    +'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading'+this.id
+                    +'"><div class="list-group">';
+            secondModule = getModuleList(this.id);
+            $(secondModule).each(function () {
+                var alterAgent = "";
+                var alterOrder = "";
+                if(this.sn=="Agent"){
+                    alterAgent = '<span class="badge" id="alterAgent"></span>'
+                }
+                if(this.sn=="Check"){
+                    alterOrder = '<span class="badge" id="alterOrder"></span>'
+                }
+                temp+='<a href="javascript:void(0);" class="list-group-item" onclick="setMain(\''+WEB_GLOBAL_CTX+this.url
+                        +'\');"><span class="'+this.className
+                        +'"></span>&nbsp;<span class="text">'+this.name
+                        +'</span>'+alterAgent+alterOrder+'</a>'
+            });
+            temp+='</div></div></div>';
+        });
+        return temp;
+    }
+
+</script>
+<@shiro.hasPermission name="Order:edit">
+<script type="text/javascript">
+    window.setInterval(function () {
+        getOrderCheck();
+    }, 30 * 1000);
+</script>
+</@shiro.hasPermission>
+
+<@shiro.hasPermission name="Agent:edit">
+<script type="text/javascript">
+    window.setInterval(function () {
+        getAgentCheck();
+    }, 30 * 1000);
+</script>
+</@shiro.hasPermission>
 </body>
 </html>

@@ -11,6 +11,7 @@ import com.xecoder.entity.User;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.viewModel.GridModel;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xecoder on Sun Aug 21 15:24:09 CST 2016.
@@ -74,7 +76,18 @@ public class OrderController extends BaseAction {
         return m;
     }
 
-
+    @RequestMapping(value="/alterOrderCheck")
+    @ResponseBody
+    public int alterAgentCheck(){
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser.isPermitted("Check:edit")) {
+            Order order = new Order();
+            order.setStatus(1);
+            List<Order> list =  orderService.findAll(null,order);
+            return list!=null?list.size():0;
+        }
+        return 0;
+    }
     /**
      * 添加订单
      *

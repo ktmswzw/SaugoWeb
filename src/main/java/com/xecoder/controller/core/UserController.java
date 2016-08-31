@@ -15,11 +15,13 @@ import com.xecoder.entity.UserRole;
 import com.xecoder.service.core.RoleService;
 import com.xecoder.service.core.UserRoleService;
 import com.xecoder.service.core.UserService;
+import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.shiro.ShiroUser;
 import com.xecoder.viewModel.GridModel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +107,18 @@ public class UserController extends BaseAction{
         return m;
     }
 
+    @RequestMapping(value="/alterAgentCheck")
+    @ResponseBody
+    public int alterAgentCheck(){
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser.isPermitted("Agent:save")) {
+            User user = new User();
+            user.setStatus("check");
+            List<User> list =  userService.find(user);
+            return list!=null?list.size():0;
+        }
+        return 0;
+    }
     /**
      * 表格产品管理
      * @return GridModel

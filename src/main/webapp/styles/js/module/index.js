@@ -1,16 +1,15 @@
-/**
- * Created by vincent on 2014/12/10.
- */
-var Loading;
 
+var Loading;
+var $OK;
+var $ERROR;
 requirejs(['jquery'],
     function () {
         requirejs(['bootstrap', 'ie10','comm','message'],
             function () {
 
                 //提示框
-                var $OK = $.scojs_message.TYPE_OK;
-                var $ERROR = $.scojs_message.TYPE_ERROR;
+                $OK = $.scojs_message.TYPE_OK;
+                $ERROR = $.scojs_message.TYPE_ERROR;
 
 
                 Loading = $('#myModal').modal({
@@ -70,30 +69,48 @@ function getModuleList(id) {
     return obj;
 }
 
-//初始化第一菜单
-function getModuleString(id) {
-    var temp = "";
-    var firstModuleGroup ={};
-    var secondModule ={};
-    firstModuleGroup = getModuleList(id);
-    $(firstModuleGroup).each(function () {
-        temp+='<div class="panel panel-default"><div class="panel-heading" role="tab" id="collapseListGroupHeading'+this.id
-        +'"><div class="panel-title"><a class="collapsed" style="text-decoration-line: none" data-parent="#accordion" data-toggle="collapse" href="#collapseListGroup'+this.id
-        +'" aria-expanded="false" aria-controls="collapseListGroup'+this.id
-        +'"><span class="'+this.className
-        +'"></span>&nbsp;<span class="text" style="font-size: small">'+this.name
-        +'</span></a></div></div><div id="collapseListGroup'+this.id
-        +'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading'+this.id
-        +'"><div class="list-group">';
-        secondModule = getModuleList(this.id);
-        $(secondModule).each(function () {
-            temp+='<a href="javascript:void(0);" class="list-group-item" onclick="setMain(\''+WEB_GLOBAL_CTX+this.url
-            +'\');"><span class="'+this.className
-            +'"></span>&nbsp;<span class="text">'+this.name
-            +'</span></a>'
-        });
-        temp+='</div></div></div>';
+//有需要确认用户的数据
+function getAgentCheck() {
+    //同步
+    $.ajax({
+        async: false,
+        cache: false,
+        type: 'GET',
+        url: WEB_GLOBAL_CTX + "/console/security/user/alterAgentCheck",
+        error: function () {// 请求失败处理函数
+            //$.scojs_message("更新失败,请重新登录!", $ERROR);
+        },
+        success: function (result) {
+            if(result!=0){
+                $("#alterAgent").html(result);
+                $.scojs_message("有新的代理需要确认!", $OK);
+            }
+            else
+                $("#alterAgent").html("");
+
+        }
     });
-    return temp;
 }
+//有需要确认订单的数据
+function getOrderCheck() {
+    //同步
+    $.ajax({
+        async: false,
+        cache: false,
+        type: 'GET',
+        url: WEB_GLOBAL_CTX + "/business/order/alterOrderCheck",
+        error: function () {// 请求失败处理函数
+            //$.scojs_message("更新失败,请重新登录!", $ERROR);
+        },
+        success: function (result) {
+            if(result!=0) {
+                $("#alterOrder").html(result);
+                $.scojs_message("有新的订单需要确认!", $OK);
+            }
+            else
+                $("#alterOrder").html("");
+        }
+    });
+}
+
 
