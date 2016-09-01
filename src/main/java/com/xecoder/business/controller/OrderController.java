@@ -4,7 +4,6 @@ import com.xecoder.business.entity.Order;
 import com.xecoder.business.service.OrderService;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
-import com.xecoder.common.util.ImageReader;
 import com.xecoder.common.util.Result;
 import com.xecoder.common.util.UploadUtils;
 import com.xecoder.entity.User;
@@ -44,6 +43,7 @@ public class OrderController extends BaseAction {
     private static final String CHECKEDIT = "/business/order/checkEdit";
     private static final String INFO = "/business/order/info";
     private static final String QUERY = "/business/order/query";
+    private static final String QUERYREPORT = "/business/order/queryReport";
 
     @RequestMapping(value = "/index")
     public String index() {
@@ -58,6 +58,26 @@ public class OrderController extends BaseAction {
     @RequestMapping(value = "/query")
     public String query() {
         return QUERY;
+    }
+
+    @RequestMapping(value = "/queryReport")
+    public ModelAndView queryReport(@RequestParam int produceId,@RequestParam int agentId,@RequestParam String start,@RequestParam String end,@RequestParam int status) {
+        ModelAndView mav = new ModelAndView(QUERYREPORT);
+        try {
+            User user = userService.get((long) agentId);
+            mav.addObject("produceId",produceId);
+            mav.addObject("agentName",user.getRealname());
+            mav.addObject("agentId",agentId);
+            mav.addObject("start",start);
+            mav.addObject("end",end);
+            mav.addObject("status",status);
+            return mav;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**

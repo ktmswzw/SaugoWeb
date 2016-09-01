@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<#include "/console/layout/main.html"/>
+<@head/>
+<body>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">订单清单</div>
+        <div class="panel-body">
+            <table id="tableB" class="table-hover table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th data-field="agentName" class="col-md-1" data-formatter="idFormatter">详情</th>
+                    <th data-field="agentName" class="col-md-1">代理</th>
+                    <th data-field="parentName" class="col-md-1">上级</th>
+                    <th data-field="inputTime" class="col-md-2">申请时间</th>
+                    <th data-field="produceName" class="col-md-1">产品</th>
+                    <th data-field="produceNumber" class="col-md-1">数量</th>
+                    <th data-field="bankMemo" class="col-md-1">备注</th>
+                    <th data-field="checkName" class="col-md-1">确认人</th>
+                    <th data-field="checkTime" class="col-md-2">确认时间</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div><!--/.container-->
+
+</body>
+<@foot/>
+<script src="${base}/styles/js/module/business/order/queryReport.js"></script>
+<script type="application/javascript">
+    var produceId = "${produceId}";
+    var agentName = "${agentName}";
+    var agentId = "${agentId}";
+    var start = "${start}";
+    var end = "${end}";
+    var status = "${status}";
+</script>
+</html>
+

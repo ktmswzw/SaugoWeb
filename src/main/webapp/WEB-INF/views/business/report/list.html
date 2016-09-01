@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<#include "/console/layout/main.html"/>
+<@head/>
+<body>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">积分统计管理</div>
+        <div class="panel-body">
+            <table id="tableB" class="table-hover table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th data-field="state" data-radio="true"></th>
+                    <th data-field="agentId" class="col-md-2">代理id</th>
+                    <th data-field="agentSum" class="col-md-2">数量</th>
+                    <th data-field="agentName" class="col-md-4">代理名称</th>
+                    <th data-field="levelOneSum" class="col-md-2">直代数量</th>
+                    <th data-field="levelTwoSum" class="col-md-2">次代数量</th>
+                    <th data-field="integral" class="col-md-2">总积分</th>
+                    <th data-field="reportDate" class="col-md-2">统计日期</th>
+
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div><!--/.container-->
+<div id="custom-toolbar">
+    <form role="form" name="form" id="form1">
+        <div class="form-inline" role="form">
+            <div class="row">
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+                    <select class="form-control " id="search_select" name="search_select">
+                    
+                    </select>
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="输入查询条件" id="search"
+                               name="search_username">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" id="query" name="query" title="查询"><span
+                                    class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
+                    <div class="btn-group" id="do">
+                        <@shiro.hasPermission name="Report:save">
+                        <button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span
+                                class="glyphicon glyphicon-plus"></span></button>
+                    </@shiro.hasPermission>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="to" style="display:none;">
+    <@shiro.hasPermission name="Report:edit">
+    <button type="button" class="btn btn-default" id="modify" name="modify" title="修改"><span
+            class="glyphicon glyphicon-edit"></span></button>
+</@shiro.hasPermission>
+<@shiro.hasPermission name="Report:delete">
+<button type="button" class="btn btn-default" id="delete" name="delete" title="删除"><span
+        class="glyphicon glyphicon-remove"></span></button>
+</@shiro.hasPermission>
+</div>
+</body>
+<@foot/>
+<script src="${base}/styles/js/module/business/report/list.js"></script>
+</html>
+

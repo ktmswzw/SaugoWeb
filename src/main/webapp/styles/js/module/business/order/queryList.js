@@ -44,20 +44,6 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
             });
         });
 
-        //修改
-        $('#check').click(function () {
-            var objects = $table.bootstrapTable('getSelections');
-            $.each(objects, function () {
-                if(this.status==1) {
-                    parent.Loading.modal('show');
-                    self.location = WEB_GLOBAL_CTX + "/business/order/check/" + this.id;
-                }
-                else{
-                    $.scojs_message("非 [待确认] 状态订单无法确认!", $ERROR);
-                }
-            });
-        });
-
         parent.Loading.modal('hide');
 
     });

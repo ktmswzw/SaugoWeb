@@ -49,6 +49,9 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         OrderCriteria criteria = new OrderCriteria();
         OrderCriteria.Criteria cri = criteria.createCriteria();
         if (order != null) {
+            if (order.getAgentId()!=null) {
+                cri.andAgentIdEqualTo(order.getAgentId());
+            }
             if (StringUtils.isNotBlank(order.getAgentName())) {
                 cri.addCriterion(" agent_name LIKE  '%"+order.getAgentName()+ "%' ");
             }

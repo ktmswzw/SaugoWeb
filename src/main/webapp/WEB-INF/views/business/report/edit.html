@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<#include "/console/layout/main.html"/>
+<html class="fuelux" >
+<@headEdit/>
+<body>
+<div class="container">
+    <form role="form" id="formSubmit" commandName="report" class="form-horizontal"
+          data-fv-framework="bootstrap"
+          data-fv-message="This value is not valid"
+          data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+          data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+          data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+        <!-- Modal -->
+        <div class="panel panel-default">
+            <div class="panel-heading">积分统计</div>
+            <div class="panel-body">
+                <div class="control-group">
+                                   <input type="hidden" name="id" id="id" /> 
+          <input type="hidden" name="produceId" id="produceId" /> 
+
+                </div>
+                          <div class="row control-group">
+                <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="agentId">代理id</label>
+                </div>
+                    <div class="col-sm-8 controls">
+                   <input type="text" class="form-control"  id="agentId" name="agentId" maxlength="50" placeholder="输入代理id" size="100" required   />
+                </div> 
+          </div> 
+          <div class="row control-group">
+                <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="agentSum">数量</label>
+                </div>
+                    <div class="col-sm-8 controls">
+                   <input type="text" class="form-control"  id="agentSum" name="agentSum" maxlength="50" placeholder="输入数量" size="100" required   />
+                </div> 
+          </div> 
+          <div class="row control-group">
+                <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="agentName">代理名称</label>
+                </div>
+                    <div class="col-sm-8 controls">
+                   <input type="text" class="form-control"  id="agentName" name="agentName" maxlength="50" placeholder="输入代理名称" size="100" required   />
+                </div> 
+          </div> 
+          <div class="row control-group">
+                <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="levelOneSum">直代数量</label>
+                </div>
+                    <div class="col-sm-8 controls">
+                   <input type="text" class="form-control"  id="levelOneSum" name="levelOneSum" maxlength="50" placeholder="输入直代数量" size="100" required   />
+                </div> 
+          </div> 
+          <div class="row control-group">
+                <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="levelTwoSum">次代数量</label>
+                </div>
+                    <div class="col-sm-8 controls">
+                   <input type="text" class="form-control"  id="levelTwoSum" name="levelTwoSum" maxlength="50" placeholder="输入次代数量" size="100" required   />
+                </div> 
+          </div> 
+          <div class="row control-group">
+                <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="integral">总积分</label>
+                </div>
+                    <div class="col-sm-8 controls">
+                   <input type="text" class="form-control"  id="integral" name="integral" maxlength="50" placeholder="输入总积分" size="100" required   />
+                </div> 
+          </div> 
+          <div class="row control-group">
+                <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="reportDate">统计日期</label>
+                </div>
+                    <div class="col-sm-8 controls">
+                   <input type="text" class="form-control"  id="reportDate" name="reportDate" maxlength="50" placeholder="输入统计日期" size="100" required   />
+                </div> 
+          </div> 
+
+            </div>
+
+            <div class="panel-footer">
+                <div class="row control-group">
+                    <div class="col-sm-4 col-sm-offset-5">
+                        <div style="align-content: center">
+                            <button type="submit" id="save" class="btn btn-primary" >保存</button>
+                            <button type="button" id="back" class="btn btn-default">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+<!-- /.container -->
+
+</body>
+<@foot/>
+<script src="${base}/styles/js/module/business/report/edit.js"></script>
+<script type="text/javascript">
+    var report = JSON.parse(JSON.stringify(${report}));
+</script>
+</html>
+
