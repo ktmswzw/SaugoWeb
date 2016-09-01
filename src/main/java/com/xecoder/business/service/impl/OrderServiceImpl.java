@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -84,7 +85,15 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Override
     public void update(Order order) {
+        order.setCheckTime(new Date());
         baseDao.getMapper(OrderMapper.class).updateByPrimaryKeySelective(order);
+        if(order.getStatus()!=1){
+            try {
+                baseDao.execute("call report_day_all("+order.getAgentId()+", "+order.getProduceId()+", '"+SimpleDate.format(order.getCheckTime())+"');");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

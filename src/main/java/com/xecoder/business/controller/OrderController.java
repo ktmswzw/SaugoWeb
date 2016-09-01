@@ -270,7 +270,6 @@ public class OrderController extends BaseAction {
                 order.setCheckId(user.getId());
                 order.setCheckName(user.getRealname());
             }
-            order.setCheckTime(new Date());
             orderService.update(order);
             result.setSuccessful(true);
             result.setMsg("撤销成功");
@@ -298,7 +297,6 @@ public class OrderController extends BaseAction {
             order.setStatus(2);
             order.setCheckId(user.getId());
             order.setCheckName(user.getRealname());
-            order.setCheckTime(new Date());
             orderService.update(order);
             result.setSuccessful(true);
             result.setMsg("确认成功");

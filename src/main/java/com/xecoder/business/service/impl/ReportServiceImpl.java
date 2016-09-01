@@ -64,7 +64,7 @@ public class ReportServiceImpl  extends BaseService implements ReportService {
 
     @Override
     public Report get(Long id) {
-        return baseDao.getMapper(ReportMapper.class).selectByPrimaryKey(id);
+        return baseDao.getMapper(ReportMapper.class).selectByPrimaryKey(Math.toIntExact(id));
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ReportServiceImpl  extends BaseService implements ReportService {
 
     @Override
     public void delete(Long id) {
-        baseDao.getMapper(ReportMapper.class).deleteByPrimaryKey(id);
+        baseDao.getMapper(ReportMapper.class).deleteByPrimaryKey(Math.toIntExact(id));
     }
 }
 

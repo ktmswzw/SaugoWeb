@@ -271,7 +271,7 @@ function serializeObject( formname )
 };
 
 
-var buttonArray = ["modify", "push", "delete", "close", "comment", "info", "force", "permission", "compressed", "stickers", "notice", "record", "back", "fix"];
+var buttonArray = ["modify", "check", "delete", "close", "comment", "info", "force", "permission", "compressed", "back", "fix"];
 
 function showEdit(obj, editDivId, appendDivId) {
     var objects = obj.bootstrapTable('getSelections');
