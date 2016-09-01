@@ -1,7 +1,9 @@
-requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'comm', 'message'],
+requirejs(['jquery', 'bootstrap','table', 'tablezn', 'select', 'selectCN', 'tExport', 'tExportS', 'comm', 'message'],
     function () {
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
+
+        initSelect("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'USER-STATUS'}, "check", "dicKey", "dicValue",true);
 
         //列表
         var $table = $('#tableB').bootstrapTable({
@@ -38,6 +40,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'com
             });
         });
 
+
         //删除
         $('#confirm').click(function () {
             var objects = $table.bootstrapTable('getSelections');
@@ -47,6 +50,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'com
                 if(state=="disabled")
                 {
                     $.scojs_message("已注销无法启用,请重新注册", $ERROR);
+                    // setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 3000);
                 }
                 else{
                     $.post(WEB_GLOBAL_CTX + "/console/security/user/deleteInfo/" + this.id, function (rsp) {
@@ -109,22 +113,26 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'tExport', 'tExportS', 'com
     });
 
 
-var statusList = [{id: 'enabled', name: '可用'}, {id: 'disabled', name: '注销'}, {id: 'check', name: '代审核'}];
-function stateFormatter(value, row, index) {
-    for (var i = 0; !(i >= statusList.length); i++) {
-        if (statusList[i].id == value) return statusList[i].name;
-    }
-    return value;
-}
-
-
-
 //本页查询拼装
 function queryParamsF(params) {
     var name = $("#search_select").val();
     var value = $("#search").val();
-    var str = "{\"" + name + "\":\"" + value + "\"}";
-    var data = eval('(' + str + ')');
+    var status = $('#status').val();
+    var str = "";
+    if(name!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\""+name+"\":\"" + value+ "\"";
+    }
+    if(status!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\"search_status\":\"" + status+ "\"";
+    }
+    var data = eval('({' + str.replace(new RegExp("/", 'g'),"-") + '})');
+
     params.sortName = "create_time";
     params.sortOrder = "desc";
     return $.extend({}, params, data);

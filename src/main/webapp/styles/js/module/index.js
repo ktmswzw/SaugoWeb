@@ -68,7 +68,7 @@ function getModuleList(id) {
     });
     return obj;
 }
-
+var old_title = document.title;
 //有需要确认用户的数据
 function getAgentCheck() {
     //同步
@@ -83,11 +83,14 @@ function getAgentCheck() {
         success: function (result) {
             if(result!=0){
                 $("#alterAgent").html(result);
+                $(document).attr("title","提醒"+result+"条代理请求需要确认!");
                 $.scojs_message("有新的代理需要确认!", $OK);
             }
-            else
+            else{
                 $("#alterAgent").html("");
-
+                $(document).attr("title",old_title);
+            }
+            setInterval("scroll()",50);
         }
     });
 }
@@ -107,10 +110,18 @@ function getOrderCheck() {
                 $("#alterOrder").html(result);
                 $.scojs_message("有新的订单需要确认!", $OK);
             }
-            else
+            else {
                 $("#alterOrder").html("");
+            }
+            setInterval("scroll()",50);
         }
     });
+}
+function scroll(){
+    var title=document.title ;
+    var firstch=title.charAt (0);
+    var leftstar=title.substring (1,title.length );
+    document.title =leftstar +"      "+firstch ;
 }
 
 

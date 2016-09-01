@@ -466,6 +466,14 @@ function levelFormatter(value, row, index) {
     return value;
 }
 
+var statusList = [{id: 'enabled', name: '正常'}, {id: 'disabled', name: '注销'}, {id: 'check', name: '待确认'}];
+
+function stateFormatter(value, row, index) {
+    for (var i = 0; !(i >= statusList.length); i++) {
+        if (statusList[i].id == value) return statusList[i].name;
+    }
+    return value;
+}
 
 //本页查询拼装
 function queryParamsOrder(params) {

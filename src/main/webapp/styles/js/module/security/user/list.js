@@ -81,15 +81,6 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
     });
 
 
-var statusList = [{id: 'enabled', name: '可用'}, {id: 'disabled', name: '不可用'}];
-function stateFormatter(value, row, index) {
-    for (var i = 0; !(i >= statusList.length); i++) {
-        if (statusList[i].id == value) return statusList[i].name;
-    }
-    return value;
-}
-
-
 //本页查询拼装
 function queryParamsF(params) {
     var name = $("#search_select").val();

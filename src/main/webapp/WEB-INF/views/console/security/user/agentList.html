@@ -31,30 +31,23 @@
     <form role="form" name="form" id="form1">
         <div class="form-inline" role="form" >
             <div class="row">
-
-                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                     <select class="form-control " id="search_select" name="search_select">
                         <option value="search_username">账号</option>
                         <option value="search_realname">姓名</option>
                     </select>
-                </div>
-                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="请输入查询内容" id="search"
-                               name="search_username">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" id="query" name="query" title="查询"><span
-                                    class="glyphicon glyphicon-search"></span></button>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5">
+                    <input class="form-control" type="text" placeholder="请输入查询内容" id="search"
+                       name="search_username">
+                    <select id="status" style="width: 150px" name="status" class="selectpicker show-tick">
+                        <option ></option>
+                    </select>
+                        <button type="button" class="btn btn-default" id="query" name="query" title="查询"><span
+                                class="glyphicon glyphicon-search"></span></button>
+                    <@shiro.hasPermission name="User:save">
+                    <button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span
+                            class="glyphicon glyphicon-plus"></span></button>
+                    </@shiro.hasPermission>
                     <div class="btn-group" id="do">
-                        <@shiro.hasPermission name="User:save">
-                        <button type="button" class="btn btn-default" id="add" name="add" title="新增" ><span
-                                class="glyphicon glyphicon-plus"></span></button>
-                        </@shiro.hasPermission>
                     </div>
                 </div>
             </div>
@@ -72,8 +65,8 @@
 
 </@shiro.hasPermission>
 <@shiro.hasPermission name="Agent:delete">
-<button type="button" class="btn btn-default" id="delete" name="delete" title="注销"><span
-        class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#myModal" ></span></button>
+<button type="button" class="btn btn-default" id="delete" name="delete" title="注销" data-toggle="modal" data-target="#myModal" ><span
+        class="glyphicon glyphicon-remove" ></span></button>
 </@shiro.hasPermission>
 </div>
 
