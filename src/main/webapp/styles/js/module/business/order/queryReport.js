@@ -7,28 +7,32 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS','com
         var $table = $('#tableS').bootstrapTable({
             url: WEB_GLOBAL_CTX + '/business/order/list',
             dataType: 'json',
-            cache:false,
-            showExport:true,
-            exportTypes:"['excel']",
-            sidePagination:'server',
-            singleSelect:true,
-            queryParams: 'reportParamsOrder',
+            cache: false,
+            showToggle: true,
+            showExport: true,
+            showRefresh: true,
+            showColumns: true,
+            exportTypes: "['excel']",
+            toolbar: '#custom-toolbar',
+            toolbarAlign: 'left',
+            sidePagination: 'server',
+            clickToSelect: true,
+            singleSelect: true,
+            smartDisplay: false,
+            queryParams: 'reportParamsOrderQuery',
             pagination: false
         });
 
-        parent.Loading.modal('hide');
 
     });
 
 
 //本页查询拼装
-function reportParamsOrder(params) {
-    var name = agentName;
-    var agentId = agentId;
-    var begin = start;
-    var end = end;
-    var produceId = produceId;
-    var status = status;
+function reportParamsOrderQuery(params) {
+    var agentId = order.agentId;
+    var begin = order.beginDate;
+    var end = order.endDate;
+    var produceId = order.produceId;
     var str = "";
     if(begin!="")
         str = "\"search_beginDate\":\"" + begin+"\"";
@@ -44,27 +48,15 @@ function reportParamsOrder(params) {
         }
         str += "\"search_agentId\":\"" + agentId+ "\"";
     }
-    if(name!="") {
-        if(str!="") {
-            str += ",";
-        }
-        str += "\"search_agentName\":\"" + name+ "\"";
-    }
     if(produceId!="") {
         if(str!="") {
             str += ",";
         }
         str += "\"search_produceId\":\"" + produceId+ "\"";
     }
-    if(status!="") {
-        if(str!="") {
-            str += ",";
-        }
-        str += "\"search_status\":\"" + status+ "\"";
-    }
     var data = eval('({' + str.replace(new RegExp("/", 'g'),"-") + '})');
-    params.sortName = "input_time";
-    params.sortOrder = "desc";
+    params.sortName = "agent_id";
+    params.sortOrder = "asc";
     return $.extend({}, params, data);
 }
 

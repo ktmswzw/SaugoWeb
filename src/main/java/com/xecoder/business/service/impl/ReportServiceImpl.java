@@ -7,6 +7,7 @@ import com.xecoder.business.service.ReportService;
 import com.xecoder.common.basedao.BaseDao;
 import com.xecoder.common.baseservice.BaseService;
 import com.xecoder.common.mybatis.Page;
+import com.xecoder.common.util.SimpleDate;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,23 @@ public class ReportServiceImpl  extends BaseService implements ReportService {
         ReportCriteria criteria = new ReportCriteria();
         ReportCriteria.Criteria cri = criteria.createCriteria();
         if (report != null) {
-                
+            if(report.getProduceId()!=null)
+                cri.andProduceIdEqualTo(report.getProduceId());
+            if(report.getAgentId()!=null) {
+                if (!report.isSuperReport())
+                    cri.addCriterion(" agent_id in (select id from security_user where status = 'enabled' and parent_id = " + report.getAgentId() + ")");
+                else
+                    cri.addCriterion(" FIND_IN_SET(agent_id, AGENT_TREE(" + report.getAgentId() + "))");
+            }
+
+            if(report.getBeginDate()!=null) {
+                String temp = SimpleDate.format(report.getBeginDate()).replace("-","");
+                cri.andReportDateGreaterThanOrEqualTo(Integer.valueOf(temp));
+            }
+            if(report.getEndDate()!=null) {
+                String temp = SimpleDate.format(report.getEndDate()).replace("-","");
+                cri.andReportDateLessThanOrEqualTo(Integer.valueOf(temp));
+            }
         }
         if(page != null && page.getSort() != null && page.getOrder() != null){
             criteria.setOrderByClause(page.getSort() + " " + page.getOrder());
@@ -78,8 +95,13 @@ public class ReportServiceImpl  extends BaseService implements ReportService {
     }
 
     @Override
-    public List<Report> reportTree(Page page, Report report){
-        return baseDao.getMapper(ReportMapper.class).reportTree(getCriteria(page,report));
+    public Page reportTree(Page page, Report report){
+        page.setCount(countByExample(page,report));
+        List<Report> list= baseDao.getMapper(ReportMapper.class).reportTree(getCriteria(page,report));
+        if(list!=null)
+            return page.setRows(list);
+        else
+            return null;
     }
 }
 

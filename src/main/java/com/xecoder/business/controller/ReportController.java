@@ -11,6 +11,7 @@ import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.Result;
 import com.xecoder.viewModel.GridModel;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,17 +45,35 @@ public class ReportController extends BaseAction {
      * 表格积分统计
      * @return GridModel
      */
-    @RequestMapping(value="/list")
+    @RequiresPermissions("Report:show")
+    @RequestMapping(value="/reportSuperlist")
     @ResponseBody
-    public GridModel list() {
+    public GridModel reportSuperlist() {
         Report report = SearchForm(Report.class);
-        Page info = reportService.findByPage(page(), report);
+        report.setSuperReport(true);
+        Page info = reportService.reportTree(page(), report);
         GridModel m = new GridModel();
         m.setRows(info.getRows());
         m.setTotal(info.getCount());
         return m;
     }
 
+    /**
+     * 表格积分统计
+     * @return GridModel
+     */
+    @RequiresPermissions("Report:show")
+    @RequestMapping(value="/reportList")
+    @ResponseBody
+    public GridModel reportList() {
+        Report report = SearchForm(Report.class);
+        report.setSuperReport(false);
+        Page info = reportService.reportTree(page(), report);
+        GridModel m = new GridModel();
+        m.setRows(info.getRows());
+        m.setTotal(info.getCount());
+        return m;
+    }
 
     /**
      * 添加积分统计

@@ -60,4 +60,6 @@ public interface UserService {
 	User getByEmail(String email);
 
 	List<User> findByParentId(Long parentId);
+
+	List<User> selectTreeById(Long id);
 }

@@ -7,7 +7,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">订单清单</div>
         <div class="panel-body">
-            <table id="tableB" class="table-hover table-condensed table-striped">
+            <table id="tableS" class="table-hover table-condensed table-striped">
                 <thead>
                 <tr>
                     <th data-field="agentName" class="col-md-1" data-formatter="idFormatter">详情</th>
@@ -28,14 +28,9 @@
 
 </body>
 <@foot/>
-<script src="${base}/styles/js/module/business/order/queryReport.js"></script>
 <script type="application/javascript">
-    var produceId = "${produceId}";
-    var agentName = "${agentName}";
-    var agentId = "${agentId}";
-    var start = "${start}";
-    var end = "${end}";
-    var status = "${status}";
+    var order = JSON.parse(JSON.stringify(${order}));
 </script>
+<script src="${base}/styles/js/module/business/order/queryReport.js"></script>
 </html>
 

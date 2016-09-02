@@ -56,7 +56,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
             if (StringUtils.isNotBlank(order.getAgentName())) {
                 cri.addCriterion(" agent_name LIKE  '%"+order.getAgentName()+ "%' ");
             }
-            if (order.getProduceId()!=null) {
+            if (order.getProduceId()!=null&&order.getProduceId()!=0) {
                 cri.andProduceIdEqualTo(order.getProduceId());
             }
             if (order.getStatus()!=null) {

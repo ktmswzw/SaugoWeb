@@ -419,5 +419,10 @@ public class UserServiceImpl extends BaseService implements UserService {
 	private boolean isSupervisor(Long id) {
 		return id == 1;
 	}
-	
+
+    @Override
+    public List<User> selectTreeById(Long id) {
+        List<User> list =   baseDao.getMapper(UserMapper.class).selectTreeById(id);
+        return list;
+    }
 }

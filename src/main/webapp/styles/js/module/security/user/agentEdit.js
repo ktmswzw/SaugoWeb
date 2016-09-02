@@ -1,5 +1,5 @@
 //加载插件
-requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','maskedInput','validator','vb','validatorLAG','comm','form','message'],
+requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedInput','validator','vb','validatorLAG','comm','form','message'],
     function ($,_) {
 
         //返回
@@ -27,11 +27,11 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','maskedI
         else{
             $("#status").val("enabled");
         }
-        //修改页面结束
-        $("#bankAccount").mask("9999 9999 9999 9999");
-        $("#bankAccount").dblclick(function() {
-            $(this).unmask();
-        });
+        // //修改页面结束
+        // $("#bankAccount").mask("9999 9999 9999 9999");
+        // $("#bankAccount").dblclick(function() {
+        //     $(this).unmask();
+        // });
 
         //页面特殊要求
         $("#username").val(($("#phone").val()));

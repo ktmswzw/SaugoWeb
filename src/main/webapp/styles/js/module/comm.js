@@ -430,7 +430,6 @@ function exportValue(value, row, index) {
     else
         return "";
 }
-
 function idFormatter(value, row, index) {
     var temp = "";
     if (value.length > 0 && value != undefined) {
@@ -515,3 +514,50 @@ function queryParamsOrder(params) {
     return $.extend({}, params, data);
 }
 
+
+
+
+//本页查询拼装
+function reportParamsOrder(params) {
+    Report_begin = $("#search_beginDate").val();
+    Report_end = $("#search_endDate").val();
+    Report_produceId = $("#produceId").val();
+
+    var str = "";
+    if(Report_begin!="")
+        str = "\"search_beginDate\":\"" + Report_begin+"\"";
+    if(Report_end!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\"search_endDate\":\"" + Report_end+ "\"";
+    }
+    if(temp_parentid!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\"search_agentId\":\"" + temp_parentid+ "\"";
+    }
+    if(Report_produceId!="") {
+        if(str!="") {
+            str += ",";
+        }
+        str += "\"search_produceId\":\"" + Report_produceId+ "\"";
+    }
+    var data = eval('({' + str.replace(new RegExp("/", 'g'),"-") + '})');
+    params.sortName = "agent_id";
+    params.sortOrder = "asc";
+    return $.extend({}, params, data);
+}
+
+function reportFormatter(value, row, index) {
+    var temp = "";
+    if (value != undefined) {
+        temp = '<button type="button" class="btn btn-primary btn-sm" onclick="viewReport(\''+value+'\')">查看</button>';
+    }
+    return temp;
+}
+function viewReport(id)
+{
+    openWindow( WEB_GLOBAL_CTX+'/business/order/queryReport?agentId='+id+"&condition="+Report_produceId+"|~"+Report_begin+"|~"+Report_end+"|");
+}

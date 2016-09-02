@@ -103,7 +103,7 @@
     select
     <include refid="Base_Column_List" />
     from security_user nn
-    WHERE FIND_IN_SET(id, AGENT_TREE(#{id,jdbcType=BIGINT}))
+    WHERE status = 'enabled' and FIND_IN_SET(id, AGENT_TREE(#{id,jdbcType=BIGINT}))
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">

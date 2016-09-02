@@ -1,5 +1,11 @@
 package com.xecoder.business.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.Transient;
+import java.util.Date;
+
 public class Report {
     private Integer id;
 
@@ -18,6 +24,18 @@ public class Report {
     private Integer produceId;
 
     private Integer reportDate;
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date beginDate;
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date endDate;
+
+    boolean superReport;
 
     public Integer getId() {
         return id;
@@ -89,5 +107,29 @@ public class Report {
 
     public void setReportDate(Integer reportDate) {
         this.reportDate = reportDate;
+    }
+
+    public Date getBeginDate() {
+        return beginDate;
+    }
+
+    public void setBeginDate(Date beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isSuperReport() {
+        return superReport;
+    }
+
+    public void setSuperReport(boolean superReport) {
+        this.superReport = superReport;
     }
 }
