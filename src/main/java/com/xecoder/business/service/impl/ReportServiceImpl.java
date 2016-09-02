@@ -76,5 +76,10 @@ public class ReportServiceImpl  extends BaseService implements ReportService {
     public void delete(Long id) {
         baseDao.getMapper(ReportMapper.class).deleteByPrimaryKey(Math.toIntExact(id));
     }
+
+    @Override
+    public List<Report> reportTree(Page page, Report report){
+        return baseDao.getMapper(ReportMapper.class).reportTree(getCriteria(page,report));
+    }
 }
 

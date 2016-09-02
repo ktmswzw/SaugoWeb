@@ -2,7 +2,6 @@ package com.xecoder.business.service;
 
 import com.xecoder.business.entity.Report;
 import com.xecoder.common.mybatis.Page;
-import com.xecoder.exception.ServiceException;
 
 import java.util.List;
 
@@ -25,6 +24,8 @@ public interface ReportService {
     void update(Report report);
 
     void delete(Long id);
+
+    List<Report> reportTree(Page page, Report report);
 
 }
 

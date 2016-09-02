@@ -273,4 +273,21 @@
       report_date = #{reportDate,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="reportTree" resultMap="BaseResultMap" parameterType="com.xecoder.business.entity.ReportCriteria" >
+    select
+    id,
+    agent_id,
+    agent_name,
+    sum(s.agent_sum) as agent_sum,
+    sum(s.level_one_sum) as level_one_sum,
+    sum(s.level_two_sum) as level_two_sum,
+    sum(integral) as integral,
+    sum(1) as produce_id,
+    sum(1) as report_date
+    from business_report s
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    GROUP BY  agent_id,agent_name
+  </select>
 </mapper>
