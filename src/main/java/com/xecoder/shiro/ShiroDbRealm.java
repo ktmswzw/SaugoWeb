@@ -300,7 +300,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	public void clearCachedAuthorizationInfo(String principal) {
 		if(principal!=null) {
 			SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
-			clearCachedAuthorizationInfo(principals);
+			doClearCache(principals);
 		}
 	}
 

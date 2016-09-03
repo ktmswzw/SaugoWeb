@@ -4,15 +4,16 @@
 
     <diskStore path="java.io.tmpdir/shiro" />
 
-   <defaultCache
-            maxElementsInMemory="100000"
+
+    <defaultCache
+            maxEntriesLocalHeap="10000"
             eternal="false"
-            timeToIdleSeconds="36000"
-            timeToLiveSeconds="36000"
-            overflowToDisk="false"
-            diskPersistent="false"
-            diskExpiryThreadIntervalSeconds="300"
-            />
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+            maxEntriesLocalDisk="300"
+            memoryStoreEvictionPolicy="LFU"/>
+    <!-- security entity-->
 
     <cache name="shiro-kickout-session"
            maxEntriesLocalHeap="2000"

@@ -46,4 +46,15 @@
 			overflowToDisk="true"
 			maxEntriesLocalDisk="100000"
 			memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="shiro-kickout-session"
+		   maxEntriesLocalHeap="2000"
+		   eternal="false"
+		   timeToIdleSeconds="36000"
+		   timeToLiveSeconds="0"
+		   overflowToDisk="false"
+		   statistics="true"
+		   maxEntriesLocalDisk="100000"
+		   memoryStoreEvictionPolicy="LFU">
+	</cache>
 </ehcache>

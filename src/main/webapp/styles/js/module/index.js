@@ -83,14 +83,14 @@ function getAgentCheck() {
         success: function (result) {
             if(result!=0){
                 $("#alterAgent").html(result);
-                $(document).attr("title","提醒"+result+"条代理请求需要确认!");
+                $(document).attr("title","提醒"+result+"条代理请求需要确认!!!");
                 $.scojs_message("有新的代理需要确认!", $OK);
             }
             else{
                 $("#alterAgent").html("");
                 $(document).attr("title",old_title);
             }
-            setInterval("scroll()",50);
+           setInterval("scroll()",50);
         }
     });
 }
