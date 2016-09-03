@@ -60,8 +60,9 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'va
             var v = $('#agentId').find("option:selected").text();
             $("#agentName").val(v.split("-上级")[0]);
         });
+
         setHeightSelf(1000);
-        $('#formSubmit').formValidation({
+        var valid = $('#formSubmit').formValidation({
             framework: 'bootstrap',
             icon: {
                 valid: 'glyphicon glyphicon-ok',
@@ -125,6 +126,12 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'va
                 });
                 return true;
             }
+        });
+
+
+        $("#file").change(function () {
+            $("#save").removeAttr("disabled");
+            $("#save").toggleClass("disabled");
         });
 
         parent.Loading.modal('hide');

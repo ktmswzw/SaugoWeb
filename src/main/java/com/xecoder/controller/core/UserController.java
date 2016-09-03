@@ -245,21 +245,21 @@ public class UserController extends BaseAction{
                 User user1 = userService.getByUsername(user.getUsername());
                 if (user1 != null ) {
                     result.setSuccessful(false);
-                    result.setMsg("代理添加失败，手机号码：" + user1.getRealname() + "已存在。");
+                    result.setMsg("代理添加失败，手机号码：" + user.getUsername()+"_"+user1.getRealname() + "已存在。");
                     return result;
                 }
 
                 User user2 = userService.getByBankAccount(user.getBankAccount());
                 if (user2 != null) {
                     result.setSuccessful(false);
-                    result.setMsg("代理添加失败，银行帐号："  + user2.getRealname() + "已经使用。");
+                    result.setMsg("代理添加失败，银行帐号："  + user.getBankAccount()+"_"+user2.getRealname() + "已经使用。");
                     return result;
                 }
 
                 User user3 = userService.getByIdentityCards(user.getIdentityCards());
                 if (user3 != null) {
                     result.setSuccessful(false);
-                    result.setMsg("代理添加失败，身份证号码："  + user3.getRealname() + "已经使用。");
+                    result.setMsg("代理添加失败，身份证号码："  + user.getIdentityCards()+"_"+user3.getRealname() + "已经使用。");
                     return result;
                 }
                 userService.save(user);

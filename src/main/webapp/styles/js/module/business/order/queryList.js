@@ -35,7 +35,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
         }).on('page-change.bs.table', function (e, size, number) {
             setHeightSelf(200*number/10);
         });
-
+        setHeightSelf(800);
         //查询动作
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {

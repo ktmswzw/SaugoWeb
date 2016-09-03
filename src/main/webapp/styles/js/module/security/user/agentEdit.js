@@ -27,11 +27,11 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
         else{
             $("#status").val("enabled");
         }
-        // //修改页面结束
-        // $("#bankAccount").mask("9999 9999 9999 9999");
-        // $("#bankAccount").dblclick(function() {
-        //     $(this).unmask();
-        // });
+        //修改页面结束
+        $("#bankAccount").mask("9999 9999 9999 9999");
+        $("#bankAccount").dblclick(function() {
+            // $(this).unmask();
+        });
 
         //页面特殊要求
         $("#username").val(($("#phone").val()));
@@ -62,7 +62,7 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
 
 
         //提交
-        $('#formSubmit').formValidation({
+        var valid = $('#formSubmit').formValidation({
             framework: 'bootstrap',
             icon: {
                 valid: 'glyphicon glyphicon-ok',
@@ -154,5 +154,24 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                 return true;
             }
         });
+
+        $("#file1").change(function () {
+            $("#save").removeAttr("disabled");
+            $("#save").toggleClass("disabled");
+        });
+
+
+        $("#file2").change(function () {
+            $("#save").removeAttr("disabled");
+            $("#save").toggleClass("disabled");
+        });
+
+
+        $("#parentId").change(function () {
+            $("#save").removeAttr("disabled");
+            $("#save").toggleClass("disabled");
+        });
+
+
     });
 
