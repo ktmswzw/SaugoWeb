@@ -50,8 +50,6 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'table', 'tablezn','select', 'select
             cache: false,
             showToggle: true,
             showExport: true,
-            showRefresh: true,
-            showColumns: true,
             exportTypes: "['excel']",
             toolbar: '#custom-toolbar',
             toolbarAlign: 'left',

@@ -133,7 +133,7 @@
                 /login/autoLoad = anon
 				/login/load = anon
 				/login = authc
-				/login/agent = anon
+				/agentLogin = anon
 				/logout = logout
 		    	/console/** = kickout,user
 		    	/business/** = kickout,user

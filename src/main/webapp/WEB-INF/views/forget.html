@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<#include "/console/layout/agentLayout.html"/>
+<@head/>
+<body>
+<form role="form" name="formLogin" id="formLogin" method="post" commandName="login">
+    <input name="salt" type="hidden" id="salt" value="${salt}"/>
+    <div class="page_title hd">
+        <div class="weui_text_area">
+            <h2 class="weui_msg_title">重置密码</h2>
+        </div>
+    </div>
+    <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">手机</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="number" value="" pattern="[0-9]*" placeholder="请输入手机号码" id="username"
+                       required
+                       name="username" tabindex="1" minlength="11" maxlength="11" max="19000000000">
+            </div>
+        </div>
+
+        <div class="weui_cell weui_vcode">
+            <div class="weui_cell_hd"><label class="weui_label">验证码</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="number" required tabindex="3" placeholder="请输入验证码"/>
+            </div>
+            <div class="weui_cell_ft">
+                <img id="Kaptcha" src=""/>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="toast" style="display: none;">
+        <div class="weui_mask_transparent"></div>
+        <div class="weui_toast">
+            <p id="msgType"></p>
+            <p class="weui_toast_content" id="error_dialog">已完成</p>
+        </div>
+    </div>
+
+    <div class="weui_btn_area">
+        <!--<a class="weui_btn weui_btn_primary" id="but_login" name="but_login">确定</a>-->
+        <button type="submit" id="but_login" name="but_login" class="weui_btn weui_btn_primary" tabindex="4">重置获取密码
+        </button>
+    </div>
+
+</form>
+
+<@foot/>
+<script src="${base}/styles/js/module/forget.js"></script>
+</body>
+</html>

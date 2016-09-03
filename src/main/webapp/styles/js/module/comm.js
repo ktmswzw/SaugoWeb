@@ -9,7 +9,21 @@ function highlight_error(el) {
         el.parent().removeClass('has-error');
     }
 }
-
+function doErrorMsg(msg,type) {
+    $('#error_dialog').html(msg);
+    if(type){
+        $('#msgType').html('');
+        $('#msgType').html('<i class="weui_icon_msg weui_icon_success"></i>');
+    }
+    else{
+        $('#msgType').html('');
+        $('#msgType').html('<i class="weui_icon_msg weui_icon_warn"></i>');
+    }
+    $('#toast').show();
+    setTimeout(function () {
+        $('#toast').hide();
+    }, 2000);
+}
 function randomKey(){
     $("#Kaptcha").attr("src", WEB_GLOBAL_CTX+"/captcha/captchaing?" + Math.floor(Math.random() * 100)).fadeIn();
 }

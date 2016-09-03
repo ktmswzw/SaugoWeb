@@ -69,6 +69,7 @@ function getModuleList(id) {
     return obj;
 }
 var old_title = document.title;
+var countCheck = 0;
 //有需要确认用户的数据
 function getAgentCheck() {
     //同步
@@ -85,12 +86,11 @@ function getAgentCheck() {
                 $("#alterAgent").html(result);
                 $(document).attr("title","提醒"+result+"条代理请求需要确认!!!");
                 $.scojs_message("有新的代理需要确认!", $OK);
+                countCheck = countCheck + result;
             }
             else{
-                $("#alterAgent").html("");
-                $(document).attr("title",old_title);
+                updateTitle();
             }
-           setInterval("scroll()",50);
         }
     });
 }
@@ -108,20 +108,19 @@ function getOrderCheck() {
         success: function (result) {
             if(result!=0) {
                 $("#alterOrder").html(result);
+                $(document).attr("title","提醒"+result+"条发货订单请求需要确认!!!");
                 $.scojs_message("有新的订单需要确认!", $OK);
+                countCheck = countCheck + result;
             }
             else {
-                $("#alterOrder").html("");
+                updateTitle();
             }
-            setInterval("scroll()",50);
         }
     });
 }
-function scroll(){
-    var title=document.title ;
-    var firstch=title.charAt (0);
-    var leftstar=title.substring (1,title.length );
-    document.title =leftstar +"      "+firstch ;
+function updateTitle() {
+    if(countCheck==0) {
+        $("#alterOrder").html("");
+        $(document).attr("title", old_title);
+    }
 }
-
-

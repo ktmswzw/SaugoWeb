@@ -2,7 +2,7 @@
  * Created by vincent on 16/9/2.
  */
 var temp_parentid,Report_produceId,Report_begin,Report_end;
-requirejs(['jquery', 'bootstrap', 'fuelux', 'table', 'tablezn','select', 'selectCN', 'base64','form', 'comm', 'message', 'validator', 'vb', 'validatorLAG'],
+requirejs(['jquery', 'bootstrap', 'fuelux', 'table', 'tablezn','select', 'selectCN', 'base64','form', 'comm', 'tExport', 'tExportS','message', 'validator', 'vb', 'validatorLAG'],
     function () {
 
         var listAction = '/business/report/reportSuperlist';
@@ -50,8 +50,6 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'table', 'tablezn','select', 'select
             cache: false,
             showToggle: true,
             showExport: true,
-            showRefresh: true,
-            showColumns: true,
             exportTypes: "['excel']",
             toolbar: '#custom-toolbar',
             toolbarAlign: 'left',
