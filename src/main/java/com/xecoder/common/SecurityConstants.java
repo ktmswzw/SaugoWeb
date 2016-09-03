@@ -48,7 +48,7 @@ public interface SecurityConstants {
 	public static final String UNKNOWN_SESSION_EXCEPTION="异常会话!";
 	public static final String UNKNOWN_ACCOUNT_EXCEPTION="账号错误!";
 	public static final String INCORRECT_CREDENTIALS_EXCEPTION="密码错误!";
-	public static final String LOCKED_ACCOUNT_EXCEPTION="账号已被锁定，请与系统管理员联系!";
+	public static final String LOCKED_ACCOUNT_EXCEPTION="账号未确认，请与系统管理员联系!";
 	public static final String DISABLED_ACCOUNT_EXCEPTION="账号被冻结，请与系统管理员联系!";
 	public static final String INCORRECT_CAPTCHA_EXCEPTION= "验证码错误!";
 	public static final String REPEAT_LOGIN_EXCEPTION= "重复登录!!";

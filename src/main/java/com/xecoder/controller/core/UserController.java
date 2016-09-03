@@ -167,6 +167,12 @@ public class UserController extends BaseAction{
             }
             else
             {
+                User user1 = userService.getByUsername(user.getUsername());
+                if (user1 != null && !user1.getId().equals(user.getId())) {
+                    result.setSuccessful(false);
+                    result.setMsg("用户  添加失败，登录名：" + user.getUsername() + "已存在。");
+                    return result;
+                }
                 user.setCreateTime(new Date());
                 userService.update(user);
             }
@@ -187,11 +193,7 @@ public class UserController extends BaseAction{
     public Result saveAgentUser(@ModelAttribute User user) {
         Result result = new Result();
         try {
-            user.setStatus("check");
-            user.setCreateTime(new Date());
-            userService.update(user);
-            result.setSuccessful(true);
-            result.setMsg("修改信息完成,需要确认后才可登录");
+            result = checkData(result,user);
         }
         catch (Exception e)
         {
@@ -239,37 +241,7 @@ public class UserController extends BaseAction{
                 user.setCardsFront(UploadUtils.upload(file1, request));
                 user.setCardsBack(UploadUtils.upload(file2, request));
             }
-            user.setCreateTime(new Date());
-            user.setStatus("check");
-            if(user.getId()==null) {
-                User user1 = userService.getByUsername(user.getUsername());
-                if (user1 != null ) {
-                    result.setSuccessful(false);
-                    result.setMsg("代理添加失败，手机号码：" + user.getUsername()+"_"+user1.getRealname() + "已存在。");
-                    return result;
-                }
-
-                User user2 = userService.getByBankAccount(user.getBankAccount());
-                if (user2 != null) {
-                    result.setSuccessful(false);
-                    result.setMsg("代理添加失败，银行帐号："  + user.getBankAccount()+"_"+user2.getRealname() + "已经使用。");
-                    return result;
-                }
-
-                User user3 = userService.getByIdentityCards(user.getIdentityCards());
-                if (user3 != null) {
-                    result.setSuccessful(false);
-                    result.setMsg("代理添加失败，身份证号码："  + user.getIdentityCards()+"_"+user3.getRealname() + "已经使用。");
-                    return result;
-                }
-                userService.save(user);
-            }
-            else
-            {
-                userService.update(user);
-            }
-            result.setSuccessful(true);
-            result.setMsg("修改信息完成,需要确认后才可登录");
+            result = checkData(result,user);
         }
         catch (Exception e)
         {
@@ -277,6 +249,63 @@ public class UserController extends BaseAction{
             result.setMsg("error");
             e.printStackTrace();
         }
+        return result;
+    }
+
+    private Result checkData(Result result,User user){
+
+        user.setCreateTime(new Date());
+        user.setStatus("check");
+        result.setMsg("修改信息完成,需要确认后才可登录");
+
+        if(user.getId()==null) {
+            User user1 = userService.getByUsername(user.getUsername());
+            if (user1 != null ) {
+                result.setSuccessful(false);
+                result.setMsg("添加失败，手机号码：" + user.getUsername()+"_"+user1.getRealname() + "已存在。");
+                return result;
+            }
+
+            User user2 = userService.getByBankAccount(user.getBankAccount());
+            if (user2 != null) {
+                result.setSuccessful(false);
+                result.setMsg("添加失败，银行帐号："  + user.getBankAccount()+"_"+user2.getRealname() + "已经使用。");
+                return result;
+            }
+
+            User user3 = userService.getByIdentityCards(user.getIdentityCards());
+            if (user3 != null) {
+                result.setSuccessful(false);
+                result.setMsg("添加失败，身份证号码："  + user.getIdentityCards()+"_"+user3.getRealname() + "已经使用。");
+                return result;
+            }
+            userService.save(user);
+        }
+        else
+        {
+            User user1 = userService.getByUsername(user.getUsername());
+            if (user1 != null && !user1.getId().equals(user.getId())) {
+                result.setSuccessful(false);
+                result.setMsg("修改失败，手机号码：" + user.getUsername()+"_"+user1.getRealname() + "已存在。");
+                return result;
+            }
+
+            User user2 = userService.getByBankAccount(user.getBankAccount());
+            if (user2 != null&& !user2.getId().equals(user.getId())) {
+                result.setSuccessful(false);
+                result.setMsg("修改失败，银行帐号："  + user.getBankAccount()+"_"+user2.getRealname() + "已经使用。");
+                return result;
+            }
+
+            User user3 = userService.getByIdentityCards(user.getIdentityCards());
+            if (user3 != null&& !user2.getId().equals(user.getId())) {
+                result.setSuccessful(false);
+                result.setMsg("修改失败，身份证号码："  + user.getIdentityCards()+"_"+user3.getRealname() + "已经使用。");
+                return result;
+            }
+            userService.update(user);
+        }
+        result.setSuccessful(true);
         return result;
     }
 

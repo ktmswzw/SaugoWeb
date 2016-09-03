@@ -30,6 +30,7 @@ public class LoginController {
 	private static final Logger LOG = LoggerFactory.getLogger(LoginController.class); 
 	
 	private static final String LOGIN_PAGE = "login";
+    private static final String LOGIN_AGENT_PAGE = "agent";
 	private static final String LOGIN_DIALOG = "management/index/loginDialog";
 
 
@@ -37,6 +38,14 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list() {
         ModelAndView modelAndView = new ModelAndView(LOGIN_PAGE);
+        String salt = UUID.randomUUID().toString();
+        modelAndView.addObject("salt",salt);
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/agent" ,method = RequestMethod.GET)
+    public ModelAndView agent() {
+        ModelAndView modelAndView = new ModelAndView(LOGIN_AGENT_PAGE);
         String salt = UUID.randomUUID().toString();
         modelAndView.addObject("salt",salt);
         return modelAndView;

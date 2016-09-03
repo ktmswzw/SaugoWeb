@@ -112,6 +112,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			if (user.getStatus().equals("disabled")) {
 				throw new DisabledAccountException();
 			}
+			if (user.getStatus().equals("check")) {
+				throw new LockedAccountException();
+			}
 			
 			byte[] salt = Encodes.decodeHex(user.getSalt());
 			

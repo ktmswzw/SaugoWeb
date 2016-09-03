@@ -5,6 +5,8 @@ import com.xecoder.common.SecurityConstants;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.entity.Module;
 import com.xecoder.entity.Permission;
+import com.xecoder.entity.Role;
+import com.xecoder.entity.UserRole;
 import com.xecoder.service.core.ModuleService;
 import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.shiro.ShiroUser;
@@ -46,10 +48,16 @@ public class IndexController extends BaseAction{
 		shiroUser.setIpAddress(request.getRemoteAddr());
 		
 		request.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
-		
-		return INDEX;
+		List<UserRole> list = shiroUser.getUser().getUserRoles();
+		if(list!=null&&list.size()>1) {
+			return INDEX;
+		}
+		else
+		{
+			return AGENT;
+		}
 	}
-	
+
 	@RequestMapping(value="/getMenuModule", method=RequestMethod.POST) 
 	@ResponseBody
 	public Module getMenuModule() {
