@@ -6,7 +6,7 @@
 <form role="form" id="formSubmit" commandName="order"
       enctype='multipart/form-data'>
     <div class="hd">
-        <h1 class="page_title">发货申请</h1>
+        <h1 class="page_title" id="title">发货申请</h1>
     </div>
     <div class="weui_cells weui_cells_form">
         <input type="hidden" name="id" id="id"/>
@@ -17,8 +17,6 @@
         <input type="hidden" name="agentName" id="agentName"/>
         <input type="hidden" name="parentId" id="parentId"/>
         <input type="hidden" name="parentName" id="parentName"/>
-        <input type="hidden" name="checkTime" id="checkTime"/>
-        <input type="hidden" name="inputTime" id="inputTime"/>
         <input type="hidden" name="status" id="status"/>
         <input type="hidden" name="url" id="url"/>
 
@@ -42,25 +40,56 @@
         </div>
 
 
-        <div class="weui_cell">
+        <div class="weui_cell" id="bankId">
             <div class="weui_cell_hd"><label class="weui_label">水单</label></div>
             <div class="weui_cell_bd weui_cell_primary">
                 <input id="file" name="file" placeholder="选择图片" type="file">
             </div>
         </div>
 
+        <div class="hiddeDiv" id="bankImage">
+
+
         <div class="weui_cell">
-            <div class="weui_cell_hd"><label class="weui_label">下载</label></div>
+            <div class="weui_cell_hd"><label class="weui_label">申请时间</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input"
+                       id="inputTime" name="inputTime"  readonly="readonly"  >
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">确认人</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input"
+                       id="checkTime" name="checkTime"  readonly="readonly"  >
+            </div>
+        </div>
+
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">确认时间</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input"
+                       id="checkName" name="checkName"  readonly="readonly"  >
+            </div>
+        </div>
+
+
+
+        <div class="weui_cell" >
+            <div class="weui_cell_hd"><label class="weui_label">查看</label></div>
             <div class="weui_cell_bd weui_cell_primary">
                 <a href="" target="_blank" id="href"></a>
             </div>
         </div>
 
 
+        </div>
+
+
         <div class="weui_cells">
             <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
-                    <textarea class="weui_textarea" placeholder="请输入备注" rows="2" name="bankMemo"
+                    <textarea class="weui_textarea" placeholder="备注" rows="2" name="bankMemo"
                               id="bankMemo"></textarea>
                 </div>
             </div>

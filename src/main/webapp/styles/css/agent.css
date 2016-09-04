@@ -24,7 +24,9 @@ body {
 .shd {
     padding: 2em 0
 }
-
+.hiddeDiv{
+    display: none;
+}
 .page_title {
     text-align: center;
     font-weight: 400;

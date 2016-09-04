@@ -11,9 +11,15 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
             meForm($('#formSubmit'), order);
             produceId = order.produceId;
             delete order["produceId"];
-
             $("#href").attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + order.url);
-            $("#href").append('<button type="button" class="btn btn-link">下载</button>');
+            $("#href").append('<p><img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url+'" alt="银行水单" style="height: 100px"></p>');
+
+            if(order.status!=1){
+                $("#save").remove();
+                $("#bankImage").toggleClass("hiddeDiv");
+                $("#bankId").remove();
+                $("#title").html("查看订单");
+            }
         }
         else {
             meForm($('#formSubmit'), order);
@@ -84,7 +90,6 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                     if (rsp.successful) {
                         $("#save").toggleClass("weui_btn_disabled");
                         setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + produceName + "'", 1);
-
                     } else {
                         doErrorMsg(rsp.msg, false);
                         return false;

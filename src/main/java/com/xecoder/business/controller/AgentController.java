@@ -5,6 +5,7 @@ import com.xecoder.business.entity.Order;
 import com.xecoder.business.service.OrderService;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.util.JacksonMapper;
+import com.xecoder.common.util.SimpleDate;
 import com.xecoder.entity.User;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
@@ -14,8 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by vincent on 16/9/3.
@@ -33,38 +38,83 @@ public class AgentController extends BaseAction {
     @Autowired
     UserService userService;
 
-
-    private static final String HOME = "/business/agent/home";
+    private static final String HOME = "/business/agent/home";//主页
     private static final String ORDER = "/business/agent/order";//发起订单
     private static final String ORDEROK = "/business/agent/orderOk";//发起订单
-    private static final String REPORT = "/business/agent/report";
-    private static final String QUERY = "/business/agent/query";
+    private static final String QUERY = "/business/agent/query";//订单查询
+    private static final String REPORT = "/business/agent/report";//订单统计
     private static final String REPORTADV = "/business/agent/reportAdv";
     private static final String NEW = "/business/agent/new";//新代理
     private static final String NEWOK = "/business/agent/newOk";//新代理
-    private static final String PASSWORD = "/business/agent/password";
+    private static final String PASSWORD = "/business/agent/password";//修改密码
 
     @RequestMapping(value = "/home")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView(HOME);
-        User  user = SecurityUtils.getLoginUser();
+        User user = SecurityUtils.getLoginUser();
         mav.addObject("realname", user.getRealname());
+        return mav;
+    }
+
+    @RequestMapping(value = "/query")
+    public ModelAndView query(@RequestParam(required = false) String beginDate,
+                              @RequestParam(required = false) String endDate,
+                              @RequestParam(defaultValue = "0") long produceId) {
+        ModelAndView mav = new ModelAndView(QUERY);
+        User user = SecurityUtils.getLoginUser();
+        Order order = new Order();
+        Date dateB = beginDate==null?SimpleDate.getDayEnd(new Date(), -30):SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
+        Date dateE = endDate==null?SimpleDate.getDayEnd(new Date(), 0):SimpleDate.strToDate(endDate, "yyyy-MM-dd");
+        order.setBeginDate(dateB);
+        order.setEndDate(dateE);
+        if (produceId != 0) {
+            order.setProduceId(produceId);
+        }
+        order.setAgentId(user.getId());
+        List<Order> orderList = orderService.findAll(page(), order);
+
+        mav.addObject("beginDate", SimpleDate.format(dateB,"yyyy-MM-dd"));
+        mav.addObject("endDate", SimpleDate.format(dateE,"yyyy-MM-dd"));
+        mav.addObject("produceId", produceId);
+        mav.addObject("orderList", orderList);
+        return mav;
+    }
+
+    @RequestMapping(value = "/report")
+    public ModelAndView report(@RequestParam(required = false) String beginDate,
+                              @RequestParam(required = false) String endDate,
+                              @RequestParam(defaultValue = "0") long produceId) {
+        ModelAndView mav = new ModelAndView(REPORT);
+        User user = SecurityUtils.getLoginUser();
+        Order order = new Order();
+        Date dateB = beginDate==null?SimpleDate.getDayStart(new Date(), -30):SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
+        Date dateE = endDate==null?SimpleDate.getDayStart(new Date(), 0):SimpleDate.strToDate(endDate, "yyyy-MM-dd");
+        order.setBeginDate(dateB);
+        order.setEndDate(dateE);
+        if (produceId != 0) {
+            order.setProduceId(produceId);
+        }
+        order.setAgentId(user.getId());
+        List<Order> orderList = orderService.findAll(page(), order);
+
+        mav.addObject("beginDate", SimpleDate.format(dateB,"yyyy-MM-dd"));
+        mav.addObject("endDate", SimpleDate.format(dateE,"yyyy-MM-dd"));
+        mav.addObject("produceId", produceId);
+        mav.addObject("orderList", orderList);
         return mav;
     }
 
     @RequestMapping(value = "/new")
     public ModelAndView newAgent() {
         ModelAndView mav = new ModelAndView(NEW);
-        User  user = SecurityUtils.getLoginUser();
+        User user = SecurityUtils.getLoginUser();
         mav.addObject("title", "新代理申请");
         mav.addObject("parentName", user.getRealname());
         try {
             ObjectMapper mapper = JacksonMapper.getInstance();
             String json = mapper.writeValueAsString(new User());
             mav.addObject("user", json);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -74,30 +124,28 @@ public class AgentController extends BaseAction {
     @RequestMapping(value = "/info")
     public ModelAndView info() {
         ModelAndView mav = new ModelAndView(NEW);
-        User  user = SecurityUtils.getLoginUser();
+        User user = SecurityUtils.getLoginUser();
         mav.addObject("title", "修改信息");
         mav.addObject("parentName", user.getParentName());
         try {
             ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString(user);
-            mav.addObject("user",json);
+            String json = mapper.writeValueAsString(user);
+            mav.addObject("user", json);
             return mav;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    @RequestMapping(value="/password")
+    @RequestMapping(value = "/password")
     public String password() {
         return PASSWORD;
     }
 
     @RequestMapping(value = "/order")
     public ModelAndView order() {
-        User  user = SecurityUtils.getLoginUser();
+        User user = SecurityUtils.getLoginUser();
         Order order = new Order();
         order.setAgentId(user.getId());
         order.setAgentName(user.getRealname());
@@ -113,7 +161,7 @@ public class AgentController extends BaseAction {
      */
     @RequestMapping(value = "/orderOk/{produceNumber}/{produceName}")
     @ResponseBody
-    public ModelAndView orderOk(@PathVariable String produceNumber,@PathVariable String produceName) {
+    public ModelAndView orderOk(@PathVariable String produceNumber, @PathVariable String produceName) {
         ModelAndView mav = new ModelAndView(ORDEROK);
         mav.addObject("produceNumber", produceNumber);
         mav.addObject("produceName", produceName);
@@ -127,7 +175,7 @@ public class AgentController extends BaseAction {
      */
     @RequestMapping(value = "/newOk/{realName}/{phone}")
     @ResponseBody
-    public ModelAndView newOk(@PathVariable String realName,@PathVariable String phone) {
+    public ModelAndView newOk(@PathVariable String realName, @PathVariable String phone) {
         ModelAndView mav = new ModelAndView(NEWOK);
         mav.addObject("realname", realName);
         mav.addObject("phone", phone);
@@ -146,21 +194,4 @@ public class AgentController extends BaseAction {
         return getView(ORDER, "order", order);
     }
 
-
-//    @RequestMapping(value = "/order")
-//    public ModelAndView order() {
-//        ModelAndView mav = new ModelAndView(ORDER);
-//        User  user = SecurityUtils.getLoginUser();
-//        mav.addObject("realname", user.getRealname());
-//        return mav;
-//    }
-//
-//
-//    @RequestMapping(value = "/order")
-//    public ModelAndView order() {
-//        ModelAndView mav = new ModelAndView(ORDER);
-//        User  user = SecurityUtils.getLoginUser();
-//        mav.addObject("realname", user.getRealname());
-//        return mav;
-//    }
 }

@@ -105,7 +105,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                     }
                 });
             } else {
-                params = $form.serialize();
+                var params = $form.serialize();
                 $.post(WEB_GLOBAL_CTX + "/console/security/user/saveAgentWexinUser", params, function (rsp) {
                     if (rsp.successful) {
                         doErrorMsg(rsp.msg, true);
