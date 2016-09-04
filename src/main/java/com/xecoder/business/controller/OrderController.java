@@ -237,6 +237,7 @@ public class OrderController extends BaseAction {
                 orderService.update(order);
 
             result.setMsg("成功");
+            result.setData(order.getAgentId());
             result.setSuccessful(true);
         } catch (Exception e) {
             e.printStackTrace();

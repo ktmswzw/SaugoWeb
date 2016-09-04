@@ -9,6 +9,14 @@ function highlight_error(el) {
         el.parent().removeClass('has-error');
     }
 }
+
+function highlight_weui_error(el) {
+    if(el.val() == '') {
+        el.parent().parent().addClass('weui_cell_warn');
+    } else {
+        el.parent().parent().removeClass('weui_cell_warn');
+    }
+}
 function doErrorMsg(msg,type) {
     $('#error_dialog').html(msg);
     if(type){
@@ -333,6 +341,23 @@ function meTreeInit(treeid,initData,url,multiSelect,folderSelect,rootid) {
         folderSelect: folderSelect
     });
     tree.tree('discloseAll');
+}
+
+//判断是哪个内置浏览器
+var isWeixin = false, isWeibo = false, isQzone = false;
+
+var ua = navigator.userAgent;
+var isiOS = navigator.userAgent.match(/(iPhone|iPod|iPad);?/i),
+    isAndroid = navigator.userAgent.match(/android/i),
+    isDesktop = !isiOS && !isAndroid;
+if (/MicroMessenger/.test(ua)) {
+    isWeixin = true;
+} else if (/Weibo/.test(ua)) {
+    isWeibo = true;
+} else if (/QQ\//i.test(ua)) {
+    isQzone = true;
+} else {
+    ;
 }
 
 function sendFile(file, editor, obj) {

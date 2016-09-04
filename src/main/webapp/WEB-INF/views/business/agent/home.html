@@ -4,13 +4,13 @@
 <@head/>
 <body ontouchstart="" huaban_collector_injected="true">
 <div class="container" id="container"><div class="home">
-    <div class="hd">
-        <h1 class="page_title">王宝强 总代</h1>
+    <div class="shd">
+        <h1 class="page_title">总代: ${realname}</h1>
         <p class="page_desc">开启智能美肤时代</p>
     </div>
     <div class="bd">
         <div class="weui_grids">
-            <a href="${base}/agent/newOrder" class="weui_grid">
+            <a href="${base}/agent/order" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_panel"></i>
                 </div>
@@ -18,7 +18,7 @@
                     发货申请
                 </p>
             </a>
-            <a href="#/article" class="weui_grid">
+            <a href="${base}/agent/report" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_article"></i>
                 </div>
@@ -26,7 +26,7 @@
                     订单统计
                 </p>
             </a>
-            <a href="#/searchbar" class="weui_grid">
+            <a href="${base}/agent/query" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_search_bar"></i>
                 </div>
@@ -34,7 +34,23 @@
                     订单查询
                 </p>
             </a>
-            <a href="#/toast" class="weui_grid">
+            <a href="${base}/agent/reportAdv" class="weui_grid">
+                <div class="weui_grid_icon">
+                    <i class="icon icon_search_bar"></i>
+                </div>
+                <p class="weui_grid_label">
+                    超代查询
+                </p>
+            </a>
+            <a href="${base}/agent/info" class="weui_grid">
+                <div class="weui_grid_icon">
+                    <i class="icon icon_toast"></i>
+                </div>
+                <p class="weui_grid_label">
+                    修改信息
+                </p>
+            </a>
+            <a href="${base}/agent/new" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_toast"></i>
                 </div>
@@ -42,7 +58,7 @@
                     新代申请
                 </p>
             </a>
-            <a href="#/msg" class="weui_grid">
+            <a href="${base}/agent/password" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_msg"></i>
                 </div>
@@ -54,6 +70,5 @@
     </div>
 </div></div>
 <@foot/>
-<script src="${base}/styles/js/module/agent/home.js"></script>
 </body>
 </html>

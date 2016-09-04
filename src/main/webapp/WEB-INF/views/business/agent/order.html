@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<#include "/console/layout/agentLayout.html"/>
+<@head/>
+<body>
+<form role="form" id="formSubmit" commandName="order"
+      enctype='multipart/form-data'>
+    <div class="hd">
+        <h1 class="page_title">发货申请</h1>
+    </div>
+    <div class="weui_cells weui_cells_form">
+        <input type="hidden" name="id" id="id"/>
+        <input type="hidden" name="inputId" id="inputId"/>
+        <input type="hidden" name="checkId" id="checkId"/>
+        <input type="hidden" name="produceName" id="produceName"/>
+        <input type="hidden" name="agentId" id="agentId"/>
+        <input type="hidden" name="agentName" id="agentName"/>
+        <input type="hidden" name="parentId" id="parentId"/>
+        <input type="hidden" name="parentName" id="parentName"/>
+        <input type="hidden" name="checkTime" id="checkTime"/>
+        <input type="hidden" name="inputTime" id="inputTime"/>
+        <input type="hidden" name="status" id="status"/>
+        <input type="hidden" name="url" id="url"/>
+
+        <div class="weui_cell weui_cell_select weui_select_after">
+            <div class="weui_cell_hd">
+                <label for="produceId" class="weui_label">产品</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <select class="weui_select" name="produceId" id="produceId" required>
+                </select>
+            </div>
+        </div>
+
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">数量</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="number" pattern="[0-9]*"
+                       id="produceNumber" name="produceNumber" maxlength="3" min="100" max="200"
+                       placeholder="请输入100~200间数量" required>
+            </div>
+        </div>
+
+
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">水单</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input id="file" name="file" placeholder="选择图片" type="file">
+            </div>
+        </div>
+
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">下载</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <a href="" target="_blank" id="href"></a>
+            </div>
+        </div>
+
+
+        <div class="weui_cells">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <textarea class="weui_textarea" placeholder="请输入备注" rows="2" name="bankMemo"
+                              id="bankMemo"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="toast" style="display: none;">
+        <div class="weui_mask_transparent"></div>
+        <div class="weui_toast">
+            <p id="msgType"></p>
+            <p class="weui_toast_content" id="error_dialog"></p>
+        </div>
+    </div>
+
+    <div class="weui_btn_area">
+        <button type="submit" id="save" name="save" class="weui_btn weui_btn_primary">提交</button>
+        <button type="button" id="back" name="back" class="weui_btn weui_btn_default">返回</button>
+
+    </div>
+</form>
+<@foot/>
+<script src="${base}/styles/js/module/business/agent/order.js"></script>
+<script type="text/javascript">
+    var order = JSON.parse(JSON.stringify(${order}));
+</script>
+</body>
+</html>

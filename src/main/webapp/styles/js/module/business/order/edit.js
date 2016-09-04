@@ -1,5 +1,5 @@
 //加载插件
-requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'validator', 'vb', 'validatorLAG', 'comm', 'form', 'message'],
+requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 'vb', 'validatorLAG', 'comm', 'form', 'message'],
     function ($, _) {
 
         //返回
@@ -12,14 +12,6 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'va
         var $ERROR = $.scojs_message.TYPE_ERROR;
         var produceId = "";
         var agentId = "";
-        //状态插件
-        $("input[type=\"checkbox\"], input[type=\"radio\"]").not("[data-switch-no-init]").bootstrapSwitch()
-            .on('switchChange.bootstrapSwitch', function (event, state) {
-                if (state)
-                    $('#produceNumber').removeAttr("readonly");
-                else
-                    $('#produceNumber').attr("readonly", "readonly")
-            });
 
         if (order != undefined && order.id != null && order.id != "") {
             //初始化页面

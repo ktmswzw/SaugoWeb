@@ -1,16 +1,31 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>starting page</title>
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>淑格订单管理系统</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="/styles/images/logo/muyu.png" type="image/png">
+    <link href="/styles/css/weui.css" rel="stylesheet">
+    <link href="/styles/css/agent.css" rel="stylesheet">
 </head>
 <body>
-500..
+
+<div class="shd">
+    <h1 class="page_title">对不起</h1>
+    <p class="page_desc">你的登录时间过长，请重现登录...</p>
+</div>
 </body>
+<script src="${base}/styles/js/module/comm.js"></script>
 <script type="text/javascript">
-    alert(500);
+    setTimeout(function() {
+        var localObj = window.location;
+        if(!isWeixin)
+            parent.window.location = localObj.protocol + "//" + localObj.host + "/login";
+        else {
+            localObj = localObj.protocol + "//" + localObj.host + "/agentLogin"
+        }
+    },3000);
 </script>
 </html>

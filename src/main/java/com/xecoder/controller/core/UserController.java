@@ -193,6 +193,7 @@ public class UserController extends BaseAction{
     public Result saveAgentUser(@ModelAttribute User user) {
         Result result = new Result();
         try {
+            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*","X"));
             result = checkData(result,user);
         }
         catch (Exception e)
@@ -224,6 +225,79 @@ public class UserController extends BaseAction{
         return result;
     }
 
+    private void updateUserInfo(User user,User user1){
+        user.setCardsFront(user.getCardsFront());
+        user.setCardsBack(user.getCardsBack());
+        user1.setRealname(user.getRealname());
+        user1.setPhone(user.getPhone());
+        user1.setUsername(user.getPhone());
+        user1.setBak(user.getBak());
+        user1.setBankAccount(user.getBankAccount());
+        user1.setBank(user.getBank());
+        user1.setAddress(user.getAddress());
+        user1.setBankName(user.getBankName());
+    }
+
+    @RequestMapping(value="/saveAgentWexinUser")
+    @ResponseBody
+    public Result saveAgentWexinUser(@ModelAttribute User user) {
+        Result result = new Result();
+        try {
+            User user1 = SecurityUtils.getLoginUser();
+            updateUserInfo(user,user1);
+            result = checkData(result, user1);
+        }
+        catch (Exception e)
+        {
+            result.setSuccessful(false);
+            result.setMsg("error");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 保存修改和新增用户照片的数据
+     *
+     * @param user
+     * @return Result
+     */
+    @RequestMapping(value = "/saveWexin")
+    @ResponseBody
+    public Result saveWexin(@ModelAttribute User user,
+                       @RequestParam("file1") MultipartFile file1,
+                       @RequestParam("file2") MultipartFile file2) {
+        Result result = new Result();
+        try {
+            if (!file1.isEmpty()) {
+                user.setCardsFront(UploadUtils.upload(file1, request));
+                user.setCardsBack(UploadUtils.upload(file2, request));
+            }
+            if(user.getId()==null) {
+                User user1 = SecurityUtils.getLoginUser();
+                user.setParentId(user1.getId());
+                user.setParentName(user1.getRealname());
+                user.setPlainPassword("123456");
+                user.setRoles("");
+                user.setEmail("");
+                user.setUsername(user.getPhone());
+                user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
+                result = checkData(result, user);
+            }else{
+                User user1 = SecurityUtils.getLoginUser();
+                updateUserInfo(user,user1);
+                result = checkData(result, user1);
+            }
+        }
+        catch (Exception e)
+        {
+            result.setSuccessful(false);
+            result.setMsg("error");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     /**
      * 保存修改和新增用户照片的数据
      *
@@ -241,6 +315,7 @@ public class UserController extends BaseAction{
                 user.setCardsFront(UploadUtils.upload(file1, request));
                 user.setCardsBack(UploadUtils.upload(file2, request));
             }
+            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*","X"));
             result = checkData(result,user);
         }
         catch (Exception e)
@@ -298,7 +373,7 @@ public class UserController extends BaseAction{
             }
 
             User user3 = userService.getByIdentityCards(user.getIdentityCards());
-            if (user3 != null&& !user2.getId().equals(user.getId())) {
+            if (user3 != null&& !user3.getId().equals(user.getId())) {
                 result.setSuccessful(false);
                 result.setMsg("修改失败，身份证号码："  + user.getIdentityCards()+"_"+user3.getRealname() + "已经使用。");
                 return result;

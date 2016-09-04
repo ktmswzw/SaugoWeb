@@ -7,9 +7,15 @@ requirejs(['jquery', 'ie10', 'comm'],
         $('#formLogin').submit(function (e) {
             var username = $('#username');
             var captcha = $('#captcha');
-            if (username.val() == '' || captcha.val() == '') {
-                highlight_error(username);
-                highlight_error(captcha);
+
+            if (username.val() == '') {
+                highlight_weui_error(username);
+                doErrorMsg("手机为空",false);
+                return false;
+            }
+            if (captcha.val() =='') {
+                highlight_weui_error(captcha);
+                doErrorMsg("填写验证码",false);
                 return false;
             } else {
                 e.preventDefault();
@@ -48,6 +54,10 @@ requirejs(['jquery', 'ie10', 'comm'],
         });
 
         randomKey();
+
+        $("#back").bind("click", function () {
+            window.history.go(-1);
+        });
 
 
     });

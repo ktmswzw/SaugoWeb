@@ -23,7 +23,7 @@
         <div class="weui_cell weui_vcode">
             <div class="weui_cell_hd"><label class="weui_label">验证码</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="number" required tabindex="3" placeholder="请输入验证码"/>
+                <input class="weui_input" type="number" id="captcha" name="captcha"  required tabindex="2" placeholder="请输入验证码"/>
             </div>
             <div class="weui_cell_ft">
                 <img id="Kaptcha" src=""/>
@@ -41,9 +41,9 @@
     </div>
 
     <div class="weui_btn_area">
-        <!--<a class="weui_btn weui_btn_primary" id="but_login" name="but_login">确定</a>-->
-        <button type="submit" id="but_login" name="but_login" class="weui_btn weui_btn_primary" tabindex="4">重置获取密码
+        <button type="submit" id="but_login" name="but_login" class="weui_btn weui_btn_primary" tabindex="3">重置获取密码
         </button>
+        <button type="button" id="back" name="back" class="weui_btn weui_btn_default" >返回</button>
     </div>
 
 </form>

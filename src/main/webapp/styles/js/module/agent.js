@@ -9,12 +9,23 @@ requirejs(['jquery', 'ie10', 'comm'],
             var username = $('#username');
             var password = $('#password');
             var captcha = $('#captcha');
-            if (username.val() == '' || password.val() == '' || captcha.val() == '') {
-                highlight_error(username);
-                highlight_error(password);
-                highlight_error(captcha);
+
+            if (username.val() == '') {
+                highlight_weui_error(username);
+                doErrorMsg("手机为空",false);
                 return false;
-            } else {
+            }
+            if ( password.val() == '' ) {
+                highlight_weui_error(password);
+                doErrorMsg("密码为空",false);
+                return false;
+            }
+            if (captcha.val() =='') {
+                highlight_weui_error(captcha);
+                doErrorMsg("填写验证码",false);
+                return false;
+            }
+            else {
                 e.preventDefault();
                 var params = $("#formLogin").serialize();
                 $.ajax({
