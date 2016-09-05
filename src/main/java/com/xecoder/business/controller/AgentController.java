@@ -2,8 +2,11 @@ package com.xecoder.business.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xecoder.business.entity.Order;
+import com.xecoder.business.entity.Report;
 import com.xecoder.business.service.OrderService;
+import com.xecoder.business.service.ReportService;
 import com.xecoder.common.baseaction.BaseAction;
+import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.SimpleDate;
 import com.xecoder.entity.User;
@@ -36,6 +39,9 @@ public class AgentController extends BaseAction {
     OrderService orderService;
 
     @Autowired
+    ReportService reportService;
+
+    @Autowired
     UserService userService;
 
     private static final String HOME = "/business/agent/home";//主页
@@ -63,15 +69,16 @@ public class AgentController extends BaseAction {
         ModelAndView mav = new ModelAndView(QUERY);
         User user = SecurityUtils.getLoginUser();
         Order order = new Order();
-        Date dateB = beginDate==null?SimpleDate.getDayEnd(new Date(), -30):SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
-        Date dateE = endDate==null?SimpleDate.getDayEnd(new Date(), 0):SimpleDate.strToDate(endDate, "yyyy-MM-dd");
+        Date dateB = beginDate==null||beginDate.equals("")?SimpleDate.getDayEnd(new Date(), -30):SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
+        Date dateE = endDate==null||endDate.equals("")?SimpleDate.getDayEnd(new Date(), 0):SimpleDate.strToDate(endDate, "yyyy-MM-dd");
         order.setBeginDate(dateB);
         order.setEndDate(dateE);
         if (produceId != 0) {
             order.setProduceId(produceId);
         }
         order.setAgentId(user.getId());
-        List<Order> orderList = orderService.findAll(page(), order);
+        Page page = new Page(1,10000,"input_time","desc");
+        List<Order> orderList = orderService.findAll(page, order);
 
         mav.addObject("beginDate", SimpleDate.format(dateB,"yyyy-MM-dd"));
         mav.addObject("endDate", SimpleDate.format(dateE,"yyyy-MM-dd"));
@@ -80,27 +87,44 @@ public class AgentController extends BaseAction {
         return mav;
     }
 
+    /**
+     * 统计
+     * @param type 1 直代  2次代  3所有
+     * @param beginDate
+     * @param endDate
+     * @param produceId
+     * @return
+     */
     @RequestMapping(value = "/report")
-    public ModelAndView report(@RequestParam(required = false) String beginDate,
+    public ModelAndView report(@RequestParam int type,
+                               @RequestParam(required = false) String beginDate,
                               @RequestParam(required = false) String endDate,
-                              @RequestParam(defaultValue = "0") long produceId) {
+                              @RequestParam(defaultValue = "0") long produceId,
+                               @RequestParam(defaultValue = "0") long agentId) {
         ModelAndView mav = new ModelAndView(REPORT);
         User user = SecurityUtils.getLoginUser();
-        Order order = new Order();
+        Report report = new Report();
         Date dateB = beginDate==null?SimpleDate.getDayStart(new Date(), -30):SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
         Date dateE = endDate==null?SimpleDate.getDayStart(new Date(), 0):SimpleDate.strToDate(endDate, "yyyy-MM-dd");
-        order.setBeginDate(dateB);
-        order.setEndDate(dateE);
+        report.setBeginDate(dateB);
+        report.setEndDate(dateE);
         if (produceId != 0) {
-            order.setProduceId(produceId);
+            report.setProduceId(Math.toIntExact(produceId));
         }
-        order.setAgentId(user.getId());
-        List<Order> orderList = orderService.findAll(page(), order);
+        if (agentId == 0) {
+            report.setAgentId(user.getId());
+        }
+        else
+        {
+            report.setAgentId(agentId);
+        }
+        List<Report> reportList = reportService.findAll(page(),report);
 
         mav.addObject("beginDate", SimpleDate.format(dateB,"yyyy-MM-dd"));
         mav.addObject("endDate", SimpleDate.format(dateE,"yyyy-MM-dd"));
         mav.addObject("produceId", produceId);
-        mav.addObject("orderList", orderList);
+        mav.addObject("type", type);
+        mav.addObject("reportList", reportList);
         return mav;
     }
 

@@ -20,10 +20,21 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                 $("#bankId").remove();
                 $("#title").html("查看订单");
             }
+            else {
+                $("#delete").toggleClass("hiddeDiv");
+                $("#title").html("修改订单");
+            }
         }
         else {
             meForm($('#formSubmit'), order);
         }
+
+
+        $("#produceId").change(function () {
+            var v = $('#produceId').find("option:selected").text();
+            $("#produceName").val(v);
+        });
+
 
         //初始化下拉框 //可做异步下拉框选择
         initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, produceId, "id", "name", false);
@@ -32,7 +43,6 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
         $('#formSubmit').submit(function (e) {
             var produceId = $('#produceId');
             var produceNumber = $('#produceNumber');
-            var produceName = $('#produceId').find("option:selected").text();
 
             if (produceId.val() == '') {
                 highlight_weui_error(produceId);
@@ -73,7 +83,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                     success: function (rsp) {
                         if (rsp.successful) {
                             $("#save").toggleClass("weui_btn_disabled");
-                            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + produceName + "'", 1);
+                            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + $("#produceName").val() + "'", 1);
                             return true;
                         }
                         else{
@@ -89,7 +99,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                 $.post(WEB_GLOBAL_CTX + "/business/order/update", params, function (rsp) {
                     if (rsp.successful) {
                         $("#save").toggleClass("weui_btn_disabled");
-                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + produceName + "'", 1);
+                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + $("#produceName").val() + "'", 1);
                     } else {
                         doErrorMsg(rsp.msg, false);
                         return false;
@@ -104,6 +114,28 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
         $("#back").bind("click", function () {
             window.history.go(-1);
         });
+
+        $("#delete").bind("click", function () {
+            if(order.status==1) {
+                $.post(WEB_GLOBAL_CTX + "/business/order/delete/" + order.id, function (rsp) {
+                    if (rsp.successful) {
+                        doErrorMsg(rsp.msg, false);
+                        $("#delete").toggleClass("weui_btn_disabled");
+                        $("#save").toggleClass("weui_btn_disabled");
+                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/home'", 3000);
+
+                    } else {
+                        doErrorMsg(rsp.msg, false);
+                    }
+                }).error(function () {
+                    doErrorMsg("更新失败,请重新登录!", false);
+                });
+            }
+            else{
+                doErrorMsg("非 [待确认] 状态订单无法撤销!", false);
+            }
+        });
+
 
 
     });
