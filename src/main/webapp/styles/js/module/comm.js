@@ -30,7 +30,7 @@ function doErrorMsg(msg,type) {
     $('#toast').show();
     setTimeout(function () {
         $('#toast').hide();
-    }, 2000);
+    }, 1500);
 }
 function randomKey(){
     $("#Kaptcha").attr("src", WEB_GLOBAL_CTX+"/captcha/captchaing?" + Math.floor(Math.random() * 100)).fadeIn();
