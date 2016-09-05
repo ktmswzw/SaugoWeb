@@ -102,10 +102,6 @@ public class UserServiceImpl extends BaseService implements UserService {
             if(StringUtils.isNotBlank(user.getStatus())){
                 cri.andStatusEqualTo(user.getStatus());
             }
-
-            if(StringUtils.isNotBlank(user.getStatus())){
-                cri.andStatusEqualTo(user.getStatus());
-            }
 //            else
 //            {
 //                cri.andStatusEqualTo("enabled");
@@ -188,17 +184,17 @@ public class UserServiceImpl extends BaseService implements UserService {
 			user.setOrganization(baseDao.getMapper(OrganizationMapper.class).selectByPrimaryKey(user.getOrgId()));
 		}
         //setTheme(user);
-        setParentName(user);
+        //setParentName(user);
 	}
 
-	public void setParentName(User user)
-    {
-        if(user != null && user.getParentId() != null){
-            User pUser = baseDao.getMapper(UserMapper.class).selectByPrimaryKey(user.getParentId());
-            if(pUser!=null)
-            user.setParentName(pUser.getRealname());
-        }
-    }
+//	public void setParentName(User user)
+//    {
+//        if(user != null && user.getParentId() != null){
+//            User pUser = baseDao.getMapper(UserMapper.class).selectByPrimaryKey(user.getParentId());
+//            if(pUser!=null)
+//            user.setParentName(pUser.getRealname());
+//        }
+//    }
 
     public  void setTheme(User user)
     {

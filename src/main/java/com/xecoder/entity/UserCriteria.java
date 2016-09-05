@@ -1325,6 +1325,206 @@ public class UserCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andAlipayAccountIsNull() {
+            addCriterion("alipay_account is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountIsNotNull() {
+            addCriterion("alipay_account is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountEqualTo(String value) {
+            addCriterion("alipay_account =", value, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountNotEqualTo(String value) {
+            addCriterion("alipay_account <>", value, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountGreaterThan(String value) {
+            addCriterion("alipay_account >", value, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountGreaterThanOrEqualTo(String value) {
+            addCriterion("alipay_account >=", value, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountLessThan(String value) {
+            addCriterion("alipay_account <", value, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountLessThanOrEqualTo(String value) {
+            addCriterion("alipay_account <=", value, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountLike(String value) {
+            addCriterion("alipay_account like", value, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountNotLike(String value) {
+            addCriterion("alipay_account not like", value, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountIn(List<String> values) {
+            addCriterion("alipay_account in", values, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountNotIn(List<String> values) {
+            addCriterion("alipay_account not in", values, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountBetween(String value1, String value2) {
+            addCriterion("alipay_account between", value1, value2, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayAccountNotBetween(String value1, String value2) {
+            addCriterion("alipay_account not between", value1, value2, "alipayAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameIsNull() {
+            addCriterion("alipay_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameIsNotNull() {
+            addCriterion("alipay_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameEqualTo(String value) {
+            addCriterion("alipay_name =", value, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameNotEqualTo(String value) {
+            addCriterion("alipay_name <>", value, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameGreaterThan(String value) {
+            addCriterion("alipay_name >", value, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameGreaterThanOrEqualTo(String value) {
+            addCriterion("alipay_name >=", value, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameLessThan(String value) {
+            addCriterion("alipay_name <", value, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameLessThanOrEqualTo(String value) {
+            addCriterion("alipay_name <=", value, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameLike(String value) {
+            addCriterion("alipay_name like", value, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameNotLike(String value) {
+            addCriterion("alipay_name not like", value, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameIn(List<String> values) {
+            addCriterion("alipay_name in", values, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameNotIn(List<String> values) {
+            addCriterion("alipay_name not in", values, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameBetween(String value1, String value2) {
+            addCriterion("alipay_name between", value1, value2, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlipayNameNotBetween(String value1, String value2) {
+            addCriterion("alipay_name not between", value1, value2, "alipayName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeIsNull() {
+            addCriterion("pay_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeIsNotNull() {
+            addCriterion("pay_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeEqualTo(Integer value) {
+            addCriterion("pay_type =", value, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeNotEqualTo(Integer value) {
+            addCriterion("pay_type <>", value, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeGreaterThan(Integer value) {
+            addCriterion("pay_type >", value, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pay_type >=", value, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeLessThan(Integer value) {
+            addCriterion("pay_type <", value, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("pay_type <=", value, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeIn(List<Integer> values) {
+            addCriterion("pay_type in", values, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeNotIn(List<Integer> values) {
+            addCriterion("pay_type not in", values, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeBetween(Integer value1, Integer value2) {
+            addCriterion("pay_type between", value1, value2, "payType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("pay_type not between", value1, value2, "payType");
+            return (Criteria) this;
+        }
+
         public Criteria andBakIsNull() {
             addCriterion("bak is null");
             return (Criteria) this;

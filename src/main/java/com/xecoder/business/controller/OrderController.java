@@ -1,7 +1,6 @@
 package com.xecoder.business.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import com.xecoder.business.entity.Order;
 import com.xecoder.business.service.OrderService;
 import com.xecoder.common.baseaction.BaseAction;
@@ -226,7 +225,7 @@ public class OrderController extends BaseAction {
             if(order.getAgentId()!=null&&order.getAgentId()!=0){
                 User u = userService.get(order.getAgentId());
                 order.setParentId(u.getParentId());
-                order.setParentName(u.getParentName());
+                //order.setParentName(u.getParentName());
             }
 
             order.setStatus(1);

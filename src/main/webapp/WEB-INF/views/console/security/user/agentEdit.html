@@ -20,6 +20,7 @@
                     <input type="hidden" name="salt" id="salt">
                     <input type="hidden" name="email" id="email" value=""/>
                     <input type="hidden" name="status" id="status" >
+                    <input type="hidden" name="payType" id="payType" >
                     <input type="hidden" name="roles" id="roles">
                     <input type="hidden" name="username" id="username">
 
@@ -98,31 +99,70 @@
 
                 <div class="row control-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="address">开户银行</label>
+                        <label class="control-label" for="state">收款信息</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <input type="text" class="form-control" id="bank" name="bank"
-                               placeholder="" required>
+                        <div class="pull-left">
+                            <div class="switch" >
+                                <input type="checkbox" id="state" name="state" data-size="small" checked="true"
+                                       data-on-color="success" data-off-color="warning" data-on-text="银行" data-off-text="支付宝">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row control-group">
-                    <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="address">银行帐号</label>
+                <div id="bankDiv">
+                    <div class="row control-group">
+                        <div class="col-sm-2 col-sm-offset-1">
+                            <label class="control-label" for="address">开户银行</label>
+                        </div>
+                        <div class="col-sm-8 controls">
+                            <input type="text" class="form-control" id="bank" name="bank"
+                                   placeholder="＊＊银行＊＊支行" >
+                        </div>
                     </div>
-                    <div class="col-sm-8 controls">
-                        <input type="text" class="form-control" id="bankAccount" name="bankAccount"
-                               placeholder="" required >
+
+                    <div class="row control-group">
+                        <div class="col-sm-2 col-sm-offset-1">
+                            <label class="control-label" for="address">银行帐号</label>
+                        </div>
+                        <div class="col-sm-8 controls">
+                            <input type="text" class="form-control" id="bankAccount" name="bankAccount"
+                                   placeholder=""  >
+                        </div>
+                    </div>
+
+                    <div class="row control-group">
+                        <div class="col-sm-2 col-sm-offset-1">
+                            <label class="control-label" for="address">户名</label>
+                        </div>
+                        <div class="col-sm-8 controls">
+                            <input type="text" class="form-control" id="bankName" name="bankName"
+                                   placeholder=""  autocomplete="off">
+                        </div>
                     </div>
                 </div>
 
-                <div class="row control-group">
-                    <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="address">户名</label>
+                <div id="alipayDiv" class="hiddeDiv">
+
+                    <div class="row control-group">
+                        <div class="col-sm-2 col-sm-offset-1">
+                            <label class="control-label" for="alipayAccount">支付宝帐号</label>
+                        </div>
+                        <div class="col-sm-8 controls">
+                            <input type="text" class="form-control" id="alipayAccount" name="alipayAccount"
+                                   placeholder=""  autocomplete="off">
+                        </div>
                     </div>
-                    <div class="col-sm-8 controls">
-                        <input type="text" class="form-control" id="bankName" name="bankName"
-                               placeholder="" required autocomplete="off">
+
+                    <div class="row control-group">
+                        <div class="col-sm-2 col-sm-offset-1">
+                            <label class="control-label" for="alipayName">支付宝名称</label>
+                        </div>
+                        <div class="col-sm-8 controls">
+                            <input type="text" class="form-control" id="alipayName" name="alipayName"
+                                   placeholder=""  autocomplete="off">
+                        </div>
                     </div>
                 </div>
 

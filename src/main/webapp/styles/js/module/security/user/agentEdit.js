@@ -11,6 +11,24 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
+        //状态插件
+        $("input[type=\"checkbox\"], input[type=\"radio\"]").not("[data-switch-no-init]").bootstrapSwitch()
+            .on('switchChange.bootstrapSwitch', function(event, state) {
+                if(state) {
+                    $("#payType").val("0");
+                    // $("#alipayAccount").val("");
+                    // $("#alipayName").val("");
+
+                }
+                else {
+                    $("#payType").val("1");
+                    // $("#bank").val("");
+                    // $("#bankAccount").val("");
+                    // $("#bankName").val("");
+                }
+                $("#alipayDiv").toggleClass("hiddeDiv");
+                $("#bankDiv").toggleClass("hiddeDiv");
+            });
 
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
             //初始化页面
@@ -23,15 +41,19 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
 
             $("#href2").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsBack);
             $("#href2").append('<button type="button" class="btn btn-link">下载</button>');
+
+            $("#state").bootstrapSwitch('state', user.payType == 0);
         }
         else{
+            $("#payType").val("0");
             $("#status").val("enabled");
+            $("#state").bootstrapSwitch('state', true);
         }
         //修改页面结束
-        $("#bankAccount").mask("9999 9999 9999 9999");
-        $("#bankAccount").dblclick(function() {
-            // $(this).unmask();
-        });
+        // $("#bankAccount").mask("9999 9999 9999 9999");
+        // $("#bankAccount").dblclick(function() {
+        //     // $(this).unmask();
+        // });
 
         //页面特殊要求
         $("#username").val(($("#phone").val()));
@@ -95,6 +117,16 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                 $.scojs_message("密码为空", $ERROR);
                 return false;
             }
+            if (($("#payType").val() == 0 ) && ( $("#bank").val() == '' || $("#bankAccount").val() == '' || $("#bankName").val() == ''  )) {
+                highlight_error($("#bank"));
+                $.scojs_message("银行信息不完整", $ERROR);
+                return false;
+            }
+            if (($("#payType").val() == 1 ) && ( $("#alipayAccount").val() == '' || $("#alipayName").val() == ''  )) {
+                highlight_error($("#bank"));
+                $.scojs_message("银行信息不完整", $ERROR);
+                return false;
+            }
             if (($("#cardsFront").val() == '' ) && ( $("#file1").val() == '')) {
                 highlight_error($("#file1"));
                 $.scojs_message("身份证照片必须双面上传", $ERROR);
@@ -155,23 +187,20 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
             }
         });
 
-        $("#file1").change(function () {
-            $("#save").removeAttr("disabled");
-            $("#save").toggleClass("disabled");
-        });
-
-
-        $("#file2").change(function () {
-            $("#save").removeAttr("disabled");
-            $("#save").toggleClass("disabled");
-        });
-
-
-        $("#parentId").change(function () {
-            $("#save").removeAttr("disabled");
-            $("#save").toggleClass("disabled");
-        });
+        $("#bank").bind("change",function(){removeDis();});
+        $("#bankAccount").bind("change",function(){removeDis();});
+        $("#bankName").bind("change",function(){removeDis();});
+        $("#alipayAccount").bind("change",function(){removeDis();});
+        $("#alipayName").bind("change",function(){removeDis();});
+        $("#file1").bind("change",function(){removeDis();});
+        $("#file2").bind("change",function(){removeDis();});
+        $("#parentId").bind("change",function(){removeDis();});
 
 
     });
 
+function removeDis() {
+
+    $("#save").removeAttr("disabled");
+    $("#save").toggleClass("disabled");
+}

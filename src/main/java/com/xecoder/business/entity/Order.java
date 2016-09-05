@@ -54,6 +54,22 @@ public class Order {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date endDate;
 
+    @Transient
+    private String bank;
+
+    @Transient
+    private String bankAccount;
+
+    @Transient
+    private String bankName;
+
+    @Transient
+    private String alipayAccount;
+
+    @Transient
+    private String alipayName;
+
+
     public Long getId() {
         return id;
     }
@@ -204,5 +220,45 @@ public class Order {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public String getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(String bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getAlipayAccount() {
+        return alipayAccount;
+    }
+
+    public void setAlipayAccount(String alipayAccount) {
+        this.alipayAccount = alipayAccount;
+    }
+
+    public String getAlipayName() {
+        return alipayName;
+    }
+
+    public void setAlipayName(String alipayName) {
+        this.alipayName = alipayName;
     }
 }

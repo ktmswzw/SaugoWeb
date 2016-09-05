@@ -50,11 +50,17 @@ public class User implements Serializable {
 
     private String bankName;
 
+    private String alipayAccount;
+
+    private String alipayName;
+
+    private Integer payType;
+
     private String bak;
+
 
     @Transient
     private String plainPassword;
-
 
     private Organization organization;
     private List<UserRole> userRoles;
@@ -69,14 +75,6 @@ public class User implements Serializable {
     private String parentName;
 
     private int nodes;
-
-    public int getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(int nodes) {
-        this.nodes = nodes;
-    }
 
     public Long getId() {
         return id;
@@ -222,6 +220,38 @@ public class User implements Serializable {
         this.bankName = bankName == null ? null : bankName.trim();
     }
 
+    public String getAlipayAccount() {
+        return alipayAccount;
+    }
+
+    public void setAlipayAccount(String alipayAccount) {
+        this.alipayAccount = alipayAccount == null ? null : alipayAccount.trim();
+    }
+
+    public String getAlipayName() {
+        return alipayName;
+    }
+
+    public void setAlipayName(String alipayName) {
+        this.alipayName = alipayName == null ? null : alipayName.trim();
+    }
+
+    public Integer getPayType() {
+        return payType;
+    }
+
+    public void setPayType(Integer payType) {
+        this.payType = payType;
+    }
+
+    public String getBak() {
+        return bak;
+    }
+
+    public void setBak(String bak) {
+        this.bak = bak == null ? null : bak.trim();
+    }
+
     public String getPlainPassword() {
         return plainPassword;
     }
@@ -295,11 +325,11 @@ public class User implements Serializable {
         this.parentName = parentName;
     }
 
-    public String getBak() {
-        return bak;
+    public int getNodes() {
+        return nodes;
     }
 
-    public void setBak(String bak) {
-        this.bak = bak;
+    public void setNodes(int nodes) {
+        this.nodes = nodes;
     }
 }

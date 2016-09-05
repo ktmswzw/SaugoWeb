@@ -19,6 +19,11 @@
     <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
     <result column="bank_memo" property="bankMemo" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bankAccount" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="bankName" property="bankName" jdbcType="VARCHAR" />
+    <result column="alipayAccount" property="alipayAccount" jdbcType="VARCHAR" />
+    <result column="alipayName" property="alipayName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -79,9 +84,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, input_id, input_time, check_id, check_time, produce_id, produce_number, input_name, 
-    check_name, produce_name, status, agent_id, agent_name, parent_id, parent_name, bank_memo,
-    url
+    nn.id, input_id, input_time, check_id, check_time, produce_id, produce_number, input_name,
+    check_name, GET_PRODUCE_NAME(produce_id) as produce_name, nn.status, agent_id, agent_name, nn.parent_id, GET_USER_NAME(nn.parent_id) as parent_name, bank_memo,
+    url,ss.bank as bank, ss.bank_account as bank_account, ss.bank_name as bank_name,
+    ss.alipay_account as alipay_account, ss.alipay_name as alipay_name
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xecoder.business.entity.OrderCriteria" >
     select
@@ -89,10 +95,11 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from business_order
+    from business_order nn,SECURITY_USER ss
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+    and nn.agent_id = ss.id
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
@@ -100,8 +107,8 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from business_order
-    where id = #{id,jdbcType=BIGINT}
+    from business_order nn,SECURITY_USER ss
+    where nn.agent_id = ss.id and id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from business_order

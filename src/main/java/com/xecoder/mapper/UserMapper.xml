@@ -20,7 +20,12 @@
     <result column="bank" jdbcType="VARCHAR" property="bank" />
     <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
     <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="alipay_account" jdbcType="VARCHAR" property="alipayAccount" />
+    <result column="alipay_name" jdbcType="VARCHAR" property="alipayName" />
+    <result column="pay_type" jdbcType="INTEGER" property="payType" />
     <result column="bak" jdbcType="VARCHAR" property="bak" />
+    <result column="nodes" jdbcType="BIGINT" property="nodes" />
+    <result column="parentName" jdbcType="VARCHAR" property="parentName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -83,7 +88,9 @@
   <sql id="Base_Column_List">
     id, create_time, email, password, phone, realname, salt, status, username, org_id, 
     parent_id, address, identity_cards, cards_front, cards_back, bank, bank_account, 
-    bank_name, bak,(select count(1) from security_user oo where oo.parent_id = nn.id) as nodes
+    bank_name, alipay_account, alipay_name, pay_type, bak,
+    (select count(1) from security_user oo where oo.parent_id = nn.id) as nodes,
+    GET_USER_NAME(nn.parent_id) as parentName
   </sql>
   <select id="selectByExample" parameterType="com.xecoder.entity.UserCriteria" resultMap="BaseResultMap">
     select
@@ -99,13 +106,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectTreeById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from security_user nn
-    WHERE status = 'enabled' and FIND_IN_SET(id, AGENT_TREE(#{id,jdbcType=BIGINT}))
-  </select>
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -113,11 +113,11 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from security_user
+    delete from security_user nn
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.xecoder.entity.UserCriteria">
-    delete from security_user
+    delete from security_user nn
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -129,6 +129,7 @@
       org_id, parent_id, address, 
       identity_cards, cards_front, cards_back, 
       bank, bank_account, bank_name, 
+      alipay_account, alipay_name, pay_type, 
       bak)
     values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
@@ -136,6 +137,7 @@
       #{orgId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
       #{identityCards,jdbcType=VARCHAR}, #{cardsFront,jdbcType=VARCHAR}, #{cardsBack,jdbcType=VARCHAR}, 
       #{bank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{alipayAccount,jdbcType=VARCHAR}, #{alipayName,jdbcType=VARCHAR}, #{payType,jdbcType=INTEGER}, 
       #{bak,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xecoder.entity.User">
@@ -194,6 +196,15 @@
       </if>
       <if test="bankName != null">
         bank_name,
+      </if>
+      <if test="alipayAccount != null">
+        alipay_account,
+      </if>
+      <if test="alipayName != null">
+        alipay_name,
+      </if>
+      <if test="payType != null">
+        pay_type,
       </if>
       <if test="bak != null">
         bak,
@@ -254,13 +265,22 @@
       <if test="bankName != null">
         #{bankName,jdbcType=VARCHAR},
       </if>
+      <if test="alipayAccount != null">
+        #{alipayAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayName != null">
+        #{alipayName,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=INTEGER},
+      </if>
       <if test="bak != null">
         #{bak,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xecoder.entity.UserCriteria" resultType="java.lang.Integer">
-    select count(*) from security_user
+    select count(*) from security_user nn
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -322,6 +342,15 @@
       <if test="record.bankName != null">
         bank_name = #{record.bankName,jdbcType=VARCHAR},
       </if>
+      <if test="record.alipayAccount != null">
+        alipay_account = #{record.alipayAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayName != null">
+        alipay_name = #{record.alipayName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payType != null">
+        pay_type = #{record.payType,jdbcType=INTEGER},
+      </if>
       <if test="record.bak != null">
         bak = #{record.bak,jdbcType=VARCHAR},
       </if>
@@ -350,6 +379,9 @@
       bank = #{record.bank,jdbcType=VARCHAR},
       bank_account = #{record.bankAccount,jdbcType=VARCHAR},
       bank_name = #{record.bankName,jdbcType=VARCHAR},
+      alipay_account = #{record.alipayAccount,jdbcType=VARCHAR},
+      alipay_name = #{record.alipayName,jdbcType=VARCHAR},
+      pay_type = #{record.payType,jdbcType=INTEGER},
       bak = #{record.bak,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -409,6 +441,15 @@
       <if test="bankName != null">
         bank_name = #{bankName,jdbcType=VARCHAR},
       </if>
+      <if test="alipayAccount != null">
+        alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayName != null">
+        alipay_name = #{alipayName,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
       <if test="bak != null">
         bak = #{bak,jdbcType=VARCHAR},
       </if>
@@ -434,7 +475,16 @@
       bank = #{bank,jdbcType=VARCHAR},
       bank_account = #{bankAccount,jdbcType=VARCHAR},
       bank_name = #{bankName,jdbcType=VARCHAR},
+      alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+      alipay_name = #{alipayName,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=INTEGER},
       bak = #{bak,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectTreeById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from security_user nn
+    WHERE status = 'enabled' and FIND_IN_SET(id, AGENT_TREE(#{id,jdbcType=BIGINT}))
+  </select>
 </mapper>

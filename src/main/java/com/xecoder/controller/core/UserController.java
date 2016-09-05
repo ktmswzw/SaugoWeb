@@ -276,7 +276,6 @@ public class UserController extends BaseAction{
             if(user.getId()==null) {
                 User user1 = SecurityUtils.getLoginUser();
                 user.setParentId(user1.getId());
-                user.setParentName(user1.getRealname());
                 user.setPlainPassword("123456");
                 user.setRoles("");
                 user.setEmail("");
@@ -423,11 +422,11 @@ public class UserController extends BaseAction{
     @ResponseBody
     public ModelAndView agentCheck(@PathVariable Integer id) {
         User user = userService.get(Long.parseLong(id + ""));
-        if(user!=null&& user.getParentId()!=null)
-        {
-            User par = userService.get(user.getParentId());
-            user.setParentName(par.getRealname());
-        }
+//        if(user!=null&& user.getParentId()!=null)
+//        {
+//            User par = userService.get(user.getParentId());
+//            user.setParentName(par.getRealname());
+//        }
         return getView(AGENTCHECK,"user",user);
     }
 

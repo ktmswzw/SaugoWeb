@@ -25,6 +25,7 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
 
             $("#href2").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsBack);
             $("#href2").append('<img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsBack+'" alt="背面" style="height: 400px" class="img-thumbnail img-responsive">');
+
         }
         setHeightSelf(600);
 
