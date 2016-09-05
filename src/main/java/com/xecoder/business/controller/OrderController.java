@@ -140,7 +140,7 @@ public class OrderController extends BaseAction {
         if (currentUser.isPermitted("Check:edit")) {
             Order order = new Order();
             order.setStatus(1);
-            List<Order> list =  orderService.findAll(null,order);
+            List<Order> list =  orderService.findAll(null,order,0);
             return list!=null?list.size():0;
         }
         return 0;

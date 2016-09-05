@@ -83,7 +83,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                     success: function (rsp) {
                         if (rsp.successful) {
                             $("#save").toggleClass("weui_btn_disabled");
-                            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + $("#produceName").val() + "'", 1);
+                            setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + $('#produceId').find("option:selected").text() + "'", 1);
                             return true;
                         }
                         else{
@@ -99,7 +99,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                 $.post(WEB_GLOBAL_CTX + "/business/order/update", params, function (rsp) {
                     if (rsp.successful) {
                         $("#save").toggleClass("weui_btn_disabled");
-                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + $("#produceName").val() + "'", 1);
+                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/orderOk/" + produceNumber.val() + "/" + $('#produceId').find("option:selected").text() + "'", 1);
                     } else {
                         doErrorMsg(rsp.msg, false);
                         return false;
@@ -122,7 +122,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                         doErrorMsg(rsp.msg, false);
                         $("#delete").toggleClass("weui_btn_disabled");
                         $("#save").toggleClass("weui_btn_disabled");
-                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/home'", 3000);
+                        setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agent/home'", 2000);
 
                     } else {
                         doErrorMsg(rsp.msg, false);

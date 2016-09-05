@@ -14,7 +14,7 @@ public interface OrderService {
 
     Page findByPage(Page page, Order order);
 
-    List<Order> findAll(Page page, Order order);
+    List<Order> findAll(Page page, Order order, int flag);
 
     int countByExample(Page page,Order order);
 

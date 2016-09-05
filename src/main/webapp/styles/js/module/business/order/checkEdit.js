@@ -19,7 +19,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux','validator', 'vb', 'validatorLAG', 'c
             //初始化页面
             meForm($('#formSubmit'), order);
             $("#href").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url);
-            $("#href").append('<img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url+'" alt="银行水单" class="img-thumbnail img-responsive">');
+            $("#href").append('<img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url+'" alt="银行水单" style="height: 400px" class="img-thumbnail img-responsive">');
 
         }
 

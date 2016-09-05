@@ -39,9 +39,6 @@ public class AgentController extends BaseAction {
     OrderService orderService;
 
     @Autowired
-    ReportService reportService;
-
-    @Autowired
     UserService userService;
 
     private static final String HOME = "/business/agent/home";//主页
@@ -62,10 +59,20 @@ public class AgentController extends BaseAction {
         return mav;
     }
 
+    /**
+     * 统计
+     * @param type 1 直代  2次代  3所有
+     * @param beginDate
+     * @param endDate
+     * @param produceId
+     * @return
+     */
     @RequestMapping(value = "/query")
-    public ModelAndView query(@RequestParam(required = false) String beginDate,
+    public ModelAndView query(@RequestParam(defaultValue = "0") int type,
+                              @RequestParam(required = false) String beginDate,
                               @RequestParam(required = false) String endDate,
-                              @RequestParam(defaultValue = "0") long produceId) {
+                              @RequestParam(defaultValue = "0") long produceId,
+                              @RequestParam(defaultValue = "0") long agentId) {
         ModelAndView mav = new ModelAndView(QUERY);
         User user = SecurityUtils.getLoginUser();
         Order order = new Order();
@@ -76,9 +83,16 @@ public class AgentController extends BaseAction {
         if (produceId != 0) {
             order.setProduceId(produceId);
         }
+        if (agentId == 0) {
+            order.setAgentId(user.getId());
+        }
+        else
+        {
+            order.setAgentId(agentId);
+        }
         order.setAgentId(user.getId());
         Page page = new Page(1,10000,"input_time","desc");
-        List<Order> orderList = orderService.findAll(page, order);
+        List<Order> orderList = orderService.findAll(page, order,type);
 
         mav.addObject("beginDate", SimpleDate.format(dateB,"yyyy-MM-dd"));
         mav.addObject("endDate", SimpleDate.format(dateE,"yyyy-MM-dd"));
@@ -87,46 +101,6 @@ public class AgentController extends BaseAction {
         return mav;
     }
 
-    /**
-     * 统计
-     * @param type 1 直代  2次代  3所有
-     * @param beginDate
-     * @param endDate
-     * @param produceId
-     * @return
-     */
-    @RequestMapping(value = "/report")
-    public ModelAndView report(@RequestParam int type,
-                               @RequestParam(required = false) String beginDate,
-                              @RequestParam(required = false) String endDate,
-                              @RequestParam(defaultValue = "0") long produceId,
-                               @RequestParam(defaultValue = "0") long agentId) {
-        ModelAndView mav = new ModelAndView(REPORT);
-        User user = SecurityUtils.getLoginUser();
-        Report report = new Report();
-        Date dateB = beginDate==null?SimpleDate.getDayStart(new Date(), -30):SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
-        Date dateE = endDate==null?SimpleDate.getDayStart(new Date(), 0):SimpleDate.strToDate(endDate, "yyyy-MM-dd");
-        report.setBeginDate(dateB);
-        report.setEndDate(dateE);
-        if (produceId != 0) {
-            report.setProduceId(Math.toIntExact(produceId));
-        }
-        if (agentId == 0) {
-            report.setAgentId(user.getId());
-        }
-        else
-        {
-            report.setAgentId(agentId);
-        }
-        List<Report> reportList = reportService.findAll(page(),report);
-
-        mav.addObject("beginDate", SimpleDate.format(dateB,"yyyy-MM-dd"));
-        mav.addObject("endDate", SimpleDate.format(dateE,"yyyy-MM-dd"));
-        mav.addObject("produceId", produceId);
-        mav.addObject("type", type);
-        mav.addObject("reportList", reportList);
-        return mav;
-    }
 
     @RequestMapping(value = "/new")
     public ModelAndView newAgent() {

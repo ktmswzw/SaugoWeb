@@ -29,7 +29,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     @Override
     public Page findByPage(Page page, Order order) {
         page.setCount(countByExample(page, order));
-        List<Order> list = baseDao.selectByPage("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order), page);
+        List<Order> list = baseDao.selectByPage("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order, 0), page);
         if (list != null)
             return page.setRows(list);
         else
@@ -37,21 +37,32 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     }
 
     @Override
-    public List<Order> findAll(Page page, Order order) {
-        return baseDao.selectList("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order));
+    public List<Order> findAll(Page page, Order order, int flag) {
+        return baseDao.selectList("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order, flag));
     }
 
     @Override
     public int countByExample(Page page, Order order) {
-        return baseDao.getMapper(OrderMapper.class).countByExample(getCriteria(page, order));
+        return baseDao.getMapper(OrderMapper.class).countByExample(getCriteria(page, order, 0));
     }
 
-    public OrderCriteria getCriteria(Page page, Order order) {
+    public OrderCriteria getCriteria(Page page, Order order, int flag) {
         OrderCriteria criteria = new OrderCriteria();
         OrderCriteria.Criteria cri = criteria.createCriteria();
         if (order != null) {
-            if (order.getAgentId()!=null) {
+            if (order.getAgentId()!=null && flag == 0) {
                 cri.andAgentIdEqualTo(order.getAgentId());
+            }
+            if (order.getAgentId()!=null && flag == 1) {
+                cri.addCriterion(" agent_id in ( " +
+                        "SELECT id FROM SECURITY_USER WHERE " +
+                        "STATUS = 'enabled' " +
+                        "AND email = '' " +
+                        "AND (parent_id IN (SELECT  id FROM SECURITY_USER  WHERE parent_Id = "+order.getAgentId()+") OR id IN (SELECT  id FROM  SECURITY_USER WHERE parent_Id = "+order.getAgentId()+") OR id = "+order.getAgentId()+") " +
+                        ")");
+            }
+            if (order.getAgentId()!=null && flag == 2) {
+                cri.addCriterion(" FIND_IN_SET(agent_id, AGENT_TREE(" + order.getAgentId() + "))");
             }
             if (StringUtils.isNotBlank(order.getAgentName())) {
                 cri.addCriterion(" agent_name LIKE  '%"+order.getAgentName()+ "%' ");
