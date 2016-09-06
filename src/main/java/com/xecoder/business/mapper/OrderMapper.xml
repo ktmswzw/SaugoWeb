@@ -95,7 +95,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from business_order nn,SECURITY_USER ss
+    from business_order nn,security_user ss
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -107,8 +107,8 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from business_order nn,SECURITY_USER ss
-    where nn.agent_id = ss.id and id = #{id,jdbcType=BIGINT}
+    from business_order nn,security_user ss
+    where nn.agent_id = ss.id and nn.id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from business_order
@@ -244,7 +244,7 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xecoder.business.entity.OrderCriteria" resultType="java.lang.Integer" >
-    select count(*) from business_order
+    select count(*) from business_order nn
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

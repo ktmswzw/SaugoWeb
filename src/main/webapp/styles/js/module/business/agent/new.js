@@ -4,12 +4,25 @@
 requirejs(['jquery', 'ie10', 'comm', 'form'],
     function () {
 
-
+        $("#state").change(function() {
+            if($("#state").is(':checked')){
+                $("#payType").val("0");
+            }
+            else{
+                $("#payType").val("1");
+            }
+            $("#alipayDiv").toggleClass("hiddeDiv");
+            $("#bankDiv").toggleClass("hiddeDiv");
+        });
 
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
             //初始化页面
             meForm($('#formSubmit'), user);
             $('#identityCards').attr("readonly","readonly");
+            $("#state").attr("checked",""+user.payType == 0);
+        }
+        else{
+            $("#payType").val("0");
         }
 
         $('#formSubmit').submit(function (e) {
@@ -39,24 +52,34 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                 return false;
             }
 
-            if ($("#bank").val() == '') {
+            // if ($("#bank").val() == '') {
+            //     highlight_weui_error($("#bank"));
+            //     doErrorMsg("开户银行为空", false);
+            //     return false;
+            // }
+            // if ($("#bankName").val() == '') {
+            //     highlight_weui_error($("#bankName"));
+            //     doErrorMsg("户名为空", false);
+            //     return false;
+            // }
+            // if ($("#bankAccount").val() == '') {
+            //     highlight_weui_error($("#bankAccount"));
+            //     doErrorMsg("银行帐号为空", false);
+            //     return false;
+            // }
+            if (($("#payType").val() == 0 ) && ( $("#bank").val() == '' || $("#bankAccount").val() == '' || $("#bankName").val() == ''  )) {
                 highlight_weui_error($("#bank"));
-                doErrorMsg("开户银行为空", false);
+                doErrorMsg("银行信息不完整", false);
                 return false;
             }
-            if ($("#bankName").val() == '') {
-                highlight_weui_error($("#bankName"));
-                doErrorMsg("户名为空", false);
+            if (($("#payType").val() == 1 ) && ( $("#alipayAccount").val() == '' || $("#alipayName").val() == ''  )) {
+                highlight_weui_error($("#alipayAccount"));
+                doErrorMsg("支付宝信息不完整", false);
                 return false;
             }
             if ($("#address").val() == '') {
                 highlight_weui_error($("#address"));
                 doErrorMsg("收货地址为空", false);
-                return false;
-            }
-            if ($("#bankAccount").val() == '') {
-                highlight_weui_error($("#bankAccount"));
-                doErrorMsg("银行帐号为空", false);
                 return false;
             }
             var afterUrl = "window.location.href='"+WEB_GLOBAL_CTX;

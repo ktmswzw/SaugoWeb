@@ -51,14 +51,14 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         OrderCriteria.Criteria cri = criteria.createCriteria();
         if (order != null) {
             if (order.getAgentId()!=null && flag == 0) {
-                cri.andAgentIdEqualTo(order.getAgentId());
+            cri.addCriterion(" nn.id LIKE  '%"+order.getAgentId()+ "%' ");
             }
             if (order.getAgentId()!=null && flag == 1) {
                 cri.addCriterion(" agent_id in ( " +
-                        "SELECT id FROM SECURITY_USER WHERE " +
+                        "SELECT id FROM security_user WHERE " +
                         "STATUS = 'enabled' " +
                         "AND email = '' " +
-                        "AND (parent_id IN (SELECT  id FROM SECURITY_USER  WHERE parent_Id = "+order.getAgentId()+") OR id IN (SELECT  id FROM  SECURITY_USER WHERE parent_Id = "+order.getAgentId()+") OR id = "+order.getAgentId()+") " +
+                        "AND (parent_id IN (SELECT  id FROM security_user  WHERE parent_Id = "+order.getAgentId()+") OR id IN (SELECT  id FROM  security_user WHERE parent_Id = "+order.getAgentId()+") OR id = "+order.getAgentId()+") " +
                         ")");
             }
             if (order.getAgentId()!=null && flag == 2) {

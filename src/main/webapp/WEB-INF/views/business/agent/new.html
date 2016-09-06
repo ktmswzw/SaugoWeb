@@ -11,12 +11,13 @@
     <div class="weui_cells weui_cells_form">
 
         <input type="hidden" name="id" id="id"/>
+        <input type="hidden" name="payType" id="payType" >
 
         <div class="weui_cell">
             <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="text"  placeholder="" id="realname" required
-                       name="realname" >
+                <input class="weui_input" type="text" placeholder="" id="realname" required
+                       name="realname">
             </div>
         </div>
 
@@ -51,42 +52,72 @@
             </div>
         </div>
 
-        <div class="weui_cell">
-            <div class="weui_cell_hd"><label class="weui_label">开户银行</label></div>
-            <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="text"  id="bank" required name="bank"  >
-            </div>
-        </div>
-        <div class="weui_cell">
-            <div class="weui_cell_hd"><label class="weui_label">银行帐号</label></div>
-            <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="tel" pattern="[0-9]*" placeholder="请输入银行帐号" id="bankAccount" required
-                       name="bankAccount" minlength="16" maxlength="16" >
+        <div class="weui_cell weui_cell_switch">
+            <div class="weui_cell_hd weui_cell_primary">收款信息</div>
+            <div class="weui_cell_ft">
+                <input class="weui_switch" type="checkbox" id="state" checked name="state"/>
             </div>
         </div>
 
-        <div class="weui_cell">
-            <div class="weui_cell_hd"><label class="weui_label">户名</label></div>
-            <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="text" placeholder="请输入户名" id="bankName" required
-                       name="bankName"  >
+        <div id="bankDiv">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">开户银行</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" id="bank"  name="bank">
+                </div>
             </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">银行帐号</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="tel" pattern="[0-9]*" placeholder="请输入银行帐号" id="bankAccount"
+
+                           name="bankAccount" minlength="16" maxlength="16">
+                </div>
+            </div>
+
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">户名</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入户名" id="bankName"
+                           name="bankName">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="alipayDiv" class="hiddeDiv">
+
+
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">支付宝帐号</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入户名" id="alipayAccount"
+                           name="alipayAccount">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">支付宝名称</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入户名" id="alipayName"
+                           name="alipayName">
+                </div>
+            </div>
+
         </div>
 
         <div class="weui_cell">
             <div class="weui_cell_hd"><label class="weui_label">收货地址</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="text" id="address" required name="address"  >
+                <input class="weui_input" type="text" id="address" required name="address">
             </div>
         </div>
 
         <div class="weui_cell">
             <div class="weui_cell_hd"><label class="weui_label">上级代理</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="text" id="parentName" required name="parentName" value="${parentName}"  >
+                <input class="weui_input" type="text" id="parentName" required name="parentName" value="${parentName}">
             </div>
         </div>
-
 
 
         <div class="weui_cells">

@@ -16,15 +16,10 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
             .on('switchChange.bootstrapSwitch', function(event, state) {
                 if(state) {
                     $("#payType").val("0");
-                    // $("#alipayAccount").val("");
-                    // $("#alipayName").val("");
 
                 }
                 else {
                     $("#payType").val("1");
-                    // $("#bank").val("");
-                    // $("#bankAccount").val("");
-                    // $("#bankName").val("");
                 }
                 $("#alipayDiv").toggleClass("hiddeDiv");
                 $("#bankDiv").toggleClass("hiddeDiv");
@@ -123,8 +118,8 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                 return false;
             }
             if (($("#payType").val() == 1 ) && ( $("#alipayAccount").val() == '' || $("#alipayName").val() == ''  )) {
-                highlight_error($("#bank"));
-                $.scojs_message("银行信息不完整", $ERROR);
+                highlight_error($("#alipayAccount"));
+                $.scojs_message("支付宝信息不完整", $ERROR);
                 return false;
             }
             if (($("#cardsFront").val() == '' ) && ( $("#file1").val() == '')) {

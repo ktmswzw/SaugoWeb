@@ -7,7 +7,7 @@
     </appender>
 
     <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/home/bea/TOMCAT7/apache/logs/operatortools.log</file>
+        <file>/home/server/tomcat9/logs/operatortools.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>logs/operatortools.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>5</maxHistory>
@@ -21,7 +21,7 @@
     </appender>
 
 
-    <root level="DEBUG">
+    <root level="ERROR">
         <appender-ref ref="console" />
         <appender-ref ref="rollingFile" />
     </root>
