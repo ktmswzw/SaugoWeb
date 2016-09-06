@@ -99,7 +99,6 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    and nn.agent_id = ss.id
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>

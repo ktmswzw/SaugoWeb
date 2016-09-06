@@ -41,23 +41,8 @@ public interface UserService {
     void delete(User user) throws ServiceException;
 
 	Page findByPage(Page page,User user);
-	
-	/**
-	 * 按用户名
-	 * @param username
-	 * @return
-	 */
-	User getByUsername(String username);
 
-	User getByBankAccount(String account);
-
-	User getByIdentityCards(String identityCards);
-	/**
-	 * 按邮箱
-	 * @param email
-	 * @return
-	 */
-	User getByEmail(String email);
+	User getByXXX(User user);
 
 	List<User> findByParentId(Long parentId);
 

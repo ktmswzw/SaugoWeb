@@ -12,14 +12,14 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
         initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, "", "id", "name", true);
 
 
+
         //列表
         var $table = $('#tableB').bootstrapTable({
-            url: '',
+            url: WEB_GLOBAL_CTX + '/business/order/list',
             dataType: 'json',
             cache:false,
             showToggle:true,
             showExport:true,
-            showRefresh:true,
             showColumns:true,
             exportTypes:"['excel']",
             toolbar:'#custom-toolbar',
@@ -35,12 +35,13 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
         }).on('page-change.bs.table', function (e, size, number) {
             setHeightSelf(200*number/10);
         });
+
         setHeightSelf(800);
         //查询动作
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {
                 url: WEB_GLOBAL_CTX + '/business/order/list',
-                queryParams: 'queryParamsF'
+                queryParams: 'queryParamsOrder'
             });
         });
 

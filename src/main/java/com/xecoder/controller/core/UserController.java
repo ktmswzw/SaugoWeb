@@ -158,7 +158,10 @@ public class UserController extends BaseAction{
         Result result = new Result();
         try {
             if(user.getId()==null) {
-                if (userService.getByUsername(user.getUsername()) != null) {
+
+                User user1 = new User();
+                user1.setUsername(user.getUsername());
+                if (userService.getByXXX(user1) != null) {
                     result.setSuccessful(false);
                     result.setMsg("用户  添加失败，登录名：" + user.getUsername() + "已存在。");
                     return result;
@@ -167,7 +170,9 @@ public class UserController extends BaseAction{
             }
             else
             {
-                User user1 = userService.getByUsername(user.getUsername());
+                User user2 = new User();
+                user2.setUsername(user.getUsername());
+                User user1 = userService.getByXXX(user2);
                 if (user1 != null && !user1.getId().equals(user.getId())) {
                     result.setSuccessful(false);
                     result.setMsg("用户  添加失败，登录名：" + user.getUsername() + "已存在。");
@@ -333,49 +338,115 @@ public class UserController extends BaseAction{
         result.setMsg("修改信息完成,需要确认后才可登录");
 
         if(user.getId()==null) {
-            User user1 = userService.getByUsername(user.getUsername());
-            if (user1 != null ) {
-                result.setSuccessful(false);
-                result.setMsg("添加失败，手机号码：" + user.getUsername()+"_"+user1.getRealname() + "已存在。");
-                return result;
+            User user2 = new User();
+            if(user.getUsername()!=null&&!user.getUsername().equals("")) {
+                user2 = new User();
+                user2.setUsername(user.getUsername());
+                User user1 = userService.getByXXX(user2);
+                if (user1 != null) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，手机号码：" + user.getUsername() + "_" + user1.getRealname() + "已存在。");
+                    return result;
+                }
             }
 
-            User user2 = userService.getByBankAccount(user.getBankAccount());
-            if (user2 != null) {
-                result.setSuccessful(false);
-                result.setMsg("添加失败，银行帐号："  + user.getBankAccount()+"_"+user2.getRealname() + "已经使用。");
-                return result;
+            if(user.getBankAccount()!=null&&!user.getBankAccount().equals("")) {
+                user2 = new User();
+                user2.setUsername(user.getBankAccount());
+                User user2s = userService.getByXXX(user2);
+                if (user2s != null) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，银行帐号：" + user.getBankAccount() + "_" + user2s.getRealname() + "已经使用。");
+                    return result;
+                }
             }
-
-            User user3 = userService.getByIdentityCards(user.getIdentityCards());
-            if (user3 != null) {
-                result.setSuccessful(false);
-                result.setMsg("添加失败，身份证号码："  + user.getIdentityCards()+"_"+user3.getRealname() + "已经使用。");
-                return result;
+            if(user.getIdentityCards()!=null&&!user.getIdentityCards().equals("")) {
+                user2 = new User();
+                user2.setUsername(user.getIdentityCards());
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，身份证号码：" + user.getIdentityCards() + "_" + user3.getRealname() + "已经使用。");
+                    return result;
+                }
+            }
+            if(user.getAlipayAccount()!=null&&!user.getAlipayAccount().equals("")) {
+                user2 = new User();
+                user2.setAlipayAccount(user.getAlipayAccount());
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，支付宝帐号：" + user.getAlipayAccount() + "_" + user3.getRealname() + "已经使用。");
+                    return result;
+                }
+            }
+            if(user.getAlipayName()!=null&&!user.getAlipayName().equals("")) {
+                user2 = new User();
+                user2.setAlipayName(user.getAlipayName());
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，支付宝名称：" + user.getAlipayName() + "_" + user3.getRealname() + "已经使用。");
+                    return result;
+                }
             }
             userService.save(user);
         }
         else
         {
-            User user1 = userService.getByUsername(user.getUsername());
-            if (user1 != null && !user1.getId().equals(user.getId())) {
-                result.setSuccessful(false);
-                result.setMsg("修改失败，手机号码：" + user.getUsername()+"_"+user1.getRealname() + "已存在。");
-                return result;
+
+            User user2 = new User();
+            if(user.getUsername()!=null&&!user.getUsername().equals("")) {
+                user2 = new User();
+                user2.setUsername(user.getUsername());
+                User user1 = userService.getByXXX(user2);
+                if (user1 != null&&user1.getId()!=user.getId()) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，手机号码：" + user.getUsername() + "_" + user1.getRealname() + "已存在。");
+                    return result;
+                }
             }
 
-            User user2 = userService.getByBankAccount(user.getBankAccount());
-            if (user2 != null&& !user2.getId().equals(user.getId())) {
-                result.setSuccessful(false);
-                result.setMsg("修改失败，银行帐号："  + user.getBankAccount()+"_"+user2.getRealname() + "已经使用。");
-                return result;
-            }
+            if(user.getBankAccount()!=null&&!user.getBankAccount().equals("")) {
 
-            User user3 = userService.getByIdentityCards(user.getIdentityCards());
-            if (user3 != null&& !user3.getId().equals(user.getId())) {
-                result.setSuccessful(false);
-                result.setMsg("修改失败，身份证号码："  + user.getIdentityCards()+"_"+user3.getRealname() + "已经使用。");
-                return result;
+                user2 = new User();
+                user2.setUsername(user.getBankAccount());
+                User user2s = userService.getByXXX(user2);
+                if (user2s != null&&user2.getId()!=user.getId()) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，银行帐号：" + user.getBankAccount() + "_" + user2s.getRealname() + "已经使用。");
+                    return result;
+                }
+            }
+            if(user.getIdentityCards()!=null&&!user.getIdentityCards().equals("")) {
+                user2 = new User();
+                user2.setUsername(user.getIdentityCards());
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null&&user3.getId()!=user.getId()) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，身份证号码：" + user.getIdentityCards() + "_" + user3.getRealname() + "已经使用。");
+                    return result;
+                }
+            }
+            if(user.getAlipayAccount()!=null&&!user.getAlipayAccount().equals("")) {
+                user2 = new User();
+                user2.setAlipayAccount(user.getAlipayAccount());
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null&&user3.getId()!=user.getId()) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，支付宝帐号：" + user.getAlipayAccount() + "_" + user3.getRealname() + "已经使用。");
+                    return result;
+                }
+            }
+            if(user.getAlipayName()!=null&&!user.getAlipayName().equals("")) {
+                user2 = new User();
+                user2.setAlipayName(user.getAlipayName());
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null&&user3.getId()!=user.getId()) {
+                    result.setSuccessful(false);
+                    result.setMsg("添加失败，支付宝名称：" + user.getAlipayName() + "_" + user3.getRealname() + "已经使用。");
+                    return result;
+                }
             }
             userService.update(user);
         }

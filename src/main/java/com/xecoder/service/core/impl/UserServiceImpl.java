@@ -219,66 +219,40 @@ public class UserServiceImpl extends BaseService implements UserService {
 	
 	/**
 	 * 按用户名
-	 * @param username
+	 * @param user
 	 * @return
 	 */
-	public User getByUsername(String username) {
-		UserCriteria criteria = new UserCriteria();
-		UserCriteria.Criteria cri = criteria.createCriteria();
-		if(StringUtils.isNotBlank(username)){
-			cri.andUsernameEqualTo(username);
-		}
-        return baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria);
+	public User getByXXX(User user) {
+        return baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, setCriteria(user));
 	}
 
-    /**
-     * 按银行帐号
-     * @param account
-     * @return
-     */
-    public User getByBankAccount(String account) {
+
+    private UserCriteria setCriteria(User user) {
         UserCriteria criteria = new UserCriteria();
         UserCriteria.Criteria cri = criteria.createCriteria();
-        if(StringUtils.isNotBlank(account)){
-            cri.andBankAccountEqualTo(account);
-        }
-        return baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria);
-    }
 
-
-    /**
-     * 按身份证
-     * @param identityCards
-     * @return
-     */
-    public User getByIdentityCards(String identityCards) {
-        UserCriteria criteria = new UserCriteria();
-        UserCriteria.Criteria cri = criteria.createCriteria();
-        if(StringUtils.isNotBlank(identityCards)){
-            cri.andIdentityCardsEqualTo(identityCards);
+        if (user != null) {
+            if(StringUtils.isNotBlank(user.getIdentityCards())){
+                cri.andIdentityCardsEqualTo(user.getIdentityCards());
+            }
+            if(StringUtils.isNotBlank(user.getBankAccount())){
+                cri.andBankAccountEqualTo(user.getBankAccount());
+            }
+            if(StringUtils.isNotBlank(user.getUsername())){
+                cri.andUsernameEqualTo(user.getUsername());
+            }
+            if(StringUtils.isNotBlank(user.getEmail())){
+                cri.andEmailEqualTo(user.getEmail());
+            }
+            if(StringUtils.isNotBlank(user.getAlipayAccount())){
+                cri.andAlipayAccountEqualTo(user.getAlipayAccount());
+            }
+            if(StringUtils.isNotBlank(user.getAlipayName())){
+                cri.andAlipayNameEqualTo(user.getAlipayName());
+            }
         }
-        return baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria);
+        return criteria;
     }
-	
-	/**
-	 * 按邮箱
-	 * @param email
-	 * @return
-	 */
-	public User getByEmail(String email) {
-		UserCriteria criteria = new UserCriteria();
-		UserCriteria.Criteria cri = criteria.createCriteria();
-		if(StringUtils.isNotBlank(email)){
-			cri.andEmailEqualTo(email);
-		}
-        User user =  baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria);
-        if(user!=null) {
-            setUserOrganization(user);
-            if(user.getId()!=null)
-                user.setUserRoles(userRoleService.find(user.getId()));
-        }
-        return user;
-	}
 
 	@Override
 	public User get(Long id) {
@@ -316,7 +290,9 @@ public class UserServiceImpl extends BaseService implements UserService {
 		baseDao.getMapper(UserMapper.class).insert(user);
 
         String roles = user.getRoles();
-        Long id = getByUsername(user.getUsername()).getId();
+        User user1 = new User();
+        user1.setUsername(user.getUsername());
+        Long id = getByXXX(user1).getId();
         if(StringUtils.isNotBlank(roles)){
             if(roles.indexOf(",")>0) {
                 for (String roleId : StringUtils.split(roles,",")) {

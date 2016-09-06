@@ -107,7 +107,7 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                 $.scojs_message("上级代理必须选择一个", $ERROR);
                 return false;
             }
-            if (($("#password").val() == '' ) && ( $("#plainPassword").val() == '')) {
+            if ((user.id == null) && ( $("#plainPassword").val() == '')) {
                 highlight_error($("#plainPassword"));
                 $.scojs_message("密码为空", $ERROR);
                 return false;
@@ -159,12 +159,12 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                             $("#save").toggleClass("disabled");
                             $.scojs_message(rsp.msg, $OK);
                             setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 3000);
+                            return true;
                         } else {
                             $.scojs_message(rsp.msg, $ERROR);
                         }
                     }
                 });
-                return true;
             }
             else {
                 params = $form.serialize();
@@ -173,12 +173,13 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                         $.scojs_message(rsp.msg, $OK);
                         $("#save").toggleClass("disabled");
                         setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/console/security/user/agentList'", 3000);
+                        return true;
                     } else {
                         $.scojs_message(rsp.msg, $ERROR);
                     }
                 }).error(function () {
+
                 });
-                return true;
             }
         });
 

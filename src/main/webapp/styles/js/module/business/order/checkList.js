@@ -47,7 +47,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn',  'select', 'selectCN','tEx
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {
                 url: WEB_GLOBAL_CTX + '/business/order/list',
-                queryParams: 'queryParamsF'
+                queryParams: 'queryParamsOrder'
             });
         });
 

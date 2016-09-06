@@ -29,7 +29,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     @Override
     public Page findByPage(Page page, Order order) {
         page.setCount(countByExample(page, order));
-        List<Order> list = baseDao.selectByPage("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order, 0), page);
+        List<Order> list = baseDao.selectByPage("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order, 0,false), page);
         if (list != null)
             return page.setRows(list);
         else
@@ -38,23 +38,27 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Override
     public List<Order> findAll(Page page, Order order, int flag) {
-        return baseDao.selectList("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order, flag));
+        return baseDao.selectList("com.xecoder.business.mapper.OrderMapper." + BaseDao.SELECT_BY_EXAMPLE, getCriteria(page, order, flag,false));
     }
 
     @Override
     public int countByExample(Page page, Order order) {
-        return baseDao.getMapper(OrderMapper.class).countByExample(getCriteria(page, order, 0));
+        return baseDao.getMapper(OrderMapper.class).countByExample(getCriteria(page, order, 0, true));
     }
 
-    public OrderCriteria getCriteria(Page page, Order order, int flag) {
+    public OrderCriteria getCriteria(Page page, Order order, int flag, boolean count) {
         OrderCriteria criteria = new OrderCriteria();
         OrderCriteria.Criteria cri = criteria.createCriteria();
         if (order != null) {
+
+            if(!count)
+            cri.addCriterion("  nn.agent_id = ss.id ");
+
             if (order.getAgentId()!=null && flag == 0) {
-            cri.addCriterion(" nn.id LIKE  '%"+order.getAgentId()+ "%' ");
+            cri.addCriterion(" nn.agent_id LIKE  '%"+order.getAgentId()+ "%' ");
             }
             if (order.getAgentId()!=null && flag == 1) {
-                cri.addCriterion(" agent_id in ( " +
+                cri.addCriterion(" nn.agent_id in ( " +
                         "SELECT id FROM security_user WHERE " +
                         "STATUS = 'enabled' " +
                         "AND email = '' " +
