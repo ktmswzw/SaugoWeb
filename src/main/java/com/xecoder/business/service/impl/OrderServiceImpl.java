@@ -46,6 +46,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         return baseDao.getMapper(OrderMapper.class).countByExample(getCriteria(page, order, 0, true));
     }
 
+//   0直接查询 1直代统计  2次代查询 3查询123层 4所有tree
     public OrderCriteria getCriteria(Page page, Order order, int flag, boolean count) {
         OrderCriteria criteria = new OrderCriteria();
         OrderCriteria.Criteria cri = criteria.createCriteria();
@@ -55,9 +56,29 @@ public class OrderServiceImpl extends BaseService implements OrderService {
             cri.addCriterion("  nn.agent_id = ss.id ");
 
             if (order.getAgentId()!=null && flag == 0) {
-            cri.addCriterion(" nn.agent_id LIKE  '%"+order.getAgentId()+ "%' ");
+                cri.addCriterion(" nn.agent_id =  "+order.getAgentId()+ " ");
             }
-            if (order.getAgentId()!=null && flag == 1) {
+            if(order.getParentId()!=null&& order.getParentId()!=0&&order.getParentId()!=0){
+                cri.addCriterion(" nn.agent_id =  "+order.getParentId()+ " ");
+            }
+            if (order.getAgentId()!=null&&flag == 1) {
+                cri.addCriterion(" nn.agent_id in ( " +
+                        "SELECT id FROM security_user WHERE " +
+                        "STATUS = 'enabled' " +
+                        "AND email = '' " +
+                        "AND parent_id  = "+order.getAgentId() +
+                        ")");
+            }
+
+            if (order.getAgentId()!=null&&flag == 2) {
+                cri.addCriterion(" nn.agent_id in ( " +
+                        "SELECT id FROM security_user WHERE " +
+                        "STATUS = 'enabled' " +
+                        "AND email = '' " +
+                        "AND (parent_id IN (SELECT  id FROM security_user  WHERE parent_Id = "+order.getAgentId()+") " +
+                        "))");
+            }
+            if (order.getAgentId()!=null&&(flag == 3)) {
                 cri.addCriterion(" nn.agent_id in ( " +
                         "SELECT id FROM security_user WHERE " +
                         "STATUS = 'enabled' " +
@@ -65,8 +86,8 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                         "AND (parent_id IN (SELECT  id FROM security_user  WHERE parent_Id = "+order.getAgentId()+") OR id IN (SELECT  id FROM  security_user WHERE parent_Id = "+order.getAgentId()+") OR id = "+order.getAgentId()+") " +
                         ")");
             }
-            if (order.getAgentId()!=null && flag == 2) {
-                cri.addCriterion(" FIND_IN_SET(agent_id, AGENT_TREE(" + order.getAgentId() + "))");
+            if (order.getAgentId()!=null&&flag == 4) {
+                cri.addCriterion(" FIND_IN_SET(nn.agent_id, AGENT_TREE(" + order.getAgentId() + "))");
             }
             if (StringUtils.isNotBlank(order.getAgentName())) {
                 cri.addCriterion(" agent_name LIKE  '%"+order.getAgentName()+ "%' ");

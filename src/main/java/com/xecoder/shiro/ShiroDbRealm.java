@@ -17,7 +17,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
-import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,7 +120,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			ShiroUser shiroUser = new ShiroUser(user.getId(), user.getUsername(), user);
 			// 这里可以缓存认证
 			return new SimpleAuthenticationInfo(shiroUser, user.getPassword(),
-					ByteSource.Util.bytes(salt), getName());
+					MySimpleByteSource.Util.bytes(salt), getName());
 		} else {
 			return null;
 		}

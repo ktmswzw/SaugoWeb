@@ -24,7 +24,16 @@
                         <label for="produceId" class="weui_label">产品</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <select class="weui_select" name="produceId" id="produceId" required>
+                        <select class="weui_select" name="produceId" id="produceId" >
+                        </select>
+                    </div>
+                </div>
+                <div class="weui_cell weui_cell_select weui_select_after">
+                    <div class="weui_cell_hd">
+                        <label for="produceId" class="weui_label">代理</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select" name="agentId" id="agentId" >
                         </select>
                     </div>
                 </div>
@@ -38,24 +47,24 @@
 <#assign sumNUmber=0 />
 <div class="weui_cells weui_cells_access">
     <#list orderList as order>
-            <a class="weui_cell" href="${base}/agent/edit/${order.id}">
+        <a class="weui_cell" href="${base}/agent/edit/${order.id}">
 
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>${order.produceName}</p>
-                </div>
-                <div class="weui_cell_ft">
-                    <#if order.status == 1 >
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>${order.produceName}</p>
+            </div>
+            <div class="weui_cell_ft">
+                <#if order.status == 1 >
 
-                        <b><span style="color: blue">${order.produceNumber}</span></b>
+                    <b><span style="color: blue">${order.produceNumber}</span></b>
+                    ${order.inputTime?string('yy/MM/dd HH:mm')}
+                    <i class="weui_icon_waiting_circle"></i>
+
+
+                    <#elseif order.status == 2>
+
+                        <b><span style="color: limegreen">${order.produceNumber}</span></b>
                         ${order.inputTime?string('yy/MM/dd HH:mm')}
-                        <i class="weui_icon_waiting_circle"></i>
-
-
-                        <#elseif order.status == 2>
-
-                            <b><span style="color: limegreen">${order.produceNumber}</span></b>
-                            ${order.inputTime?string('yy/MM/dd HH:mm')}
-                            <#assign sumNUmber=sumNUmber+order.produceNumber>
+                        <#assign sumNUmber=sumNUmber+order.produceNumber>
                             <i class="weui_icon_success_circle"></i>
 
 
@@ -67,9 +76,9 @@
 
 
 
-                    </#if>
-                </div>
-            </a>
+                </#if>
+            </div>
+        </a>
     </#list>
 </div>
 
@@ -81,7 +90,7 @@
 
 
 <@foot/>
-<script src="${base}/styles/js/module/business/agent/query.js"></script>
+<script src="${base}/styles/js/module/business/agent/reportAdv.js"></script>
 <script type="text/javascript">
     var produceId = "${produceId}";
     var agentId = "${agentId}";

@@ -42,6 +42,7 @@ public class Order {
 
     private String bankMemo;
 
+
     private String url;
 
     @Transient
@@ -69,6 +70,8 @@ public class Order {
     @Transient
     private String alipayName;
 
+    @Transient
+    private Long point;
 
     public Long getId() {
         return id;
@@ -260,5 +263,13 @@ public class Order {
 
     public void setAlipayName(String alipayName) {
         this.alipayName = alipayName;
+    }
+
+    public Long getPoint() {
+        return point;
+    }
+
+    public void setPoint(Long point) {
+        this.point = point;
     }
 }

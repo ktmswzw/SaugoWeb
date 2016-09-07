@@ -1,10 +1,11 @@
 package com.xecoder.business.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import com.xecoder.business.entity.Order;
-import com.xecoder.business.entity.Report;
+import com.xecoder.business.entity.Remuneration;
 import com.xecoder.business.service.OrderService;
-import com.xecoder.business.service.ReportService;
+import com.xecoder.business.service.RemunerationService;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.JacksonMapper;
@@ -41,6 +42,9 @@ public class AgentController extends BaseAction {
     @Autowired
     UserService userService;
 
+    @Autowired
+    RemunerationService remunerationService;
+
     private static final String HOME = "/business/agent/home";//主页
     private static final String ORDER = "/business/agent/order";//发起订单
     private static final String ORDEROK = "/business/agent/orderOk";//发起订单
@@ -61,42 +65,73 @@ public class AgentController extends BaseAction {
 
     /**
      * 统计
-     * @param type 1 直代  2次代  3所有
+     *
+     * @param type      0 查询  1直代统计  2次代查询 3查询123层 4所有tree
      * @param beginDate
      * @param endDate
      * @param produceId
      * @return
      */
     @RequestMapping(value = "/query")
-    public ModelAndView query(@RequestParam(defaultValue = "0") int type,
+    public ModelAndView query(@RequestParam(defaultValue = "3") int type,
                               @RequestParam(required = false) String beginDate,
                               @RequestParam(required = false) String endDate,
                               @RequestParam(defaultValue = "0") long produceId,
                               @RequestParam(defaultValue = "0") long agentId) {
-        ModelAndView mav = new ModelAndView(QUERY);
+        String pageType = QUERY;
+        if (type >= 1 && type <= 3)
+            pageType = REPORT;
+        if (type == 4)
+            pageType = REPORTADV;
+        ModelAndView mav = new ModelAndView(pageType);
         User user = SecurityUtils.getLoginUser();
         Order order = new Order();
-        Date dateB = beginDate==null||beginDate.equals("")?SimpleDate.getDayEnd(new Date(), -30):SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
-        Date dateE = endDate==null||endDate.equals("")?SimpleDate.getDayEnd(new Date(), 0):SimpleDate.strToDate(endDate, "yyyy-MM-dd");
+        Date dateB = beginDate == null || beginDate.equals("") ? SimpleDate.getDayEnd(new Date(), -30) : SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
+        Date dateE = endDate == null || endDate.equals("") ? SimpleDate.getDayEnd(new Date(), 0) : SimpleDate.strToDate(endDate, "yyyy-MM-dd");
         order.setBeginDate(dateB);
         order.setEndDate(dateE);
         if (produceId != 0) {
             order.setProduceId(produceId);
         }
-        if (agentId == 0) {
-            order.setAgentId(user.getId());
-        }
-        else
-        {
-            order.setAgentId(agentId);
-        }
-        order.setAgentId(user.getId());
-        Page page = new Page(1,10000,"input_time","desc");
-        List<Order> orderList = orderService.findAll(page, order,type);
 
-        mav.addObject("beginDate", SimpleDate.format(dateB,"yyyy-MM-dd"));
-        mav.addObject("endDate", SimpleDate.format(dateE,"yyyy-MM-dd"));
+        order.setParentId(agentId);
+        order.setAgentId(user.getId());
+
+        Page page = new Page(1, 10000, "input_time", "desc");
+        List<Order> orderList = orderService.findAll(page, order, type);
+
+        //所有积分
+        List<Remuneration> remunerations = remunerationService.findAll(null,new Remuneration());
+
+        if (type >= 1 && type <= 3){
+            for(Order o:orderList){
+                if(o.getParentId().equals(user.getId())){//直代
+                    for(Remuneration remuneration:remunerations){
+                        if(remuneration.getLevel()==1&&o.getProduceId().equals(remuneration.getProduceId())){
+                            o.setPoint(o.getProduceNumber()*remuneration.getRemuneration());
+                        }
+                    }
+                }
+                else if(!o.getParentId().equals(user.getId())){//次代
+                    for(Remuneration remuneration:remunerations){
+                        if(remuneration.getLevel()==2&&o.getProduceId().equals(remuneration.getProduceId())){
+                            o.setPoint(o.getProduceNumber()*remuneration.getRemuneration());
+                        }
+                    }
+                }
+                else{
+                    o.setPoint((long) 0);//自己
+                }
+
+            }
+        }
+
+
+        mav.addObject("beginDate", SimpleDate.format(dateB, "yyyy-MM-dd"));
+        mav.addObject("endDate", SimpleDate.format(dateE, "yyyy-MM-dd"));
         mav.addObject("produceId", produceId);
+        mav.addObject("agentId", agentId);
+        mav.addObject("type", type);
         mav.addObject("orderList", orderList);
         return mav;
     }

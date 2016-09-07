@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+</div>
+<#include "/console/layout/agentLayout.html"/>
+<@head/>
+<form name="formSubmit" id="formSubmit" method="post" action="${base}/agent/query">
+    <div id="container" class="container">
+        <div class="bd">
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label for="beginDate" class="weui_label">开始</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="date" value="${beginDate}" id="beginDate" name="beginDate">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label for="endDate" class="weui_label">截止</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="date" value="${endDate}" id="endDate" name="endDate">
+                    </div>
+                </div>
+                <div class="weui_cell weui_cell_select weui_select_after">
+                    <div class="weui_cell_hd">
+                        <label for="produceId" class="weui_label">级别</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select" name="type" id="type" >
+                        </select>
+                    </div>
+                </div>
+                <div class="weui_cell weui_cell_select weui_select_after">
+                    <div class="weui_cell_hd">
+                        <label for="produceId" class="weui_label">产品</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select" name="produceId" id="produceId" >
+                        </select>
+                    </div>
+                </div>
+                <div class="weui_cell weui_cell_select weui_select_after">
+                    <div class="weui_cell_hd">
+                        <label for="produceId" class="weui_label">代理</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select" name="agentId" id="agentId" >
+                        </select>
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <button type="submit" id="query" name="query" class="weui_btn weui_btn_primary">查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<#assign sumNUmber=0/>
+<#assign sumPoint=0/>
+<div class="weui_cells weui_cells_access">
+    <#list orderList as order>
+        <a class="weui_cell" href="${base}/agent/edit/${order.id}">
+
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>${order.produceName}<span style="color: #d86c88">${order.agentName}</span><span style="color: #7c797d">[${order.parentName}]</span></p>
+            </div>
+            <div class="weui_cell_ft">
+                <#if order.status == 1 >
+
+                    <b><span style="color: blue">${order.produceNumber}</span></b>
+                    ${order.inputTime?string('MM/dd')}
+                    <i class="weui_icon_waiting_circle"></i>
+
+                <#elseif order.status == 2>
+
+                    <b><span style="color: limegreen">${order.produceNumber}</span>/<span style="color: #d86c88">${order.point}</span></b>
+                    ${order.inputTime?string('MM/dd')}
+                    <#assign sumNUmber=sumNUmber+order.produceNumber   >
+                    <#assign sumPoint=sumPoint+order.point   >
+                        <i class="weui_icon_success_circle"></i>
+
+                <#else>
+
+                    <b><span style="color: red">${order.produceNumber}</span></b>
+                    ${order.inputTime?string('MM/dd')}
+                    <i class="weui_icon_cancel"></i>
+
+                </#if>
+            </div>
+        </a>
+    </#list>
+</div>
+
+<div class="weui_extra_area">
+    <div class="weui_cells">
+        <div class="weui_cells_title">有效数量/积分合计 <h2 class="page_title">${sumNUmber} / ${sumPoint}</h2></div>
+    </div>
+</div>
+
+
+<@foot/>
+<script src="${base}/styles/js/module/business/agent/report.js"></script>
+<script type="text/javascript">
+    var produceId = "${produceId}";
+    var agentId = "${agentId}";
+    var type = "${type}";
+</script>
+</body>
+</html>

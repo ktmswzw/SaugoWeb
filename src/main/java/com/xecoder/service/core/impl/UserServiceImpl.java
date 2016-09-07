@@ -114,6 +114,15 @@ public class UserServiceImpl extends BaseService implements UserService {
                 cri.andPhoneEqualTo(user.getPhone());
             }
 
+            if (user.getParentId()!=null) {
+                cri.addCriterion(" nn.id in ( " +
+                        "SELECT ss.id FROM security_user ss WHERE " +
+                        "ss.STATUS = 'enabled' " +
+                        "AND ss.email = '' " +
+                        "AND (ss.parent_id IN (SELECT  id FROM security_user  WHERE parent_Id = "+user.getParentId()+") OR ss.id IN (SELECT  id FROM  security_user WHERE parent_Id = "+user.getParentId()+") OR ss.id = "+user.getParentId()+") " +
+                        ")");
+            }
+
             if(StringUtils.isNotBlank(user.getEmail())){
                 cri.andEmailEqualTo(user.getEmail());
             }

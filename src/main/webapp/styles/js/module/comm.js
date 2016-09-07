@@ -119,6 +119,32 @@ function initSelect(id, ajaxUrl, ajaxDataParam, initData, sValue, sText,isQuery)
     });
 }
 
+//初始化下拉框函数
+function initSelectOne(id, ajaxUrl, ajaxDataParam, initData, sValue, sText,isQuery) {
+    //同步
+    $.ajax({
+        async: false,
+        cache: false,
+        type: 'POST',
+        url: ajaxUrl,
+        data: ajaxDataParam,
+        error: function () {// 请求失败处理函数
+            //$.scojs_message("更新失败,请重新登录!", $ERROR);
+        },
+        success: function (result) {
+            var options = "";
+            $(result).each(function () {
+                options += selectOptionOne($(this), initData, sValue, sText);
+            });
+            //console.debug(options);
+            $("#" + id).append(options);
+            if(isQuery)
+                addSearchBox(id);
+        }
+    });
+}
+
+
 
 function formatRepo (repo) {
     if (repo.loading) return repo.text;
@@ -190,7 +216,18 @@ function selectOption(obj, initData, sValue, sText) {
     return "<option " + selected + " value='" + obj[0][value] + "'>" + obj[0][text] + "</option>\n";
 }
 
-
+function selectOptionOne(obj, initData, sValue, sText) {
+    var text = (sText != undefined && sText != null && sText != "") ? sText : "name";
+    var value = (sValue != undefined && sValue != null && sValue != "") ? sValue : "id";
+    var selected = "";//默认不选择
+    //判断是否是已存储的选择
+    if (initData != undefined && initData != null && initData != "") {
+        if (initData == obj[0][value]) {
+            selected = "selected";
+        }
+    }
+    return "<option " + selected + " value='" + obj[0][value] + "'>" + obj[0][text] + "</option>\n";
+}
 
 //初始化fuelue树
 function initTree(ajaxUrl, ajaxDataParam, initData) {
