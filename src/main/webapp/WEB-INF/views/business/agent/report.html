@@ -23,7 +23,16 @@
                         <label for="produceId" class="weui_label">级别</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <select class="weui_select" name="type" id="type" >
+                        <select class="weui_select" name="type" id="type">
+                        </select>
+                    </div>
+                </div>
+                <div class="weui_cell weui_cell_select weui_select_after">
+                    <div class="weui_cell_hd">
+                        <label for="produceId" class="weui_label">状态</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select" name="status" id="status">
                         </select>
                     </div>
                 </div>
@@ -32,7 +41,7 @@
                         <label for="produceId" class="weui_label">产品</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <select class="weui_select" name="produceId" id="produceId" >
+                        <select class="weui_select" name="produceId" id="produceId">
                         </select>
                     </div>
                 </div>
@@ -41,7 +50,7 @@
                         <label for="produceId" class="weui_label">代理</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <select class="weui_select" name="agentId" id="agentId" >
+                        <select class="weui_select" name="agentId" id="agentId">
                         </select>
                     </div>
                 </div>
@@ -54,43 +63,47 @@
 </form>
 <#assign sumNUmber=0/>
 <#assign sumPoint=0/>
-<div class="weui_cells weui_cells_access">
+<div class="weui_cells weui_cells_access" style="font-size: 15px">
     <#list orderList as order>
         <a class="weui_cell" href="${base}/agent/edit/${order.id}">
 
             <div class="weui_cell_bd weui_cell_primary">
-                <p>${order.produceName}<span style="color: #d86c88">${order.agentName}</span><span style="color: #7c797d">[${order.parentName}]</span></p>
+                <p>${order.inputTime?string('MM/dd')}-${order.produceName}<span style="color: #3c4737">${order.agentName}</span><span
+                        style="color: #7c797d">[${order.parentName}]</span></p>
             </div>
             <div class="weui_cell_ft">
                 <#if order.status == 1 >
 
                     <b><span style="color: blue">${order.produceNumber}</span></b>
-                    ${order.inputTime?string('MM/dd')}
                     <i class="weui_icon_waiting_circle"></i>
 
-                <#elseif order.status == 2>
+                    <#elseif order.status == 2>
 
-                    <b><span style="color: limegreen">${order.produceNumber}</span>/<span style="color: #d86c88">${order.point}</span></b>
-                    ${order.inputTime?string('MM/dd')}
-                    <#assign sumNUmber=sumNUmber+order.produceNumber   >
-                    <#assign sumPoint=sumPoint+order.point   >
-                        <i class="weui_icon_success_circle"></i>
+                        <b><span style="color: limegreen">${order.produceNumber}</span>/<span style="color: limegreen">${order.point}</span></b>
+                        <#assign sumNUmber=sumNUmber+order.produceNumber   >
+                            <#assign sumPoint=sumPoint+order.point   >
+                                <i class="weui_icon_success_circle"></i>
 
-                <#else>
+                                <#else>
 
-                    <b><span style="color: red">${order.produceNumber}</span></b>
-                    ${order.inputTime?string('MM/dd')}
-                    <i class="weui_icon_cancel"></i>
+                                    <b><span style="color: red">${order.produceNumber}</span></b>
+                                    <i class="weui_icon_cancel"></i>
 
                 </#if>
             </div>
         </a>
     </#list>
+    <br>
+    <br>
+    <br>
+    <br>
 </div>
 
 <div class="weui_extra_area">
     <div class="weui_cells">
-        <div class="weui_cells_title">有效数量/积分合计 <h2 class="page_title">${sumNUmber} / ${sumPoint}</h2></div>
+        <a href="${base}/agent/home">
+            <div class="weui_cells_title">有效数量/积分合计 <h2 class="page_title_bottom">${sumNUmber} / ${sumPoint}</h2></div>
+        </a>
     </div>
 </div>
 
@@ -101,6 +114,7 @@
     var produceId = "${produceId}";
     var agentId = "${agentId}";
     var type = "${type}";
+    var status = "${status}";
 </script>
 </body>
 </html>

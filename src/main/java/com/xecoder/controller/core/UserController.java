@@ -131,8 +131,7 @@ public class UserController extends BaseAction{
         user.setStatus("enabled");
         List<User> list = userService.find(user);
         list.stream().filter(u -> u.getParentId() != null).forEach(u -> {
-            User in = userService.get(u.getParentId());
-            u.setRealname(u.getRealname() + "-上级" + "[" + in.getRealname() + "]");
+            u.setRealname(u.getRealname() + "-上级" + "[" + u.getParentName() + "]");
         });
         return list;
     }
@@ -147,8 +146,7 @@ public class UserController extends BaseAction{
         user.setParentId(SecurityUtils.getLoginUser().getId());
         List<User> list = userService.find(user);
         list.stream().filter(u -> u.getParentId() != null).forEach(u -> {
-            User in = userService.get(u.getParentId());
-            u.setRealname(u.getRealname() + "-上级" + "[" + in.getRealname() + "]");
+            u.setRealname(u.getRealname() + "-上级" + "[" + u.getParentName() + "]");
         });
         return list;
     }

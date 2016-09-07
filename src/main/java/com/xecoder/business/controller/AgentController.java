@@ -77,6 +77,7 @@ public class AgentController extends BaseAction {
                               @RequestParam(required = false) String beginDate,
                               @RequestParam(required = false) String endDate,
                               @RequestParam(defaultValue = "0") long produceId,
+                              @RequestParam(defaultValue = "0") int status,
                               @RequestParam(defaultValue = "0") long agentId) {
         String pageType = QUERY;
         if (type >= 1 && type <= 3)
@@ -95,6 +96,8 @@ public class AgentController extends BaseAction {
         }
 
         order.setParentId(agentId);
+
+        order.setStatus(status==0?null:status);
         order.setAgentId(user.getId());
 
         Page page = new Page(1, 10000, "input_time", "desc");
@@ -132,6 +135,7 @@ public class AgentController extends BaseAction {
         mav.addObject("produceId", produceId);
         mav.addObject("agentId", agentId);
         mav.addObject("type", type);
+        mav.addObject("status", status);
         mav.addObject("orderList", orderList);
         return mav;
     }
@@ -223,8 +227,21 @@ public class AgentController extends BaseAction {
     @RequestMapping(value = "/edit/{id}")
     @ResponseBody
     public ModelAndView edit(@PathVariable Long id) {
-        Order order = orderService.get(id);
-        return getView(ORDER, "order", order);
+        ModelAndView mav = new ModelAndView(ORDER);
+        try {
+            Order order = orderService.get(id);
+            ObjectMapper mapper = JacksonMapper.getInstance();
+            String json =mapper.writeValueAsString(order);
+            int self = SecurityUtils.getLoginUser().getId().equals(order.getAgentId())?1:0;//有权修改
+            mav.addObject("order",json);
+            mav.addObject("self",self);
+            return mav;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

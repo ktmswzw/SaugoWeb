@@ -96,8 +96,6 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                 cri.andProduceIdEqualTo(order.getProduceId());
             }
             if (order.getStatus()!=null) {
-//                cri.andStatusEqualTo(order.getStatus());
-
                 cri.addCriterion(" nn.status =  "+order.getStatus()+ " ");
             }
             if(order.getBeginDate()!=null)

@@ -9,6 +9,9 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
         //初始化下拉框 //可做异步下拉框选择
         initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, produceId, "id", "name", false);
 
+        $('#status').append("<option ></option>");
+        initSelectOne("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'ORDER_STATUS'}, status, "dicKey", "dicValue",false);
+
         $("#query").bind("click", function () {
             $("#formSubmit").submit();
         });

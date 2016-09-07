@@ -13,6 +13,10 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
         initSelectOne("agentId", WEB_GLOBAL_CTX + "/console/security/user/chooseListThree", {name: ''}, agentId, "id", "realname", false);
 
 
+        $('#status').append("<option ></option>");
+        initSelectOne("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'ORDER_STATUS'}, status, "dicKey", "dicValue",false);
+
+
         $("#query").bind("click", function () {
             $("#formSubmit").submit();
         });

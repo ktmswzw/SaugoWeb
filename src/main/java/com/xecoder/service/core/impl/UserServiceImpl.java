@@ -69,12 +69,12 @@ public class UserServiceImpl extends BaseService implements UserService {
 	public List<User> find(User user) {
 
         List<User> list =baseDao.getMapper(UserMapper.class).selectByExample(getCriteria(null,user));
-        if(list != null && list.size() > 0){
-            for(User u:list){
-                u.setUserRoles(userRoleService.find(u.getId()));
-            }
-        }
-		
+//        if(list != null && list.size() > 0){
+//            for(User u:list){
+//                u.setUserRoles(userRoleService.find(u.getId()));
+//            }
+//        }
+//
 		return list;
 	}
 
@@ -132,6 +132,10 @@ public class UserServiceImpl extends BaseService implements UserService {
 
         if(page != null && page.getSort() != null && page.getOrder() != null){
             criteria.setOrderByClause(page.getSort() + " " + page.getOrder());
+        }
+        else
+        {
+            criteria.setOrderByClause("realname" + " " + "asc");
         }
 
         return criteria;
