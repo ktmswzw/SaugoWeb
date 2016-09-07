@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by V on Sun Aug 21 15:24:09 CST 2016.
@@ -111,11 +112,12 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Override
     public void save(Order order) {
+        order.setId(UUID.randomUUID().toString());
         baseDao.getMapper(OrderMapper.class).insertSelective(order);
     }
 
     @Override
-    public Order get(Long id) {
+    public Order get(String id) {
         return baseDao.getMapper(OrderMapper.class).selectByPrimaryKey(id);
     }
 
@@ -133,7 +135,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         baseDao.getMapper(OrderMapper.class).deleteByPrimaryKey(id);
     }
 }

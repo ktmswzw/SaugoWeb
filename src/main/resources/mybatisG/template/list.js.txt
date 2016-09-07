@@ -67,7 +67,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
         //添加
         $('#add').click(function () {
             parent.Loading.modal('show');
-            self.location = WEB_GLOBAL_CTX + "/business/{lowerModuleCode}/add";
+            selfOrder.location = WEB_GLOBAL_CTX + "/business/{lowerModuleCode}/add";
         });
 
         //修改
@@ -75,7 +75,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS', 'co
             parent.Loading.modal('show');
             var objects = $table.bootstrapTable('getSelections');
             $.each(objects, function () {
-                self.location = WEB_GLOBAL_CTX + "/business/{lowerModuleCode}/edit/"+this.{tableKeyColumn};
+                selfOrder.location = WEB_GLOBAL_CTX + "/business/{lowerModuleCode}/edit/"+this.{tableKeyColumn};
             });
         });
 

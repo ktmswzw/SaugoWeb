@@ -14,7 +14,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
             $("#href").attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + order.url);
             $("#href").append('<p><img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url+'" alt="银行水单" style="height: 100px"></p>');
 
-            if(order.status!=1||self=="0"){
+            if(order.status!=1||order.selfOrder=="0"){
                 $("#save").remove();
                 $("#bankImage").toggleClass("hiddeDiv");
                 $("#bankId").remove();
@@ -87,7 +87,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                             return true;
                         }
                         else{
-                            doErrorMsg(result.msg,false);
+                            doErrorMsg(rsp.msg,false);
                             return false;
                         }
                     }

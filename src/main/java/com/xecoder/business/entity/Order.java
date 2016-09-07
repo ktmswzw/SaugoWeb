@@ -7,7 +7,7 @@ import javax.persistence.Transient;
 import java.util.Date;
 
 public class Order {
-    private Long id;
+    private String id;
 
     private Long inputId;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -46,6 +46,9 @@ public class Order {
     private String url;
 
     @Transient
+    private String selfOrder;
+
+    @Transient
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date beginDate;
@@ -73,11 +76,11 @@ public class Order {
     @Transient
     private Long point;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -271,5 +274,13 @@ public class Order {
 
     public void setPoint(Long point) {
         this.point = point;
+    }
+
+    public String getSelfOrder() {
+        return selfOrder;
+    }
+
+    public void setSelfOrder(String selfOrder) {
+        this.selfOrder = selfOrder;
     }
 }

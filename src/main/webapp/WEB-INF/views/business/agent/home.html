@@ -10,6 +10,7 @@
     </div>
     <div class="bd">
         <div class="weui_grids">
+            <@shiro.hasPermission name="Order:save">
             <a href="${base}/agent/order" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_panel"></i>
@@ -18,6 +19,8 @@
                     发货申请
                 </p>
             </a>
+            </@shiro.hasPermission>
+            <@shiro.hasPermission name="Query:show">
             <a href="${base}/agent/query?type=0" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_search_bar"></i>
@@ -26,6 +29,8 @@
                     订单查询
                 </p>
             </a>
+            </@shiro.hasPermission>
+            <@shiro.hasPermission name="Report:show">
             <a href="${base}/agent/query?type=1" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_article"></i>
@@ -34,6 +39,8 @@
                     订单统计
                 </p>
             </a>
+            </@shiro.hasPermission>
+            <@shiro.hasPermission name="SuperReport:show">
             <a href="${base}/agent/query?type=4" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_search_bar"></i>
@@ -42,14 +49,8 @@
                     超代统计
                 </p>
             </a>
-            <a href="${base}/agent/info" class="weui_grid">
-                <div class="weui_grid_icon">
-                    <i class="icon icon_toast"></i>
-                </div>
-                <p class="weui_grid_label">
-                    修改信息
-                </p>
-            </a>
+            </@shiro.hasPermission>
+            <@shiro.hasPermission name="Agent:save">
             <a href="${base}/agent/new" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="icon icon_toast"></i>
@@ -58,12 +59,29 @@
                     新代申请
                 </p>
             </a>
+            </@shiro.hasPermission>
+            <a href="${base}/agent/info" class="weui_grid">
+                <div class="weui_grid_icon">
+                    <i class="icon weui_icon_info_circle"></i>
+                </div>
+                <p class="weui_grid_label">
+                    修改信息
+                </p>
+            </a>
             <a href="${base}/agent/password" class="weui_grid">
                 <div class="weui_grid_icon">
-                    <i class="icon icon_msg"></i>
+                    <i class="icon weui_icon_warn"></i>
                 </div>
                 <p class="weui_grid_label">
                     修改密码
+                </p>
+            </a>
+            <a href="${base}/logout" class="weui_grid">
+                <div class="weui_grid_icon">
+                    <i class="icon weui_icon_cancel"></i>
+                </div>
+                <p class="weui_grid_label">
+                    退出系统
                 </p>
             </a>
         </div>

@@ -166,7 +166,7 @@ public class OrderController extends BaseAction {
      */
     @RequestMapping(value = "/edit/{id}")
     @ResponseBody
-    public ModelAndView edit(@PathVariable Long id) {
+    public ModelAndView edit(@PathVariable String id) {
         Order order = orderService.get(id);
         User  user = SecurityUtils.getLoginUser();
         order.setInputId(user.getId());
@@ -181,7 +181,7 @@ public class OrderController extends BaseAction {
      */
     @RequestMapping(value = "/check/{id}")
     @ResponseBody
-    public ModelAndView check(@PathVariable Long id) {
+    public ModelAndView check(@PathVariable String id) {
         Order order = orderService.get(id);
         User  user = SecurityUtils.getLoginUser();
         order.setCheckId(user.getId());
@@ -196,7 +196,7 @@ public class OrderController extends BaseAction {
      */
     @RequestMapping(value = "/view/{id}")
     @ResponseBody
-    public ModelAndView view(@PathVariable Long id) {
+    public ModelAndView view(@PathVariable String id) {
         Order order = orderService.get(id);
         return getView(INFO, "order", order);
     }
@@ -227,10 +227,9 @@ public class OrderController extends BaseAction {
                 order.setParentId(u.getParentId());
                 //order.setParentName(u.getParentName());
             }
-
             order.setStatus(1);
             order.setInputTime(new Date());
-            if(order.getId()==null)
+            if(order.getId()==null||order.getId().equals(""))
                 orderService.save(order);
             else
                 orderService.update(order);
@@ -285,7 +284,7 @@ public class OrderController extends BaseAction {
      */
     @RequestMapping(value = "/get/{id}")
     @ResponseBody
-    public Order getInfo(@PathVariable Long id) {
+    public Order getInfo(@PathVariable String id) {
         return orderService.get(id);
     }
 
@@ -297,7 +296,7 @@ public class OrderController extends BaseAction {
      */
     @RequestMapping(value = "/delete/{id}")
     @ResponseBody
-    public Result deleteInfo(@PathVariable Long id) {
+    public Result deleteInfo(@PathVariable String id) {
         Result result = new Result();
         User  user = SecurityUtils.getLoginUser();
         Order order = orderService.get(id);

@@ -20,11 +20,11 @@ public interface OrderService {
 
     void save(Order order);
 
-    Order get(Long id);
+    Order get(String id);
 
     void update(Order order);
 
-    void delete(Long id);
+    void delete(String id);
 
 }
 

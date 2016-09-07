@@ -1,7 +1,6 @@
 package com.xecoder.business.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import com.xecoder.business.entity.Order;
 import com.xecoder.business.entity.Remuneration;
 import com.xecoder.business.service.OrderService;
@@ -13,6 +12,8 @@ import com.xecoder.common.util.SimpleDate;
 import com.xecoder.entity.User;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,7 @@ public class AgentController extends BaseAction {
      * @param produceId
      * @return
      */
+    @RequiresPermissions("Query:show")
     @RequestMapping(value = "/query")
     public ModelAndView query(@RequestParam(defaultValue = "3") int type,
                               @RequestParam(required = false) String beginDate,
@@ -79,11 +81,17 @@ public class AgentController extends BaseAction {
                               @RequestParam(defaultValue = "0") long produceId,
                               @RequestParam(defaultValue = "0") int status,
                               @RequestParam(defaultValue = "0") long agentId) {
+
+        Subject currentUser = SecurityUtils.getSubject();
         String pageType = QUERY;
-        if (type >= 1 && type <= 3)
+        if (type >= 1 && type <= 3) {
+            currentUser.checkPermission("Report:show");
             pageType = REPORT;
-        if (type == 4)
+        }
+        if (type == 4) {
+            currentUser.checkPermission("SuperReport:show");
             pageType = REPORTADV;
+        }
         ModelAndView mav = new ModelAndView(pageType);
         User user = SecurityUtils.getLoginUser();
         Order order = new Order();
@@ -141,6 +149,7 @@ public class AgentController extends BaseAction {
     }
 
 
+    @RequiresPermissions("Agent:save")
     @RequestMapping(value = "/new")
     public ModelAndView newAgent() {
         ModelAndView mav = new ModelAndView(NEW);
@@ -158,6 +167,7 @@ public class AgentController extends BaseAction {
         return mav;
     }
 
+    @RequiresPermissions("Order:save")
     @RequestMapping(value = "/info")
     public ModelAndView info() {
         ModelAndView mav = new ModelAndView(NEW);
@@ -180,6 +190,7 @@ public class AgentController extends BaseAction {
         return PASSWORD;
     }
 
+    @RequiresPermissions("Order:save")
     @RequestMapping(value = "/order")
     public ModelAndView order() {
         User user = SecurityUtils.getLoginUser();
@@ -188,8 +199,10 @@ public class AgentController extends BaseAction {
         order.setAgentName(user.getRealname());
         order.setInputId(user.getId());
         order.setInputName(user.getRealname());
+        order.setSelfOrder("1");
         return getView(ORDER, "order", order);
     }
+
 
     /**
      * 完成订单
@@ -224,17 +237,19 @@ public class AgentController extends BaseAction {
      *
      * @return ModelAndView
      */
+
+    @RequiresPermissions("Order:save")
     @RequestMapping(value = "/edit/{id}")
     @ResponseBody
-    public ModelAndView edit(@PathVariable Long id) {
+    public ModelAndView edit(@PathVariable String id) {
         ModelAndView mav = new ModelAndView(ORDER);
         try {
             Order order = orderService.get(id);
             ObjectMapper mapper = JacksonMapper.getInstance();
+            String self = SecurityUtils.getLoginUser().getId().equals(order.getAgentId())?"1":"0";//有权修改
+            order.setSelfOrder(self);
             String json =mapper.writeValueAsString(order);
-            int self = SecurityUtils.getLoginUser().getId().equals(order.getAgentId())?1:0;//有权修改
             mav.addObject("order",json);
-            mav.addObject("self",self);
             return mav;
         }
         catch (Exception e)
