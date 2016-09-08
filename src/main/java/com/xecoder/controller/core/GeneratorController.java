@@ -36,7 +36,7 @@ import java.util.List;
 
 /**
  * 代码生成
- * Created by vincent on 2014/10/13.
+ * Created by imanon.net on 2014/10/13.
  */
 @Controller
 @RequestMapping("/generator")

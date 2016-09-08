@@ -6,7 +6,7 @@ import com.xecoder.entity.Columns;
 import java.util.List;
 
 /**
- * Created by vincent on 2014/10/13.
+ * Created by imanon.net on 2014/10/13.
  */
 public interface ColumnsService {
     int countByExample(Page page, Columns columns);

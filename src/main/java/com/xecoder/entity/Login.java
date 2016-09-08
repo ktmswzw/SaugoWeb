@@ -3,7 +3,7 @@ package com.xecoder.entity;
 import java.io.Serializable;
 
 /**
- * Created by vincent on 2014/12/9.
+ * Created by imanon.net on 2014/12/9.
  */
 public class Login implements Serializable {
     String username,password,captcha,rememberMe;

@@ -1,7 +1,7 @@
 package com.xecoder.common.util;
 
 /**
- * Created by Vincent on 2015/5/19.
+ * Created by imanon.net on 2015/5/19.
  */
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

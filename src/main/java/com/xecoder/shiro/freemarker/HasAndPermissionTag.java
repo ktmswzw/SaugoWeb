@@ -3,7 +3,7 @@ package com.xecoder.shiro.freemarker;
 import org.apache.shiro.subject.Subject;
 
 /**
- * Created by vincent on 2014/9/6.
+ * Created by imanon.net on 2014/9/6.
  */
 public class HasAndPermissionTag extends PermissionTag {
     private static final String PERMISSION_NAMES_DELIMETER = ",";

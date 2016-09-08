@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 /**
- * Created by vincent on 2014/10/20.
+ * Created by imanon.net on 2014/10/20.
  */
 public class FileUtil {
 

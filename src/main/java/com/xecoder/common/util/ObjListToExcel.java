@@ -14,8 +14,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 /**
- * Created by vincent on 16/8/18.
- * Duser.name = 224911261@qq.com
+ * Created by imanon.net on 16/8/18.
+ * Duser.name = imanon
  * SaugoWeb
  */
 @SuppressWarnings("unchecked")

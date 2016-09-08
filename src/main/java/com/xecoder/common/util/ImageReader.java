@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.imgscalr.Scalr;
 
 /**
- * Created by Vincent on 2015/4/10.
+ * Created by imanon.net on 2015/4/10.
  */
 public final class ImageReader {
 

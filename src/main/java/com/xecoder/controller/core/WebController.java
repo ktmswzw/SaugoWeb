@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.UUID;
 
 /**
- * Created by vincent on 2014/11/18.
+ * Created by imanon.net on 2014/11/18.
  */
 @Controller
 @RequestMapping("/")

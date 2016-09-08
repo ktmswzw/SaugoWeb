@@ -1,7 +1,7 @@
 package com.xecoder.common.mybatis;
 
 /**
- * Created by vincent on 2014/10/13.
+ * Created by imanon.net on 2014/10/13.
  */
 public abstract class CustomerContextHolder {
 

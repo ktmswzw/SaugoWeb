@@ -1,7 +1,7 @@
 package com.xecoder.common.util;
 
 /**
- * Created by Vincent on 2015/1/28.
+ * Created by imanon.net on 2015/1/28.
  */
 public class DataAttributes {
 

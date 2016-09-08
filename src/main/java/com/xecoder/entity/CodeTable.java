@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * 代码主页模型
- * Created by vincent on 2014/10/14.
+ * Created by imanon.net on 2014/10/14.
  */
 @Repository
 public class CodeTable implements Serializable {

@@ -1,5 +1,5 @@
 /**
- * Created by vincent on 16/9/7.
+ * Created by imanon.net on 16/9/7.
  */
 requirejs(['jquery', 'ie10', 'comm', 'form'],
     function () {

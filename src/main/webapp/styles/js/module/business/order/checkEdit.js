@@ -1,5 +1,5 @@
 /**
- * Created by vincent on 16/8/30.
+ * Created by imanon.net on 16/8/30.
  */
 //加载插件
 requirejs(['jquery', 'bootstrap', 'fuelux','validator', 'vb', 'validatorLAG', 'comm', 'form', 'message'],

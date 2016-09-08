@@ -7,7 +7,7 @@ import com.xecoder.entity.SecurityPortalReport;
 import java.util.List;
 
 /**
- * Created by vincent on 2014/9/14.
+ * Created by imanon.net on 2014/9/14.
  */
 public interface PortalService {
     Page findByPage(Page page, SecurityPortal securityPortal);

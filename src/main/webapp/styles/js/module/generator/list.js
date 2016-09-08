@@ -1,5 +1,5 @@
 /**
- * Created by Vincent on 2015/3/1.
+ * Created by imanon.net on 2015/3/1.
  */
 requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select','selectCN','tExport', 'tExportS', 'comm', 'message'],
     function () {

@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * 代码模型列展示类型
- * Created by vincent on 2014/10/14.
+ * Created by imanon.net on 2014/10/14.
  */
 @Repository
 public class CodeColumn implements Serializable{

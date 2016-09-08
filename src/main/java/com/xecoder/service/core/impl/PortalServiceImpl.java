@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by vincent on 2014/9/14.
+ * Created by imanon.net on 2014/9/14.
  */
 @Service("portalService")
 @Transactional

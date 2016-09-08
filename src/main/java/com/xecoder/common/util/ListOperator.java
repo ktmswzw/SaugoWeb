@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Created by  moxz
- * User: 224911261@qq.com
+ * User: imanon
  * 2015/9/22-22:02
  * RecruitSystem.com.xecoder.common.util
  */
