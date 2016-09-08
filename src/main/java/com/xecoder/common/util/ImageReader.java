@@ -40,6 +40,20 @@ public final class ImageReader {
     }
 
 
+    public static void convertImage(InputStream ins, String newFilename,int width,int height) {
+        BufferedImage originalImage;
+        try {
+            originalImage = ImageIO.read(ins);
+            BufferedImage thumbnail = Scalr.resize(originalImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_WIDTH,
+                    width, height, Scalr.OP_ANTIALIAS);
+
+            if (!ImageIO.write(thumbnail, "JPEG", new File(newFilename)))
+                System.out.println("File write failed.");;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void writeToFile(BitMatrix matrix, String format, File file)
             throws IOException {
         BufferedImage image = toBufferedImage(matrix);

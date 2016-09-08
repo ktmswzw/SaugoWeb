@@ -4,7 +4,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Date;
 import java.util.UUID;
@@ -14,9 +17,11 @@ import java.util.UUID;
  */
 public class UploadUtils {
     public static String upload(MultipartFile file,HttpServletRequest request){
-        String logoPathDir = "/Users/vincent/Downloads/upload/"
-                + SimpleDate.format(SimpleDate.localDate(new Date(),1));
+
+        String logoPathDir = "/Users/vincent/Downloads/upload/"+ SimpleDate.format(SimpleDate.localDate(new Date(),1));
+//        String logoPathDir = "/upload/" + SimpleDate.format(SimpleDate.localDate(new Date(),1));
         //String contextPath = request.getSession().getServletContext().getRealPath(logoPathDir);
+
         //String filePath = contextPath + File.separator ;
         String filePath = logoPathDir ;
         File file_in = new File(filePath);
@@ -27,7 +32,7 @@ public class UploadUtils {
         String newFilename = newFilenameBase + originalFileExtension;
         File source = new File(filePath + "/" + newFilename);
 
-        if(!file.getOriginalFilename().equals("image.jpg")) {
+        if(!file.getContentType().equals("image/jpeg")) {
             try {
                 file.transferTo(source);
             } catch (IOException e) {
@@ -38,17 +43,17 @@ public class UploadUtils {
         }
         else{
             try{
-                FileOutputStream fos = FileUtils.openOutputStream(source);
-                IOUtils.copy(file.getInputStream(), fos);
+                ImageReader.convertImage(file.getInputStream(),filePath + "/" + newFilename,1000,1000);
                 return filePath + "/" + newFilename;
             }catch (Exception e){
                 e.printStackTrace();
             }
 
-
         }
         return "";
     }
+
+
 
     public static File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException
     {
