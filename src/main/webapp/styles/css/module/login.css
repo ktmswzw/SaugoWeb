@@ -47,7 +47,9 @@ body {
 {
     height: 30px;
 }
-
+.panel-primary {
+    border-color: #7c797d;
+}
 .login-div{
     max-width: 400px;
     margin-left: auto;
