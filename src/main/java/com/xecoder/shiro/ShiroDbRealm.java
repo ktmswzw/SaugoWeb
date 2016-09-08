@@ -40,8 +40,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	protected boolean activeRoot = true;
 	
 	// 是否使用验证码
-	protected boolean useCaptcha = false;
-	
+	protected boolean useCaptcha = true;
+
 	protected UserService userService;
 	
 	protected RoleService roleService;

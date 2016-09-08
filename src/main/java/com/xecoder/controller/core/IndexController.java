@@ -32,7 +32,7 @@ import java.util.List;
 public class IndexController extends BaseAction{
 
 	private static final String INDEX = "console/index/index";
-	private static final String AGENT = "console/index/agent";
+	private static final String AGENT = "business/agent/home";
 	private static final String PORTAL = "console/index/portal";
 	private static final String LOADING = "console/layout/loading";
 
@@ -49,13 +49,12 @@ public class IndexController extends BaseAction{
 		
 		request.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
 		List<UserRole> list = shiroUser.getUser().getUserRoles();
-		if(list!=null&&list.size()>1) {
-			return INDEX;
+		for(UserRole userRole:list){
+			if(userRole.getRoleId().equals(2)||userRole.getRoleId().equals(3)){
+				return AGENT;
+			}
 		}
-		else
-		{
-			return AGENT;
-		}
+		return INDEX;
 	}
 
 	@RequestMapping(value="/getMenuModule", method=RequestMethod.POST) 

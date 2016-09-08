@@ -89,6 +89,7 @@ function getAgentCheck() {
                 countCheck = countCheck + result;
             }
             else{
+                countCheck=0;
                 updateTitle();
             }
         }
@@ -113,6 +114,7 @@ function getOrderCheck() {
                 countCheck = countCheck + result;
             }
             else {
+                countCheck=0;
                 updateTitle();
             }
         }

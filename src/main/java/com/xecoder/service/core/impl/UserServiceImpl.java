@@ -174,6 +174,17 @@ public class UserServiceImpl extends BaseService implements UserService {
         return list;
     }
 
+    @Override
+    public List<User> findByParentIdAll(Long parentId) {
+        UserCriteria criteria = new UserCriteria();
+        UserCriteria.Criteria cri = criteria.createCriteria();
+        if(parentId != null){
+            cri.andParentIdEqualTo(parentId);
+        }
+        List<User> list =   baseDao.getMapper(UserMapper.class).selectByExample(criteria);
+        return list;
+    }
+
 	@Override
 	public User get(String username) {
 		UserCriteria criteria = new UserCriteria();
@@ -305,56 +316,50 @@ public class UserServiceImpl extends BaseService implements UserService {
         String roles = user.getRoles();
         User user1 = new User();
         user1.setUsername(user.getUsername());
-        Long id = getByXXX(user1).getId();
-        if(StringUtils.isNotBlank(roles)){
-            if(roles.indexOf(",")>0) {
-                for (String roleId : StringUtils.split(roles,",")) {
-                    UserRole userRole = new UserRole();
-                    userRole.setRoleId(Long.parseLong(roleId));
-                    userRole.setUserId(id);
-                    userRole.setPriority(99);
-                    userRoleService.save(userRole);
-                }
-            }
-            else{
-                UserRole userRole = new UserRole();
-                userRole.setRoleId(Long.parseLong(roles));
-                userRole.setUserId(id);
-                userRole.setPriority(99);
-                userRoleService.save(userRole);
-            }
+        user1 = getByXXX(user1);
+        if(user1!=null){
+            user1.setRoles(roles);
+            addNewRoles(user1);
         }
-
-
 		shiroRealm.clearCachedAuthorizationInfo(user.getUsername());
 	}
 
-	@Override
-	public void update(User user) {
+	private void deleteOldRoles(User user){
+	    List<UserRole> list = userRoleService.find(user.getId());
+        for(UserRole userRole:list){
+            userRoleService.delete(userRole.getId());
+        }
+    }
+
+    private void addNewRoles(User user){
         String roles = user.getRoles();
-        //Long id = getByUsername(user.getUsername()).getId();
         if(StringUtils.isNotBlank(roles)){
+            deleteOldRoles(user);
             if(StringUtils.indexOfAny(roles,",")>0) {
                 for (String roleId : StringUtils.split(roles,",")) {
-                    UserRole userRole = new UserRole();
-                    userRole.setRoleId(Long.parseLong(roleId));
-                    userRole.setUserId(user.getId());
-                    userRole.setPriority(99);
-                    if (userRoleService.find(userRole).size()==0) {
-                        userRoleService.save(userRole);
-                    }
+                    addRole(user.getId(),Long.parseLong(roleId));
                 }
             }
             else{
-                UserRole userRole = new UserRole();
-                userRole.setRoleId(Long.parseLong(roles));
-                userRole.setUserId(user.getId());
-                userRole.setPriority(99);
-                if (userRoleService.find(userRole).size()==0) {
-                    userRoleService.save(userRole);
-                }
+                addRole(user.getId(),Long.parseLong(roles));
             }
         }
+    }
+
+    private void addRole(Long userId,Long roleId){
+        UserRole userRole = new UserRole();
+        userRole.setRoleId(roleId);
+        userRole.setUserId(userId);
+        userRole.setPriority(99);
+        if (userRoleService.find(userRole).size()==0) {
+            userRoleService.save(userRole);
+        }
+    }
+
+
+	@Override
+	public void update(User user) {
+        addNewRoles(user);
         if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
             HashPassword hashPassword = ShiroDbRealm.encryptPassword(user.getPlainPassword());
             user.setSalt(hashPassword.salt);

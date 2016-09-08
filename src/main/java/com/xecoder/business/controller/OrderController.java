@@ -11,8 +11,11 @@ import com.xecoder.common.util.SimpleDate;
 import com.xecoder.common.util.UploadUtils;
 import com.xecoder.entity.User;
 import com.xecoder.service.core.UserService;
+import com.xecoder.shiro.IncorrectCaptchaException;
 import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.viewModel.GridModel;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,33 +58,44 @@ public class OrderController extends BaseAction {
         return INDEX;
     }
 
+    @RequiresPermissions("Check:show")
     @RequestMapping(value = "/check")
     public String check() {
         return CHECK;
     }
 
+    @RequiresPermissions("Query:show")
     @RequestMapping(value = "/query")
     public String query() {
         return QUERY;
     }
 
 
+    @RequiresPermissions("Report:show")
     @RequestMapping(value = "/report")
     public String report() {
         return REPORT;
     }
 
+    @RequiresPermissions("SuperReport:show")
     @RequestMapping(value = "/superReport")
     public String superReport() {
         return SUPERREPORT;
     }
 
+    @RequiresPermissions("Report:show")
     @RequestMapping(value = "/queryReport")
     public ModelAndView queryReport(@RequestParam int agentId,@RequestParam String condition) {
         ModelAndView mav = new ModelAndView(QUERYREPORT);
         try {
             Order order = new Order();
+
             User user = userService.get((long) agentId);
+            User currentUser = SecurityUtils.getLoginUser();
+            List<User> list = userService.selectTreeById(currentUser.getId());
+            if(!list.contains(user)){
+                new IncorrectCaptchaException("没有权限");
+            }
             String produceId,start,end;
             String [] temp = condition.split("~");
             produceId=(temp[0]).replace("|","");
@@ -149,6 +163,7 @@ public class OrderController extends BaseAction {
      *
      * @return ModelAndView
      */
+    @RequiresPermissions("Order:save")
     @RequestMapping(value = "/add")
     @ResponseBody
     public ModelAndView add() {
@@ -164,6 +179,7 @@ public class OrderController extends BaseAction {
      *
      * @return ModelAndView
      */
+    @RequiresPermissions("Order:save")
     @RequestMapping(value = "/edit/{id}")
     @ResponseBody
     public ModelAndView edit(@PathVariable String id) {
@@ -179,6 +195,7 @@ public class OrderController extends BaseAction {
      *
      * @return ModelAndView
      */
+    @RequiresPermissions("Check:edit")
     @RequestMapping(value = "/check/{id}")
     @ResponseBody
     public ModelAndView check(@PathVariable String id) {
@@ -194,6 +211,7 @@ public class OrderController extends BaseAction {
      *
      * @return ModelAndView
      */
+    @RequiresPermissions("Query:show")
     @RequestMapping(value = "/view/{id}")
     @ResponseBody
     public ModelAndView view(@PathVariable String id) {
@@ -208,6 +226,7 @@ public class OrderController extends BaseAction {
      * @param order
      * @return Result
      */
+    @RequiresPermissions("Order:save")
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result saveOrder(@ModelAttribute Order order,
@@ -252,6 +271,7 @@ public class OrderController extends BaseAction {
      * @param order
      * @return Result
      */
+    @RequiresPermissions("Order:edit")
     @RequestMapping(value = "/update")
     @ResponseBody
     public Result updateOrder(@ModelAttribute Order order) {
@@ -282,6 +302,7 @@ public class OrderController extends BaseAction {
      * @param id
      * @return
      */
+    @RequiresPermissions("Order:view")
     @RequestMapping(value = "/get/{id}")
     @ResponseBody
     public Order getInfo(@PathVariable String id) {
@@ -294,6 +315,7 @@ public class OrderController extends BaseAction {
      * @param id
      * @return
      */
+    @RequiresPermissions("Order:delete")
     @RequestMapping(value = "/delete/{id}")
     @ResponseBody
     public Result deleteInfo(@PathVariable String id) {
@@ -323,6 +345,7 @@ public class OrderController extends BaseAction {
      * @param orderO
      * @return
      */
+    @RequiresPermissions("Check:edit")
     @RequestMapping(value = "/checkSave")
     @ResponseBody
     public Result checkSave(@ModelAttribute Order orderO) {

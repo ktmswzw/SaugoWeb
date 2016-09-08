@@ -123,7 +123,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
 
         $("#file").change(function () {
             $("#save").removeAttr("disabled");
-            $("#save").toggleClass("disabled");
+            $("#save").removeAttr("disabled");
         });
 
         parent.Loading.modal('hide');

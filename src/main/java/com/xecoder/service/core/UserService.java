@@ -46,5 +46,7 @@ public interface UserService {
 
 	List<User> findByParentId(Long parentId);
 
+	List<User> findByParentIdAll(Long parentId);
+
 	List<User> selectTreeById(Long id);
 }

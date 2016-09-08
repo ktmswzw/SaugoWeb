@@ -485,6 +485,6 @@
     select
     <include refid="Base_Column_List" />
     from security_user nn
-    WHERE status = 'enabled' and FIND_IN_SET(id, AGENT_TREE(#{id,jdbcType=BIGINT}))
+    WHERE FIND_IN_SET(id, AGENT_TREE(#{id,jdbcType=BIGINT}))
   </select>
 </mapper>

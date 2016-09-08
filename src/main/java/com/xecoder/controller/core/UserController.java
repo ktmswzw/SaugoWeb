@@ -354,6 +354,9 @@ public class UserController extends BaseAction{
         if(user.getParentId()==2){
             user.setRoles("2");//超级代理
         }
+        else{
+            user.setRoles("3");//总代
+        }
         if(user.getId()==null) {
             User user2 = new User();
             if(user.getUsername()!=null&&!user.getUsername().equals("")) {
@@ -532,7 +535,8 @@ public class UserController extends BaseAction{
             return result;
         }
         user.setStatus("disabled");
-        user.setUsername("已注销"+user.getUsername());
+        user.setUsername("DEL-"+user.getUsername());
+        user.setRealname("DEL-"+user.getRealname());
         user.setIdentityCards("DEL-"+user.getIdentityCards());
         user.setBankAccount("DEL-"+user.getBankAccount());
         userService.delete(user);
@@ -574,7 +578,7 @@ public class UserController extends BaseAction{
     @RequestMapping(value = "/findJsonById/{id}", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject findJsonById(@PathVariable Long id) {
-        List<User> list = userService.findByParentId(id);
+        List<User> list = userService.findByParentIdAll(id);
         JSONObject jsonobject = new JSONObject();
         JSONArray jarray = new JSONArray();
         for (User o : list) {
