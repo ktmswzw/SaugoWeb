@@ -18,8 +18,8 @@ import java.util.UUID;
 public class UploadUtils {
     public static String upload(MultipartFile file,HttpServletRequest request){
 
-        String logoPathDir = "/Users/vincent/Downloads/upload/"+ SimpleDate.format(SimpleDate.localDate(new Date(),1));
-//        String logoPathDir = "/upload/" + SimpleDate.format(SimpleDate.localDate(new Date(),1));
+//        String logoPathDir = "/Users/vincent/Downloads/upload/"+ SimpleDate.format(SimpleDate.localDate(new Date(),1));
+        String logoPathDir = "/upload/" + SimpleDate.format(SimpleDate.localDate(new Date(),1));
         //String contextPath = request.getSession().getServletContext().getRealPath(logoPathDir);
 
         //String filePath = contextPath + File.separator ;
