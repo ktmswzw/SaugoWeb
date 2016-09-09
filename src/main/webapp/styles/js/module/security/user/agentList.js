@@ -1,3 +1,4 @@
+var sortSelf = true;
 requirejs(['jquery', 'bootstrap','table', 'tablezn', 'select', 'selectCN', 'tExport', 'tExportS', 'comm', 'message'],
     function () {
         var $OK = $.scojs_message.TYPE_OK;
@@ -19,6 +20,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'select', 'selectCN', 'tExp
             sidePagination:'server',
             clickToSelect:true,
             singleSelect:true,
+            customSort:'customSort',
             smartDisplay: false,
             queryParams: 'queryParamsF',
             pagination: true,
@@ -30,16 +32,23 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'select', 'selectCN', 'tExp
             showEdit($table, 'to', 'do', 'in');
         }).on('page-change.bs.table', function (e, size, number) {
             setHeightSelf(200*number/10);
+        }).on('sort.bs.table', function (name,order) {
+            queryParamsB();
+            sortSelf = !sortSelf;
         });
         setHeightSelf(800);
         //查询动作
         $('#query').click(function () {
+            queryParamsB();
+        });
+
+
+        function queryParamsB() {
             $table.bootstrapTable('refresh', {
                 url: WEB_GLOBAL_CTX + '/console/security/user/agentUserList',
                 queryParams: 'queryParamsF'
             });
-        });
-
+        }
 
         //删除
         $('#confirm').click(function () {
@@ -134,6 +143,7 @@ function queryParamsF(params) {
     var data = eval('({' + str.replace(new RegExp("/", 'g'),"-") + '})');
 
     params.sortName = "create_time";
-    params.sortOrder = "desc";
+    params.sortOrder = sortSelf?"desc":"asc";
     return $.extend({}, params, data);
 }
+

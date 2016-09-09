@@ -275,7 +275,6 @@
   </update>
   <select id="reportTree" resultMap="BaseResultMap" parameterType="com.xecoder.business.entity.ReportCriteria" >
     select
-    id,
     agent_id,
     agent_name,
     sum(s.agent_sum) as agent_sum,

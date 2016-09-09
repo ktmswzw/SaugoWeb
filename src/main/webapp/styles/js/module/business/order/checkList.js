@@ -74,6 +74,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn',  'select', 'selectCN','tEx
             });
         });
 
+
         //修改
         $('#check').click(function () {
             var objects = $table.bootstrapTable('getSelections');
