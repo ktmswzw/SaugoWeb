@@ -57,4 +57,9 @@ public interface SecurityConstants {
 	public static final String TEXT_TYPE_PLAIN= "text/plain";
 	public static final String TEXT_TYPE_HTML= "text/html";
 	public static final String SESSION_FORCE_LOGOUT_KEY= "session.force.logout";
+
+	public static final String SMS_URL = "http://gw.api.taobao.com/router/rest";
+	public static final String SMSFREESIGNNAME = "淑格订单管理系统";
+	public static final String SMS_KEY = "23451520";
+	public static final String SMS_SECRET = "";
 }

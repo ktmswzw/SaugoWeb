@@ -5,6 +5,7 @@
 
 <!--
         java -jar D:\Program\mybatis-generator-core-1.3.2\lib\mybatis-generator-core-1.3.2.jar -configfile src/main/resources/mybatisG/core.xml -overwrite
+mvn install:install-file: -DgroupId=taobao -DartifactId=taobao -Dversion=1.1 -Dpackaging=jar -Dfile=/Users/vincent/Downloads/sdk-java-2016-06-07/taobao-sdk-java-auto_1455552377940-20160607.jar
 -->
 
 

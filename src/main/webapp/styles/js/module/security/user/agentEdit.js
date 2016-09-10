@@ -107,11 +107,11 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                 $.scojs_message("上级代理必须选择一个", $ERROR);
                 return false;
             }
-            if ((user.id == null) && ( $("#plainPassword").val() == '')) {
+/*            if ((user.id == null) && ( $("#plainPassword").val() == '')) {
                 highlight_error($("#plainPassword"));
                 $.scojs_message("密码为空", $ERROR);
                 return false;
-            }
+            }*/
             if (($("#payType").val() == 0 ) && ( $("#bank").val() == '' || $("#bankAccount").val() == '' || $("#bankName").val() == ''  )) {
                 highlight_error($("#bank"));
                 $.scojs_message("银行信息不完整", $ERROR);

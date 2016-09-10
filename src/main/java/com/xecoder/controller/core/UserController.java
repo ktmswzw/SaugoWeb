@@ -8,10 +8,8 @@ import com.google.common.base.Strings;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.*;
-import com.xecoder.entity.Role;
-import com.xecoder.entity.RoleSelect;
-import com.xecoder.entity.User;
-import com.xecoder.entity.UserRole;
+import com.xecoder.entity.*;
+import com.xecoder.service.core.LogEntityService;
 import com.xecoder.service.core.RoleService;
 import com.xecoder.service.core.UserRoleService;
 import com.xecoder.service.core.UserService;
@@ -60,10 +58,7 @@ public class UserController extends BaseAction{
     private RoleService roleService;
 
     @Autowired
-    private UserRoleService userRoleService;
-
-    @Autowired
-    private EhCacheCacheManager ehCacheCacheManager;
+    private LogEntityService logEntityService;
 
     @RequiresPermissions("User:show")
     @RequestMapping(value="/list")
@@ -224,16 +219,43 @@ public class UserController extends BaseAction{
         return result;
     }
 
+
+//    JSONObject jsonobject = new JSONObject();
+//    JSONArray jarray = new JSONArray();
+//        for (Organization o : organization) {
+//        FuelueTree fuelueTree = new FuelueTree();
+//        fuelueTree.setText(o.getName());
+//        fuelueTree.setType(o.getNodes() > 0 ? "folder" : "item");
+//        DataAttributes dataAttributes =  new DataAttributes();
+//        dataAttributes.setId(o.getId().toString());
+//        fuelueTree.setAttr(dataAttributes);
+//        jarray.add(fuelueTree);
+//    }
+//        jsonobject.put("data", jarray);
+//        return jsonobject;
+
     @RequestMapping(value="/check")
     @ResponseBody
     public Result checkUser(@ModelAttribute User user) {
         Result result = new Result();
         try {
             user.setCreateTime(new Date());
+            user.setPlainPassword(String.valueOf(RadomUtils.nextSixInt()));
             user.setStatus("enabled");
             userService.update(user);
             result.setSuccessful(true);
             result.setMsg("帐号已可使用");
+            LogEntity log = new LogEntity();
+            log.setUsername(user.getUsername());
+            log.setCreateTime(new Date());
+            log.setSuperid(String.valueOf(user.getId()));
+            log.setIpAddress(request.getRemoteAddr());
+            JSONObject object = new JSONObject();
+            object.put("realname",user.getRealname());
+            object.put("username",user.getUsername());
+            object.put("password",user.getPlainPassword());
+            AliyunSmsPush.sendSms(user.getPhone(),"SMS_14735423",object.toJSONString(),log);
+            logEntityService.save(log);
         }
         catch (Exception e)
         {
