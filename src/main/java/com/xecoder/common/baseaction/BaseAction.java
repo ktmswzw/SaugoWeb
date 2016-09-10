@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xecoder.common.util.AliyunSmsPush;
 import com.xecoder.common.util.DateConverter;
 import com.xecoder.common.util.JacksonMapper;
+import com.xecoder.common.util.Result;
 import com.xecoder.entity.LogEntity;
 import com.xecoder.entity.User;
 import com.xecoder.service.core.LogEntityService;
@@ -59,7 +61,10 @@ public class BaseAction {
     public LogEntityService log;
 
     public LogEntity logBean;
-	
+
+	@Autowired
+	private LogEntityService logEntityService;
+
 	/**
 	 * ModelAttribute 
 	 * 放置在方法的形参上：表示引用Model中的数据
@@ -208,5 +213,15 @@ public class BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void sendFill(String phone,String code,String json,LogEntity log,Result result){
+		boolean flag = AliyunSmsPush.sendSms(phone, code, json, log);
+		if (!flag) {
+			logEntityService.save(log);
+			result.setSuccessful(false);
+			result.setMsg(log.getMessage());
+		}
+//		result.setSuccessful(true);
 	}
 }

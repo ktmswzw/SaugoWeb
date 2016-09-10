@@ -109,7 +109,7 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
             }
 /*            if ((user.id == null) && ( $("#plainPassword").val() == '')) {
                 highlight_error($("#plainPassword"));
-                $.scojs_message("密码为空", $ERROR); 
+                $.scojs_message("密码为空", $ERROR);
                 return false;
             }*/
             if (($("#payType").val() == 0 ) && ( $("#bank").val() == '' || $("#bankAccount").val() == '' || $("#bankName").val() == ''  )) {

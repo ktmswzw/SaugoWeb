@@ -40,10 +40,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/console/security/user")
-public class UserController extends BaseAction{
+public class UserController extends BaseAction {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    
+
     private static final String LIST = "console/security/user/list";
     private static final String ADDEDIT = "console/security/user/edit";
     private static final String AGENTLIST = "console/security/user/agentList";
@@ -57,31 +57,28 @@ public class UserController extends BaseAction{
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private LogEntityService logEntityService;
-
     @RequiresPermissions("User:show")
-    @RequestMapping(value="/list")
-    public String list(HttpServletRequest request) {
+    @RequestMapping(value = "/list")
+    public String list() {
         return LIST;
     }
 
 
-    @RequestMapping(value="/password")
+    @RequestMapping(value = "/password")
     public String password() {
         return PASSWORD;
     }
 
 
     @RequiresPermissions("Agent:show")
-    @RequestMapping(value="/agentList")
-    public String agentList(HttpServletRequest request) {
+    @RequestMapping(value = "/agentList")
+    public String agentList() {
         return AGENTLIST;
     }
 
-    @RequestMapping(value="/userList")
+    @RequestMapping(value = "/userList")
     @ResponseBody
-    public GridModel userList(){
+    public GridModel userList() {
         User user = form(User.class);
         user.setEmail("1");
         Page info = userService.findByPage(page(), user);
@@ -91,9 +88,9 @@ public class UserController extends BaseAction{
         return m;
     }
 
-    @RequestMapping(value="/agentUserList")
+    @RequestMapping(value = "/agentUserList")
     @ResponseBody
-    public GridModel agentUserList(){
+    public GridModel agentUserList() {
         User user = form(User.class);
         Page info = userService.findByPage(page(), user);
         GridModel m = new GridModel();
@@ -102,23 +99,25 @@ public class UserController extends BaseAction{
         return m;
     }
 
-    @RequestMapping(value="/alterAgentCheck")
+    @RequestMapping(value = "/alterAgentCheck")
     @ResponseBody
-    public int alterAgentCheck(){
+    public int alterAgentCheck() {
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isPermitted("Agent:save")) {
             User user = new User();
             user.setStatus("check");
-            List<User> list =  userService.find(user);
-            return list!=null?list.size():0;
+            List<User> list = userService.find(user);
+            return list != null ? list.size() : 0;
         }
         return 0;
     }
+
     /**
      * 表格产品管理
+     *
      * @return GridModel
      */
-    @RequestMapping(value="/chooseList")
+    @RequestMapping(value = "/chooseList")
     @ResponseBody
     public List<User> chooseList(@RequestParam String name) {
         User user = new User();
@@ -132,7 +131,7 @@ public class UserController extends BaseAction{
     }
 
 
-    @RequestMapping(value="/chooseListThree")
+    @RequestMapping(value = "/chooseListThree")
     @ResponseBody
     public List<User> chooseListThree(@RequestParam String name) {
         User user = new User();
@@ -146,27 +145,27 @@ public class UserController extends BaseAction{
         return list;
     }
 
-    @RequestMapping(value="/userAdd")
+    @RequestMapping(value = "/userAdd")
     @ResponseBody
     public ModelAndView userAdd() {
-        return getView(ADDEDIT,"user", new User());
+        return getView(ADDEDIT, "user", new User());
     }
 
 
     @RequiresPermissions("Agent:save")
-    @RequestMapping(value="/agentUserEdit")
+    @RequestMapping(value = "/agentUserEdit")
     @ResponseBody
     public ModelAndView agentUserEdit() {
-        return getView(AGENTADDEDIT,"user", new User());
+        return getView(AGENTADDEDIT, "user", new User());
     }
 
 
-    @RequestMapping(value="/saveUser")
+    @RequestMapping(value = "/saveUser")
     @ResponseBody
     public Result saveUser(@ModelAttribute User user) {
         Result result = new Result();
         try {
-            if(user.getId()==null) {
+            if (user.getId() == null) {
 
                 User user1 = new User();
                 user1.setUsername(user.getUsername());
@@ -176,9 +175,7 @@ public class UserController extends BaseAction{
                     return result;
                 }
                 userService.save(user);
-            }
-            else
-            {
+            } else {
                 User user2 = new User();
                 user2.setUsername(user.getUsername());
                 User user1 = userService.getByXXX(user2);
@@ -192,9 +189,7 @@ public class UserController extends BaseAction{
             }
             result.setSuccessful(true);
             result.setMsg("保存成功");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             result.setSuccessful(false);
             result.setMsg("error");
             e.printStackTrace();
@@ -202,16 +197,14 @@ public class UserController extends BaseAction{
         return result;
     }
 
-    @RequestMapping(value="/saveAgentUser")
+    @RequestMapping(value = "/saveAgentUser")
     @ResponseBody
     public Result saveAgentUser(@ModelAttribute User user) {
         Result result = new Result();
         try {
-            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*","X"));
-            result = checkData(result,user);
-        }
-        catch (Exception e)
-        {
+            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
+            result = checkData(result, user);
+        } catch (Exception e) {
             result.setSuccessful(false);
             result.setMsg("error");
             e.printStackTrace();
@@ -234,31 +227,35 @@ public class UserController extends BaseAction{
 //        jsonobject.put("data", jarray);
 //        return jsonobject;
 
-    @RequestMapping(value="/check")
+    @RequestMapping(value = "/check")
     @ResponseBody
     public Result checkUser(@ModelAttribute User user) {
         Result result = new Result();
         try {
-            user.setCreateTime(new Date());
-            user.setPlainPassword(String.valueOf(RadomUtils.nextSixInt()));
-            user.setStatus("enabled");
-            userService.update(user);
+            User user1 = userService.get(user.getId());
+            user1.setCreateTime(new Date());
+            user1.setStatus("enabled");
             result.setSuccessful(true);
             result.setMsg("帐号已可使用");
-            LogEntity log = new LogEntity();
-            log.setUsername(user.getUsername());
-            log.setCreateTime(new Date());
-            log.setSuperid(String.valueOf(user.getId()));
-            log.setIpAddress(request.getRemoteAddr());
-            JSONObject object = new JSONObject();
-            object.put("realname",user.getRealname());
-            object.put("username",user.getUsername());
-            object.put("password",user.getPlainPassword());
-            AliyunSmsPush.sendSms(user.getPhone(),"SMS_14735423",object.toJSONString(),log);
-            logEntityService.save(log);
-        }
-        catch (Exception e)
-        {
+            if (user1.getPassword()==null||user1.getPassword().equals("")) {
+                user1.setPlainPassword(String.valueOf(RadomUtils.nextSixInt()));
+                LogEntity log = new LogEntity();
+                log.setUsername(user.getUsername());
+                log.setCreateTime(new Date());
+                log.setSuperid(String.valueOf(user.getId()));
+                log.setIpAddress(request.getRemoteAddr());
+                JSONObject object = new JSONObject();
+                object.put("realname", user1.getRealname());
+                object.put("username", user1.getUsername());
+                object.put("password", user1.getPlainPassword());
+                log.setLogLevel("2");
+                this.sendFill(user1.getPhone(), "SMS_14735423", object.toJSONString(), log,result);
+                if(!result.isSuccessful()){
+                    return result;
+                }
+            }
+            userService.update(user1);
+        } catch (Exception e) {
             result.setSuccessful(false);
             result.setMsg("错误");
             e.printStackTrace();
@@ -266,7 +263,7 @@ public class UserController extends BaseAction{
         return result;
     }
 
-    private void updateUserInfo(User user,User user1){
+    private void updateUserInfo(User user, User user1) {
         user.setCardsFront(user.getCardsFront());
         user.setCardsBack(user.getCardsBack());
         user1.setRealname(user.getRealname());
@@ -279,17 +276,15 @@ public class UserController extends BaseAction{
         user1.setBankName(user.getBankName());
     }
 
-    @RequestMapping(value="/saveAgentWexinUser")
+    @RequestMapping(value = "/saveAgentWexinUser")
     @ResponseBody
     public Result saveAgentWexinUser(@ModelAttribute User user) {
         Result result = new Result();
         try {
             User user1 = SecurityUtils.getLoginUser();
-            updateUserInfo(user,user1);
+            updateUserInfo(user, user1);
             result = checkData(result, user1);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             result.setSuccessful(false);
             result.setMsg("error");
             e.printStackTrace();
@@ -306,15 +301,15 @@ public class UserController extends BaseAction{
     @RequestMapping(value = "/saveWexin")
     @ResponseBody
     public Result saveWexin(@ModelAttribute User user,
-                       @RequestParam("file1") MultipartFile file1,
-                       @RequestParam("file2") MultipartFile file2) {
+                            @RequestParam("file1") MultipartFile file1,
+                            @RequestParam("file2") MultipartFile file2) {
         Result result = new Result();
         try {
             if (!file1.isEmpty()) {
                 user.setCardsFront(UploadUtils.upload(file1, request));
                 user.setCardsBack(UploadUtils.upload(file2, request));
             }
-            if(user.getId()==null) {
+            if (user.getId() == null) {
                 User user1 = SecurityUtils.getLoginUser();
                 user.setParentId(user1.getId());
                 user.setPlainPassword("123456");
@@ -323,14 +318,12 @@ public class UserController extends BaseAction{
                 user.setUsername(user.getPhone());
                 user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
                 result = checkData(result, user);
-            }else{
+            } else {
                 User user1 = SecurityUtils.getLoginUser();
-                updateUserInfo(user,user1);
+                updateUserInfo(user, user1);
                 result = checkData(result, user1);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             result.setSuccessful(false);
             result.setMsg("error");
             e.printStackTrace();
@@ -347,19 +340,17 @@ public class UserController extends BaseAction{
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result save(@ModelAttribute User user,
-                            @RequestParam("file1") MultipartFile file1,
-                            @RequestParam("file2") MultipartFile file2) {
+                       @RequestParam("file1") MultipartFile file1,
+                       @RequestParam("file2") MultipartFile file2) {
         Result result = new Result();
         try {
             if (!file1.isEmpty()) {
                 user.setCardsFront(UploadUtils.upload(file1, request));
                 user.setCardsBack(UploadUtils.upload(file2, request));
             }
-            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*","X"));
-            result = checkData(result,user);
-        }
-        catch (Exception e)
-        {
+            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
+            result = checkData(result, user);
+        } catch (Exception e) {
             result.setSuccessful(false);
             result.setMsg("error");
             e.printStackTrace();
@@ -367,21 +358,20 @@ public class UserController extends BaseAction{
         return result;
     }
 
-    private Result checkData(Result result,User user){
+    private Result checkData(Result result, User user) {
 
         user.setCreateTime(new Date());
         user.setStatus("check");
         result.setMsg("修改信息完成,需要确认后才可登录");
 
-        if(user.getParentId()==2){
+        if (user.getParentId() == 2) {
             user.setRoles("2");//超级代理
-        }
-        else{
+        } else {
             user.setRoles("3");//总代
         }
-        if(user.getId()==null) {
+        if (user.getId() == null) {
             User user2 = new User();
-            if(user.getUsername()!=null&&!user.getUsername().equals("")) {
+            if (user.getUsername() != null && !user.getUsername().equals("")) {
                 user2 = new User();
                 user2.setUsername(user.getUsername());
                 User user1 = userService.getByXXX(user2);
@@ -392,7 +382,7 @@ public class UserController extends BaseAction{
                 }
             }
 
-            if(user.getBankAccount()!=null&&!user.getBankAccount().equals("")) {
+            if (user.getBankAccount() != null && !user.getBankAccount().equals("")) {
                 user2 = new User();
                 user2.setUsername(user.getBankAccount());
                 User user2s = userService.getByXXX(user2);
@@ -402,7 +392,7 @@ public class UserController extends BaseAction{
                     return result;
                 }
             }
-            if(user.getIdentityCards()!=null&&!user.getIdentityCards().equals("")) {
+            if (user.getIdentityCards() != null && !user.getIdentityCards().equals("")) {
                 user2 = new User();
                 user2.setUsername(user.getIdentityCards());
                 User user3 = userService.getByXXX(user2);
@@ -412,7 +402,7 @@ public class UserController extends BaseAction{
                     return result;
                 }
             }
-            if(user.getAlipayAccount()!=null&&!user.getAlipayAccount().equals("")) {
+            if (user.getAlipayAccount() != null && !user.getAlipayAccount().equals("")) {
                 user2 = new User();
                 user2.setAlipayAccount(user.getAlipayAccount());
                 User user3 = userService.getByXXX(user2);
@@ -422,7 +412,7 @@ public class UserController extends BaseAction{
                     return result;
                 }
             }
-            if(user.getAlipayName()!=null&&!user.getAlipayName().equals("")) {
+            if (user.getAlipayName() != null && !user.getAlipayName().equals("")) {
                 user2 = new User();
                 user2.setAlipayName(user.getAlipayName());
                 User user3 = userService.getByXXX(user2);
@@ -433,58 +423,56 @@ public class UserController extends BaseAction{
                 }
             }
             userService.save(user);
-        }
-        else
-        {
+        } else {
 
             User user2 = new User();
-            if(user.getUsername()!=null&&!user.getUsername().equals("")) {
+            if (user.getUsername() != null && !user.getUsername().equals("")) {
                 user2 = new User();
                 user2.setUsername(user.getUsername());
                 User user1 = userService.getByXXX(user2);
-                if (user1 != null&&user1.getId()!=user.getId()) {
+                if (user1 != null && user1.getId() != user.getId()) {
                     result.setSuccessful(false);
                     result.setMsg("添加失败，手机号码：" + user.getUsername() + "_" + user1.getRealname() + "已存在。");
                     return result;
                 }
             }
 
-            if(user.getBankAccount()!=null&&!user.getBankAccount().equals("")) {
+            if (user.getBankAccount() != null && !user.getBankAccount().equals("")) {
 
                 user2 = new User();
                 user2.setUsername(user.getBankAccount());
                 User user2s = userService.getByXXX(user2);
-                if (user2s != null&&user2.getId()!=user.getId()) {
+                if (user2s != null && user2.getId() != user.getId()) {
                     result.setSuccessful(false);
                     result.setMsg("添加失败，银行帐号：" + user.getBankAccount() + "_" + user2s.getRealname() + "已经使用。");
                     return result;
                 }
             }
-            if(user.getIdentityCards()!=null&&!user.getIdentityCards().equals("")) {
+            if (user.getIdentityCards() != null && !user.getIdentityCards().equals("")) {
                 user2 = new User();
                 user2.setUsername(user.getIdentityCards());
                 User user3 = userService.getByXXX(user2);
-                if (user3 != null&&user3.getId()!=user.getId()) {
+                if (user3 != null && user3.getId() != user.getId()) {
                     result.setSuccessful(false);
                     result.setMsg("添加失败，身份证号码：" + user.getIdentityCards() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
-            if(user.getAlipayAccount()!=null&&!user.getAlipayAccount().equals("")) {
+            if (user.getAlipayAccount() != null && !user.getAlipayAccount().equals("")) {
                 user2 = new User();
                 user2.setAlipayAccount(user.getAlipayAccount());
                 User user3 = userService.getByXXX(user2);
-                if (user3 != null&&user3.getId()!=user.getId()) {
+                if (user3 != null && user3.getId() != user.getId()) {
                     result.setSuccessful(false);
                     result.setMsg("添加失败，支付宝帐号：" + user.getAlipayAccount() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
-            if(user.getAlipayName()!=null&&!user.getAlipayName().equals("")) {
+            if (user.getAlipayName() != null && !user.getAlipayName().equals("")) {
                 user2 = new User();
                 user2.setAlipayName(user.getAlipayName());
                 User user3 = userService.getByXXX(user2);
-                if (user3 != null&&user3.getId()!=user.getId()) {
+                if (user3 != null && user3.getId() != user.getId()) {
                     result.setSuccessful(false);
                     result.setMsg("添加失败，支付宝名称：" + user.getAlipayName() + "_" + user3.getRealname() + "已经使用。");
                     return result;
@@ -496,23 +484,22 @@ public class UserController extends BaseAction{
         return result;
     }
 
-    @RequestMapping(value="/editUser/{id}")
+    @RequestMapping(value = "/editUser/{id}")
     @ResponseBody
     public ModelAndView editUser(@PathVariable Integer id) {
         User user = userService.get(Long.parseLong(id + ""));
-        return getView(ADDEDIT,"user",user);
+        return getView(ADDEDIT, "user", user);
     }
 
 
-    @RequestMapping(value="/passwordUpdate")
+    @RequestMapping(value = "/passwordUpdate")
     @ResponseBody
-    public Result passwordUpdate(@RequestParam String plainPassword,@RequestParam String newPlainPassword) {
+    public Result passwordUpdate(@RequestParam String plainPassword, @RequestParam String newPlainPassword) {
         ShiroUser shiroUser = com.xecoder.shiro.SecurityUtils.getShiroUser();
         User user = userService.get(shiroUser.getUser().getId());
         Result result = new Result();
         user.setPlainPassword(plainPassword);
-        if(!userService.newPwd(user,newPlainPassword))
-        {
+        if (!userService.newPwd(user, newPlainPassword)) {
             result.setMsg("操作失败,原密码不正确");
             result.setSuccessful(false);
             return result;
@@ -523,15 +510,15 @@ public class UserController extends BaseAction{
     }
 
 
-    @RequestMapping(value="/editAgentUser/{id}")
+    @RequestMapping(value = "/editAgentUser/{id}")
     @ResponseBody
     public ModelAndView ededitAgentUseritUser(@PathVariable Integer id) {
         User user = userService.get(Long.parseLong(id + ""));
-        return getView(AGENTADDEDIT,"user",user);
+        return getView(AGENTADDEDIT, "user", user);
     }
 
 
-    @RequestMapping(value="/agentCheck/{id}")
+    @RequestMapping(value = "/agentCheck/{id}")
     @ResponseBody
     public ModelAndView agentCheck(@PathVariable Integer id) {
         User user = userService.get(Long.parseLong(id + ""));
@@ -540,27 +527,26 @@ public class UserController extends BaseAction{
 //            User par = userService.get(user.getParentId());
 //            user.setParentName(par.getRealname());
 //        }
-        return getView(AGENTCHECK,"user",user);
+        return getView(AGENTCHECK, "user", user);
     }
 
 
-    @RequestMapping(value="/deleteInfo/{id}", method=RequestMethod.POST)
+    @RequestMapping(value = "/deleteInfo/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Result deleteInfo(@PathVariable Long id) {
         logger.debug("id = " + id);
         Result result = new Result();
         User user = userService.get(id);
-        if(id==1||id==2)
-        {
+        if (id == 1 || id == 2) {
             result.setMsg("操作失败,此帐号特殊,不可删除");
             result.setSuccessful(false);
             return result;
         }
         user.setStatus("disabled");
-        user.setUsername("DEL-"+user.getUsername());
-        user.setRealname("DEL-"+user.getRealname());
-        user.setIdentityCards("DEL-"+user.getIdentityCards());
-        user.setBankAccount("DEL-"+user.getBankAccount());
+        user.setUsername("DEL-" + user.getUsername());
+        user.setRealname("DEL-" + user.getRealname());
+        user.setIdentityCards("DEL-" + user.getIdentityCards());
+        user.setBankAccount("DEL-" + user.getBankAccount());
         userService.delete(user);
         result.setMsg("操作成功");
         updateParentId(user);
@@ -570,17 +556,18 @@ public class UserController extends BaseAction{
 
     /**
      * 更新注销的本级的下级的上级为注销的上级
+     *
      * @param userDel
      */
-    private void updateParentId(User userDel){
+    private void updateParentId(User userDel) {
         List<User> list = userService.findByParentId(userDel.getId());
-        for(User user:list){
+        for (User user : list) {
             user.setParentId(userDel.getParentId());
             userService.update(user);
         }
     }
 
-    @RequestMapping(value="/findAllRole/{id}")
+    @RequestMapping(value = "/findAllRole/{id}")
     @ResponseBody
     public List<Role> findAllRole(@PathVariable Long id) {
         logger.debug("id = " + id);
@@ -588,12 +575,12 @@ public class UserController extends BaseAction{
     }
 
 
-    @RequestMapping(value="/findRole")
+    @RequestMapping(value = "/findRole")
     @ResponseBody
     public List<Role> findAllRole(@RequestParam String description) {
         Role role = new Role();
         role.setDescription(description);
-        return roleService.find(null,role);
+        return roleService.find(null, role);
     }
 
 
@@ -607,7 +594,7 @@ public class UserController extends BaseAction{
             FuelueTree fuelueTree = new FuelueTree();
             fuelueTree.setText(o.getRealname());
             fuelueTree.setType(o.getNodes() > 0 ? "folder" : "item");
-            DataAttributes dataAttributes =  new DataAttributes();
+            DataAttributes dataAttributes = new DataAttributes();
             dataAttributes.setId(o.getId().toString());
             fuelueTree.setAttr(dataAttributes);
             jarray.add(fuelueTree);
@@ -616,25 +603,24 @@ public class UserController extends BaseAction{
         return jsonobject;
     }
 
-    @RequestMapping(value="/findAllRoleSelect/{id}/{roles}")
+    @RequestMapping(value = "/findAllRoleSelect/{id}/{roles}")
     @ResponseBody
-    public List<RoleSelect> findAllRoleSelect(@PathVariable Long id,@PathVariable String roles) {
+    public List<RoleSelect> findAllRoleSelect(@PathVariable Long id, @PathVariable String roles) {
         logger.debug("id = " + id);
         List<RoleSelect> roleSelects = new ArrayList<RoleSelect>();
         List<Role> list = roleService.findAll();
 
-        for(Role role: list)
-        {
+        for (Role role : list) {
             RoleSelect roleSelect = new RoleSelect();
-                roleSelect.setId(role.getId());
-                roleSelect.setDescription(role.getDescription());
-                for (String roleId : StringUtils.split(roles, ",")) {
-                    if(StringUtils.equals(role.getId().toString(),roleId)) {
-                        roleSelect.setSelected(true);
-                        break;
-                    }
+            roleSelect.setId(role.getId());
+            roleSelect.setDescription(role.getDescription());
+            for (String roleId : StringUtils.split(roles, ",")) {
+                if (StringUtils.equals(role.getId().toString(), roleId)) {
+                    roleSelect.setSelected(true);
+                    break;
                 }
-                roleSelects.add(roleSelect);
+            }
+            roleSelects.add(roleSelect);
         }
         return roleSelects;
     }

@@ -1,15 +1,20 @@
 package com.xecoder.controller.core;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xecoder.common.SecurityConstants;
+import com.xecoder.common.baseaction.BaseAction;
+import com.xecoder.common.util.AliyunSmsPush;
+import com.xecoder.common.util.RadomUtils;
 import com.xecoder.common.util.Result;
+import com.xecoder.entity.LogEntity;
 import com.xecoder.entity.Login;
 import com.xecoder.entity.User;
+import com.xecoder.service.core.LogEntityService;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.CaptchaUsernamePasswordToken;
 import com.xecoder.shiro.IncorrectCaptchaException;
 import com.xecoder.shiro.RepeatLoginException;
 import com.xecoder.shiro.ShiroDbRealm;
-import com.xecoder.viewModel.Json;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.session.UnknownSessionException;
@@ -24,11 +29,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("/")
-public class LoginController {
+public class LoginController extends BaseAction {
 
     @Autowired
     UserService userService;
@@ -68,6 +74,7 @@ public class LoginController {
         CaptchaUsernamePasswordToken token=new CaptchaUsernamePasswordToken();
         result.setSuccessful(false);
         try {
+            token.setCaptcha(login.getCaptcha());
             ShiroDbRealm shiroDbRealm = new ShiroDbRealm();
             if (shiroDbRealm.isUseCaptcha()&&!doCaptchaValidate(token)) {//忽略大小写。
                 throw new IncorrectCaptchaException("验证码错误");
@@ -78,13 +85,29 @@ public class LoginController {
                 return result;
             }
             else{
-                //TODO发送6位随机密码
+                //TODO 发送6位随机密码
                 result.setSuccessful(true);
                 result.setMsg("密码已发");
+                user.setPlainPassword(String.valueOf(RadomUtils.nextSixInt()));
+                LogEntity log = new LogEntity();
+                log.setUsername(user.getUsername());
+                log.setCreateTime(new Date());
+                log.setSuperid(String.valueOf(user.getId()));
+                log.setIpAddress(request.getRemoteAddr());
+                JSONObject object = new JSONObject();
+                object.put("name",user.getRealname());
+                object.put("password",user.getPlainPassword());
+                log.setLogLevel("3");
+                this.sendFill(user.getPhone(),"SMS_14745701", object.toJSONString(), log,result);
+                if(!result.isSuccessful()){
+                    return result;
+                }
+                userService.update(user);
             }
 
         } catch (Exception e) {
-            throw new IncorrectCaptchaException("验证码错误");
+            result.setSuccessful(false);
+            result.setMsg("验证码错误");
         }
         return result;
     }

@@ -1,15 +1,19 @@
 package com.xecoder.business.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xecoder.business.entity.Order;
+import com.xecoder.business.entity.Remuneration;
 import com.xecoder.business.service.OrderService;
+import com.xecoder.business.service.RemunerationService;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
-import com.xecoder.common.util.JacksonMapper;
-import com.xecoder.common.util.Result;
-import com.xecoder.common.util.SimpleDate;
-import com.xecoder.common.util.UploadUtils;
+import com.xecoder.common.util.*;
+import com.xecoder.entity.LogEntity;
 import com.xecoder.entity.User;
+import com.xecoder.entity.UserRole;
+import com.xecoder.service.core.LogEntityService;
+import com.xecoder.service.core.UserRoleService;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.IncorrectCaptchaException;
 import com.xecoder.shiro.SecurityUtils;
@@ -42,6 +46,12 @@ public class OrderController extends BaseAction {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRoleService userRoleService;
+
+    @Autowired
+    private RemunerationService remunerationService;
 
     private static final String INDEX = "/business/order/list";
     private static final String CHECK = "/business/order/check";
@@ -85,7 +95,7 @@ public class OrderController extends BaseAction {
 
     @RequiresPermissions("Report:show")
     @RequestMapping(value = "/queryReport")
-    public ModelAndView queryReport(@RequestParam int agentId,@RequestParam String condition) {
+    public ModelAndView queryReport(@RequestParam int agentId, @RequestParam String condition) {
         ModelAndView mav = new ModelAndView(QUERYREPORT);
         try {
             Order order = new Order();
@@ -93,38 +103,36 @@ public class OrderController extends BaseAction {
             User user = userService.get((long) agentId);
             User currentUser = SecurityUtils.getLoginUser();
             List<User> list = userService.selectTreeById(currentUser.getId());
-            if(!list.contains(user)){
+            if (!list.contains(user)) {
                 new IncorrectCaptchaException("没有权限");
             }
-            String produceId,start,end;
-            String [] temp = condition.split("~");
-            produceId=(temp[0]).replace("|","");
-            start=temp[1].replace("|","");
-            end=temp[2].replace("|","");
+            String produceId, start, end;
+            String[] temp = condition.split("~");
+            produceId = (temp[0]).replace("|", "");
+            start = temp[1].replace("|", "");
+            end = temp[2].replace("|", "");
 
-            if(produceId!=null&&!produceId.equals(""))
+            if (produceId != null && !produceId.equals(""))
                 order.setParentId(Long.valueOf(produceId));
 
-            if(agentId!=0)
+            if (agentId != 0)
                 order.setAgentId(Long.valueOf(agentId));
 
 
-            if(start!=null&&!start.equals(""))
+            if (start != null && !start.equals(""))
                 order.setBeginDate(SimpleDate.strToDate(start));
 
 
-            if(end!=null&&!end.equals(""))
+            if (end != null && !end.equals(""))
                 order.setEndDate(SimpleDate.strToDate(end));
 
             ObjectMapper mapper = JacksonMapper.getInstance();
-            String json =mapper.writeValueAsString(order);
+            String json = mapper.writeValueAsString(order);
 
-            mav.addObject("order",json);
+            mav.addObject("order", json);
 
             return mav;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -146,18 +154,19 @@ public class OrderController extends BaseAction {
         return m;
     }
 
-    @RequestMapping(value="/alterOrderCheck")
+    @RequestMapping(value = "/alterOrderCheck")
     @ResponseBody
-    public int alterAgentCheck(){
+    public int alterAgentCheck() {
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isPermitted("Check:edit")) {
             Order order = new Order();
             order.setStatus(1);
-            List<Order> list =  orderService.findAll(null,order,0);
-            return list!=null?list.size():0;
+            List<Order> list = orderService.findAll(null, order, 0);
+            return list != null ? list.size() : 0;
         }
         return 0;
     }
+
     /**
      * 添加订单
      *
@@ -168,7 +177,7 @@ public class OrderController extends BaseAction {
     @ResponseBody
     public ModelAndView add() {
         Order order = new Order();
-        User  user = SecurityUtils.getLoginUser();
+        User user = SecurityUtils.getLoginUser();
         order.setInputId(user.getId());
         order.setInputName(user.getRealname());
         return getView(EDIT, "order", order);
@@ -184,7 +193,7 @@ public class OrderController extends BaseAction {
     @ResponseBody
     public ModelAndView edit(@PathVariable String id) {
         Order order = orderService.get(id);
-        User  user = SecurityUtils.getLoginUser();
+        User user = SecurityUtils.getLoginUser();
         order.setInputId(user.getId());
         order.setInputName(user.getRealname());
         return getView(EDIT, "order", order);
@@ -200,7 +209,7 @@ public class OrderController extends BaseAction {
     @ResponseBody
     public ModelAndView check(@PathVariable String id) {
         Order order = orderService.get(id);
-        User  user = SecurityUtils.getLoginUser();
+        User user = SecurityUtils.getLoginUser();
         order.setCheckId(user.getId());
         order.setCheckName(user.getRealname());
         return getView(CHECKEDIT, "order", order);
@@ -232,6 +241,7 @@ public class OrderController extends BaseAction {
     public Result saveOrder(@ModelAttribute Order order,
                             @RequestParam("file") MultipartFile file) {
         Result result = new Result();
+        String agent = "";
         try {
 
             if (!file.isEmpty()) {
@@ -241,14 +251,15 @@ public class OrderController extends BaseAction {
 //                String code = ImageReader.getCode(path);
 //                order.setProduceName(code);
             }
-            if(order.getAgentId()!=null&&order.getAgentId()!=0){
+            if (order.getAgentId() != null && order.getAgentId() != 0) {
                 User u = userService.get(order.getAgentId());
+                agent = u.getRealname();
                 order.setParentId(u.getParentId());
                 //order.setParentName(u.getParentName());
             }
             order.setStatus(1);
             order.setInputTime(new Date());
-            if(order.getId()==null||order.getId().equals(""))
+            if (order.getId() == null || order.getId().equals(""))
                 orderService.save(order);
             else
                 orderService.update(order);
@@ -256,6 +267,36 @@ public class OrderController extends BaseAction {
             result.setMsg("成功");
             result.setData(order.getAgentId());
             result.setSuccessful(true);
+
+            if (order.getAgentId() != null) {//审核人
+
+                LogEntity log = new LogEntity();
+                log.setUsername(agent);
+                log.setCreateTime(new Date());
+                log.setSuperid(String.valueOf(order.getId()));
+                log.setIpAddress(request.getRemoteAddr());
+
+                JSONObject object = new JSONObject();
+                object.put("name", agent);
+                object.put("number", order.getProduceNumber());
+                log.setLogLevel("6");
+                UserRole userRole = new UserRole();
+                userRole.setRoleId(Long.valueOf(101));
+                List<UserRole> list = userRoleService.find(userRole);
+                if (list != null && list.size() > 0) {
+                    for (UserRole userRole1 : list) {
+                        User user = userService.get(userRole1.getUserId());
+                        if (user != null) {
+                            this.sendFill(user.getPhone(), "SMS_14700583", object.toJSONString(), log, result);
+                        }
+                    }
+                    if (!result.isSuccessful()) {
+                        return result;
+                    }
+                }
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
             result.setMsg("失败" + e.getMessage());
@@ -278,12 +319,11 @@ public class OrderController extends BaseAction {
         Result result = new Result();
         try {
             Order order_db = orderService.get(order.getId());
-            if(order_db.getStatus()==1) {
+            if (order_db.getStatus() == 1) {
                 orderService.update(order);
                 result.setMsg("修改成功");
                 result.setSuccessful(true);
-            }
-            else{
+            } else {
                 result.setSuccessful(false);
                 result.setMsg("订单已被其他人修改,修改失败");
             }
@@ -320,19 +360,18 @@ public class OrderController extends BaseAction {
     @ResponseBody
     public Result deleteInfo(@PathVariable String id) {
         Result result = new Result();
-        User  user = SecurityUtils.getLoginUser();
+        User user = SecurityUtils.getLoginUser();
         Order order = orderService.get(id);
-        if(order.getStatus()!=9) {
+        if (order.getStatus() != 9) {
             order.setStatus(9);
-            if(!order.getInputId().equals(user.getId())){
+            if (!order.getInputId().equals(user.getId())) {
                 order.setCheckId(user.getId());
                 order.setCheckName(user.getRealname());
             }
             orderService.update(order);
             result.setSuccessful(true);
             result.setMsg("撤销成功");
-        }
-        else{
+        } else {
             result.setSuccessful(false);
             result.setMsg("订单已被其他人撤销,撤销失败");
         }
@@ -351,16 +390,77 @@ public class OrderController extends BaseAction {
     public Result checkSave(@ModelAttribute Order orderO) {
         Result result = new Result();
         Order order = orderService.get(orderO.getId());
-        User  user = SecurityUtils.getLoginUser();
-        if(order.getStatus()==1) {
+        User user = SecurityUtils.getLoginUser();
+        if (order.getStatus() == 1) {
             order.setStatus(2);
             order.setCheckId(user.getId());
             order.setCheckName(user.getRealname());
-            orderService.update(order);
             result.setSuccessful(true);
             result.setMsg("确认成功");
-        }
-        else{
+
+            LogEntity log = new LogEntity();
+            log.setUsername(user.getUsername());
+            log.setCreateTime(new Date());
+            log.setSuperid(String.valueOf(order.getId()));
+            log.setIpAddress(request.getRemoteAddr());
+
+            User agent = userService.get(order.getAgentId());
+            if (order.getAgentId() != null) {//代理
+
+                JSONObject object = new JSONObject();
+                object.put("name", agent.getRealname());
+                object.put("number", order.getProduceNumber());
+                log.setLogLevel("7");
+                this.sendFill(agent.getPhone(), "SMS_14780357", object.toJSONString(), log,result);
+                if (!result.isSuccessful()) {
+                    return result;
+                }
+            }
+
+            //积分
+            Remuneration remuneration = new Remuneration();
+            remuneration.setProduceId(order.getProduceId());
+            Page page = new Page(1, 10, "level", "desc");
+            List<Remuneration> list = remunerationService.findAll(page, remuneration);
+
+            if (order.getParentId() != null) {//上级代理
+                User user1 = userService.get(order.getParentId());
+                JSONObject object = new JSONObject();
+                object.put("name", user1.getRealname());
+                object.put("agent", agent.getRealname());
+                object.put("number", order.getProduceNumber());
+                if (list.size() == 2) {
+                    remuneration = list.get(0);
+                    object.put("point", remuneration.getRemuneration()*order.getProduceNumber());
+                }
+                log.setLogLevel("4");
+                this.sendFill(user1.getPhone(), "SMS_14765447", object.toJSONString(), log,result);
+                if (!result.isSuccessful()) {
+                    return result;
+                }
+            }
+
+
+            if (order.getParentId() != null) {//上上级代理
+                User user1 = userService.get(order.getParentId());
+                User user2 = userService.get(user1.getParentId());
+                JSONObject object = new JSONObject();
+                object.put("name", user2.getRealname());
+                object.put("agent", agent.getRealname());
+                object.put("number", order.getProduceNumber());
+                if (list.size() == 2) {
+                    remuneration = list.get(1);
+                    object.put("point", remuneration.getRemuneration()*order.getProduceNumber());
+                }
+                log.setLogLevel("5");
+                this.sendFill(user2.getPhone(), "SMS_14770485", object.toJSONString(), log,result);
+                if (!result.isSuccessful()) {
+                    return result;
+                }
+            }
+
+            orderService.update(order);
+        } else {
             result.setSuccessful(false);
             result.setMsg("订单已被其他人修改,确认失败");
         }

@@ -18,7 +18,7 @@ import java.util.Random;
  */
 public class AliyunSmsPush {
 
-    public static void sendSms(String phone,String templateCode, String jsonString,LogEntity log) {
+    public static boolean sendSms(String phone,String templateCode, String jsonString,LogEntity log) {
         TaobaoClient client = new DefaultTaobaoClient(SecurityConstants.SMS_URL, SecurityConstants.SMS_KEY, SecurityConstants.SMS_SECRET);
         AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
         req.setExtend("1");
@@ -29,14 +29,17 @@ public class AliyunSmsPush {
         req.setSmsParamString(jsonString);
         try {
             AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-            if(rsp.getResult().getSuccess())
-                log.setMessage("发送成功");
-            else
-                log.setMessage("发送失败"+rsp.getResult().getMsg());
-            log.setLogLevel("");
+            if(rsp.getResult()!=null&&rsp.getResult().getSuccess()) {
+                log.setMessage("发送短信成功");
+                return true;
+            }
+            else {
+                log.setMessage("发送短信失败-" + rsp.getSubMsg());
+                return false;
+            }
         } catch (ApiException e) {
-            log.setMessage("发送失败");
-
+            log.setMessage("发送短信失败");
+            return false;
         }
     }
     

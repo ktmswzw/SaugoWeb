@@ -38,13 +38,13 @@ public class SessionController extends BaseAction {
     private SessionDAO sessionDAO;
 
     @RequestMapping(value="/list")
-    public String list(HttpServletRequest request) {
+    public String list() {
         return LIST;
     }
 
     @RequestMapping(value="/listShow")
     @ResponseBody
-    public GridModel list() {
+    public GridModel listShow() {
         Collection<Session> sessions =  sessionDAO.getActiveSessions();
         GridModel m = new GridModel();
         List<Session> list = new ArrayList();

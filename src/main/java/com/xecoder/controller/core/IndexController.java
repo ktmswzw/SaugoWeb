@@ -41,7 +41,7 @@ public class IndexController extends BaseAction{
 	private ModuleService moduleService;
 
 	@RequestMapping(value="",  method=RequestMethod.GET)
-	public String index(HttpServletRequest request) {
+	public String index() {
 		
 		ShiroUser shiroUser = SecurityUtils.getShiroUser();
 		// 加入ipAddress
