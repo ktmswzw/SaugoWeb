@@ -61,5 +61,5 @@ public interface SecurityConstants {
 	public static final String SMS_URL = "http://gw.api.taobao.com/router/rest";
 	public static final String SMSFREESIGNNAME = "淑格订单管理系统";
 	public static final String SMS_KEY = "23451520";
-	public static final String SMS_SECRET = "";
+	public static final String SMS_SECRET = " ";
 }
