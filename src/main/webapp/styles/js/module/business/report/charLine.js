@@ -78,8 +78,6 @@ require(
             toolbox: {
                 show : true,
                 feature : {
-                    mark : {show: true},
-                    dataView : {show: true},
                     magicType : {show: true, type: ['line', 'bar']},
                     restore : {show: true},
                     saveAsImage : {show: true}
