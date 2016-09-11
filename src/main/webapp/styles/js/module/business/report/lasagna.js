@@ -64,7 +64,7 @@ require(
                 feature : {
                     magicType : {
                         show: true,
-                        type: ['pie', 'funnel']
+                        type: ['pie']
                     },
                     restore : {show: true},
                     saveAsImage : {show: true}
