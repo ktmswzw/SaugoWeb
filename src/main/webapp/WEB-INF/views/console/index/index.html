@@ -5,6 +5,11 @@
 <body>
 <@loadDiv/>
 <@north/>
+
+<#assign charReport=""/>
+<@shiro.hasPermission name="CharReport:show">
+<#assign charReport="/business/report/charLine"/>
+</@shiro.hasPermission>
 <div class="container" >
     <div class="row row-offcanvas row-offcanvas-left">
 
@@ -13,7 +18,7 @@
         </div>
 
         <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 left-padding">
-            <iframe id="main" class="iframeMain" src="${base}/business/report/charLine" scrolling="no" allow-scripts allow-same-origin allow-forms allow-top-navigation></iframe>
+            <iframe id="main" class="iframeMain" src="${base}${charReport}" scrolling="no" allow-scripts allow-same-origin allow-forms allow-top-navigation></iframe>
         </div>
     </div><!--/row-->
 

@@ -278,7 +278,7 @@ public class OrderController extends BaseAction {
 
                 JSONObject object = new JSONObject();
                 object.put("name", agent);
-                object.put("number", order.getProduceNumber());
+                object.put("number", String.valueOf(order.getProduceNumber()));
                 log.setLogLevel("6");
                 UserRole userRole = new UserRole();
                 userRole.setRoleId(Long.valueOf(101));
@@ -409,7 +409,7 @@ public class OrderController extends BaseAction {
 
                 JSONObject object = new JSONObject();
                 object.put("name", agent.getRealname());
-                object.put("number", order.getProduceNumber());
+                object.put("number", String.valueOf(order.getProduceNumber()));
                 log.setLogLevel("7");
                 this.sendFill(agent.getPhone(), "SMS_14780357", object.toJSONString(), log,result);
                 if (!result.isSuccessful()) {
@@ -428,7 +428,7 @@ public class OrderController extends BaseAction {
                 JSONObject object = new JSONObject();
                 object.put("name", user1.getRealname());
                 object.put("agent", agent.getRealname());
-                object.put("number", order.getProduceNumber());
+                object.put("number", String.valueOf(order.getProduceNumber()));
                 if (list.size() == 2) {
                     remuneration = list.get(0);
                     object.put("point", remuneration.getRemuneration()*order.getProduceNumber());
@@ -447,7 +447,7 @@ public class OrderController extends BaseAction {
                 JSONObject object = new JSONObject();
                 object.put("name", user2.getRealname());
                 object.put("agent", agent.getRealname());
-                object.put("number", order.getProduceNumber());
+                object.put("number", String.valueOf(order.getProduceNumber()));
                 if (list.size() == 2) {
                     remuneration = list.get(1);
                     object.put("point", remuneration.getRemuneration()*order.getProduceNumber());

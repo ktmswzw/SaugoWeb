@@ -4,7 +4,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'select', 'selectCN', 'tExp
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
-        initSelect("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'USER-STATUS'}, new Array("check"), "dicKey", "dicValue",true);
+        initSelectOne("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'USER-STATUS'}, "", "dicKey", "dicValue",true);
 
         //列表
         var $table = $('#tableB').bootstrapTable({

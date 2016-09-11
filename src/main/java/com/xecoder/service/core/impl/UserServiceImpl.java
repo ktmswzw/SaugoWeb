@@ -99,6 +99,9 @@ public class UserServiceImpl extends BaseService implements UserService {
             if (StringUtils.isNotBlank(user.getBankAccount())) {
                 cri.andBankAccountEqualTo(user.getBankAccount());
             }
+            if (user.getCreateTime()!=null) {
+                cri.andCreateTimeGreaterThan(user.getCreateTime());
+            }
             if(StringUtils.isNotBlank(user.getStatus())){
                 cri.andStatusEqualTo(user.getStatus());
             }

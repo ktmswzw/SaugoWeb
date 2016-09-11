@@ -48,11 +48,13 @@ public class ReportController extends BaseAction {
         return INDEX;
     }
 
+    @RequiresPermissions("CharReport:show")
     @RequestMapping(value="/charLine")
     public String charLine() {
         return CHARLINE;
     }
 
+    @RequiresPermissions("CharReport:show")
     @RequestMapping(value="/lasagna/{date}")
     public ModelAndView lasagna(@PathVariable String date) {
         ModelAndView mav = new ModelAndView(LASAGNA);
@@ -120,10 +122,10 @@ public class ReportController extends BaseAction {
 
 
     /**
-     * 图标积分
+     * 图标统计
      * @return GridModel
      */
-    @RequiresPermissions("Report:show")
+    @RequiresPermissions("CharReport:show")
     @RequestMapping(value="/lasagnaData/{date}")
     @ResponseBody
     public List<Order> lasagnaData(@PathVariable String date) {

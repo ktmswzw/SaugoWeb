@@ -130,6 +130,23 @@ public class UserController extends BaseAction {
         return list;
     }
 
+    /**
+     * 表格产品管理
+     *
+     * @return GridModel
+     */
+    @RequestMapping(value = "/reportChar")
+    @ResponseBody
+    public List<User> reportChar() {
+        User user = new User();
+        user.setStatus("enabled");
+        user.setCreateTime(SimpleDate.getDayStart(new Date(),-30));
+        List<User> list = userService.reportChar(user);
+        list.stream().filter(u -> u.getParentId() != null).forEach(u -> {
+            u.setRealname(u.getRealname() + "-上级" + "[" + u.getParentName() + "]");
+        });
+        return list;
+    }
 
     @RequestMapping(value = "/chooseListThree")
     @ResponseBody

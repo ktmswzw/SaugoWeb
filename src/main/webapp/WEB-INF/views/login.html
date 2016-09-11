@@ -17,7 +17,7 @@
         <form role="form" name="formLogin" id="formLogin" method="post" commandName="login">
             <div class="panel panel-primary">
                 <p></p>
-                <div class="panel-body" >
+                <div class="panel-body">
                     <input name="salt" type="hidden" id="salt"
                            value="${salt}"
                     />
@@ -25,10 +25,13 @@
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                             <input type="number" id="username" name="username" class="form-control"
-                                   placeholder="手机号码" value="15869100508" required autofocus="" tabindex="1" minlength="11" maxlength="11">
-                            <span class="input-group-addon" data-toggle="tooltip" title="保存登录信息">
-                                <span class="glyphicon glyphicon-saved"></span>
-                                <input type="checkbox" id="rememberMe" checked name="rememberMe" data-size="mini">
+                                   placeholder="手机号码" value="" required autofocus="" tabindex="1"
+                                   minlength="11" maxlength="11">
+                            <span class="input-group-addon" data-toggle="tooltip" title="保存登录信息30天">
+                                <span class="glyphicon glyphicon-time"></span>
+                                <input type="checkbox" id="rememberMe" checked name="rememberMe" data-size="mini"
+                                       data-on-label="SI" data-off-label="NO"
+                                >
                             </span>
                         </div>
                     </div>
@@ -39,12 +42,14 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-lock"></span>
                             </span>
-                            <input type="password" id="password" name="password" value="123456" class="form-control "
+                            <input type="password" id="password" name="password" value="" class="form-control "
                                    placeholder="登录密码"
                                    required tabindex="2"/>
                             <span class="input-group-addon" data-toggle="tooltip" title="查看密码">
                                     <span class="glyphicon glyphicon-eye-open"></span>
-                                    <input type="checkbox" id="show-password" data-size="mini">
+                                    <input type="checkbox" id="show-password" data-size="mini"
+                                           data-on-label="SI" data-off-label="NO"
+                                    >
                                 </input>
                             </span>
                         </div>
@@ -56,7 +61,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
                             <input type="text" id="captcha" name="captcha" class="form-control"
-                                   placeholder="验证码" autocomplete="off" required tabindex="3" />
+                                   placeholder="验证码" autocomplete="off" required tabindex="3"/>
                             <span class="input-group-addon refresh" data-toggle="tooltip" title="点击刷新">
                                 <span class="glyphicon glyphicon-refresh" id="refresh"></span>
                                 <img id="Kaptcha" src=""/>
@@ -78,12 +83,12 @@
             </div>
         </form>
     </div>
+</div>
 
 
-        <div class="foot-div">
-            <a href="http://www.saugo.cn" class="btn btn-link" style="color: #e2e2e2" target="_blank">&copy;2015~2016 宁波淑格智能科技有限公司</a>
-        </div>
-
+<div class="foot-div">
+    <a href="http://www.saugo.cn" class="btn btn-link" style="color: #e2e2e2" target="_blank">&copy;2015~2016
+        宁波淑格智能科技有限公司</a>
 </div>
 
 <@footlogin/>

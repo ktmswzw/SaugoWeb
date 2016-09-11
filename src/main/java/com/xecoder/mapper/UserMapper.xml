@@ -490,11 +490,11 @@
 
   <select id="reportChar" resultMap="BaseResultMap" parameterType="com.xecoder.entity.User" >
     select
-    count(ss.id) as org_id,DATE_FORMAT(ss.create_time,'%Y%m%d') as parent_id
-    from security_user s
+    count(nn.id) as org_id,DATE_FORMAT(nn.create_time,'%Y%m%d') as parent_id
+    from security_user nn
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    GROUP BY DATE_FORMAT(ss.create_time,'%Y%m%d')
+    GROUP BY DATE_FORMAT(nn.create_time,'%Y%m%d')
   </select>
 </mapper>
