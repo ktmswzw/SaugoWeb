@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonEncoding;
+import com.xecoder.business.entity.Order;
 import com.xecoder.business.entity.Report;
 import com.xecoder.business.service.ReportService;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.Result;
+import com.xecoder.common.util.SimpleDate;
+import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.viewModel.GridModel;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -18,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Security;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,10 +40,29 @@ public class ReportController extends BaseAction {
 
     private static final String INDEX = "/business/report/list";
     private static final String EDIT = "/business/report/edit";
+    private static final String CHARLINE = "/business/report/charLine";
+    private static final String LASAGNA = "/business/report/lasagna";
 
     @RequestMapping(value="/index")
     public String index() {
         return INDEX;
+    }
+
+    @RequestMapping(value="/charLine")
+    public String charLine() {
+        return CHARLINE;
+    }
+
+    @RequestMapping(value="/lasagna/{date}")
+    public ModelAndView lasagna(@PathVariable String date) {
+        ModelAndView mav = new ModelAndView(LASAGNA);
+        try {
+            mav.addObject("date", date);
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
@@ -59,6 +84,23 @@ public class ReportController extends BaseAction {
     }
 
     /**
+     * 首页统计
+     * @return GridModel
+     */
+    @RequiresPermissions("Report:show")
+    @RequestMapping(value="/charLineList")
+    @ResponseBody
+    public List<Report> charLineList() {
+        Report report = SearchForm(Report.class);
+        report.setSuperReport(true);
+        if(report.getBeginDate()!=null&&!report.getBeginDate().equals("")){
+            report.setBeginDate(SimpleDate.getDayStart(new Date(),-30));
+        }
+        List<Report> list = reportService.reportChar(report);
+        return list;
+    }
+
+    /**
      * 表格积分统计
      * @return GridModel
      */
@@ -73,6 +115,23 @@ public class ReportController extends BaseAction {
         m.setRows(info.getRows());
         m.setTotal(info.getCount());
         return m;
+    }
+
+
+
+    /**
+     * 图标积分
+     * @return GridModel
+     */
+    @RequiresPermissions("Report:show")
+    @RequestMapping(value="/lasagnaData/{date}")
+    @ResponseBody
+    public List<Order> lasagnaData(@PathVariable String date) {
+        Report report = new Report();
+        report.setBeginDate(SimpleDate.strToDate(date));
+        report.setEndDate(SimpleDate.strToDate(date));
+        Page info = reportService.reportTree(page(), report);
+        return info.getRows();
     }
 
     /**

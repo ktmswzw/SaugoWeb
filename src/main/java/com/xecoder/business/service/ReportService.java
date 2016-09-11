@@ -15,6 +15,8 @@ public interface ReportService {
 
     List<Report> findAll(Page page, Report report);
 
+    List<Report> reportChar(Report report);
+
     int countByExample(Page page,Report report);
 
     void save(Report report);

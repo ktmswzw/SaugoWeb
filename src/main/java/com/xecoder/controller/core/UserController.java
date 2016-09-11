@@ -212,21 +212,6 @@ public class UserController extends BaseAction {
         return result;
     }
 
-
-//    JSONObject jsonobject = new JSONObject();
-//    JSONArray jarray = new JSONArray();
-//        for (Organization o : organization) {
-//        FuelueTree fuelueTree = new FuelueTree();
-//        fuelueTree.setText(o.getName());
-//        fuelueTree.setType(o.getNodes() > 0 ? "folder" : "item");
-//        DataAttributes dataAttributes =  new DataAttributes();
-//        dataAttributes.setId(o.getId().toString());
-//        fuelueTree.setAttr(dataAttributes);
-//        jarray.add(fuelueTree);
-//    }
-//        jsonobject.put("data", jarray);
-//        return jsonobject;
-
     @RequestMapping(value = "/check")
     @ResponseBody
     public Result checkUser(@ModelAttribute User user) {

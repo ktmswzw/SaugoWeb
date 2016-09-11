@@ -21,6 +21,8 @@ public class SimpleDate
 
     public static String DATE_PATTEN = "yyyy-MM-dd";
 
+    public static String DATE_PATTEN_NO = "yyyyMMdd";
+
     public static String DATE_YEAR = "yyyy";
 
     public static String DATE_PATTEN_MM = "yyyy-MM-dd HH:mm";
@@ -74,7 +76,7 @@ public class SimpleDate
     {
         try
         {
-            Date date = DateUtils.parseDate(str, new String[] { DATE_PATTEN, DATE_PATTEN_MM, DATE_PATTEN_ZH, DATE_PATTEN_TM,
+            Date date = DateUtils.parseDate(str, new String[] { DATE_PATTEN,DATE_PATTEN_NO, DATE_PATTEN_MM, DATE_PATTEN_ZH, DATE_PATTEN_TM,
                     DATE_PATTEN_TM_1 });
             return date;
         }

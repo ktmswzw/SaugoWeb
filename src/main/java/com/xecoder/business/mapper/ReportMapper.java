@@ -29,4 +29,6 @@ public interface ReportMapper {
     int updateByPrimaryKey(Report record);
 
     List<Report> reportTree(ReportCriteria example);
+
+    List<Report> reportChar(ReportCriteria example);
 }

@@ -415,4 +415,9 @@ public class UserServiceImpl extends BaseService implements UserService {
         List<User> list =   baseDao.getMapper(UserMapper.class).selectTreeById(id);
         return list;
     }
+
+    @Override
+    public List<User> reportChar(User user) {
+        return baseDao.getMapper(UserMapper.class).reportChar(getCriteria(null,user));
+    }
 }

@@ -41,6 +41,11 @@ public class ReportServiceImpl  extends BaseService implements ReportService {
     }
 
     @Override
+    public List<Report> reportChar(Report report) {
+        return baseDao.getMapper(ReportMapper.class).reportChar(getCriteria(null,report));
+    }
+
+    @Override
     public int countByExample(Page page, Report report) {
         return baseDao.getMapper(ReportMapper.class).countByExample(getCriteria(page,report));
     }

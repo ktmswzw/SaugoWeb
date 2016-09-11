@@ -289,4 +289,14 @@
     </if>
     GROUP BY  agent_id,agent_name
   </select>
+
+  <select id="reportChar" resultMap="BaseResultMap" parameterType="com.xecoder.business.entity.ReportCriteria" >
+    select
+    sum(s.agent_sum) as agent_sum,report_date
+    from business_report s
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    GROUP BY report_date
+  </select>
 </mapper>
