@@ -1,5 +1,6 @@
 package com.xecoder.common.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
@@ -45,7 +46,50 @@ public class AliyunSmsPush {
     
     public static void main(String[] strings){
 
-        System.out.println("RadomUtilsa = " + RadomUtils.nextSixInt());
+//        JSONObject object = new JSONObject();
+//        object.put("realname", "test");
+//        object.put("username", "15869100507");
+//        object.put("password", "123456");
+//        LogEntity log = new LogEntity();
+//        sendSms("15869100507", "SMS_14726055", object.toJSONString(),log);
+
+
+//        JSONObject object = new JSONObject();
+//        object.put("name", "test");
+//        object.put("password", "123456");
+//        LogEntity log = new LogEntity();
+//        sendSms("15869100507", "SMS_14685924", object.toJSONString(),log);
+
+//        JSONObject object = new JSONObject();
+//        object.put("name", "test");
+//        object.put("agent", "test2");
+//        object.put("number", "200");
+//        object.put("point", "6000");
+//        LogEntity log = new LogEntity();
+//        sendSms("15869100507", "SMS_14765447", object.toJSONString(),log);
+
+//        JSONObject object = new JSONObject();
+//        object.put("name", "test");
+//        object.put("agent", "test2");
+//        object.put("number", "200");
+//        object.put("point", "6000");
+//        LogEntity log = new LogEntity();
+//        sendSms("15869100507", "SMS_14770485", object.toJSONString(),log);
+
+
+//        JSONObject object = new JSONObject();
+//        object.put("agent", "test2");
+//        object.put("number", "200");
+//        LogEntity log = new LogEntity();
+//        sendSms("15869100507", "SMS_14700583", object.toJSONString(),log);
+//
+
+
+//        JSONObject object = new JSONObject();
+//        object.put("name", "test2");
+//        object.put("number", "200");
+//        LogEntity log = new LogEntity();
+//        sendSms("15869100507", "SMS_14780357", object.toJSONString(),log);
     }
 }
 //模板类型:短信通知

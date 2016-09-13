@@ -98,7 +98,7 @@ public class LoginController extends BaseAction {
                 object.put("name",user.getRealname());
                 object.put("password",user.getPlainPassword());
                 log.setLogLevel("3");
-                this.sendFill(user.getPhone(),"SMS_14745701", object.toJSONString(), log,result);
+                this.sendFill(user.getPhone(),"SMS_14685924", object.toJSONString(), log,result);
                 if(!result.isSuccessful()){
                     return result;
                 }

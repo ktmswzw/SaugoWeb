@@ -251,7 +251,7 @@ public class UserController extends BaseAction {
                 object.put("username", user1.getUsername());
                 object.put("password", user1.getPlainPassword());
                 log.setLogLevel("2");
-                this.sendFill(user1.getPhone(), "SMS_14735423", object.toJSONString(), log,result);
+                this.sendFill(user1.getPhone(), "SMS_14726055", object.toJSONString(), log,result);
                 if(!result.isSuccessful()){
                     return result;
                 }
