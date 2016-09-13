@@ -31,19 +31,19 @@ public class OrganizationServiceImpl extends BaseService implements Organization
 		if (isRoot(id)) {
 			throw new ServiceException("不允许删除根组织。");
 		}
-		
-		Organization organization = this.get(id);
-		//先判断是否存在子模块，如果存在子模块，则不允许删除
-		if(find(organization.getId(), null, null).size() > 0){
-			throw new ServiceException(organization.getName() + "组织下存在子组织，不允许删除。");
-		}
-		
-		UserCriteria criteria = new UserCriteria();
-		criteria.createCriteria().andOrgIdEqualTo(organization.getId());
-		List<User> userList = baseDao.getMapper(UserMapper.class).selectByExample(criteria);
-		if (userList.size() > 0) {
-			throw new ServiceException(organization.getName() + "组织下存在用户，不允许删除。");
-		}
+//
+//		Organization organization = this.get(id);
+//		//先判断是否存在子模块，如果存在子模块，则不允许删除
+//		if(find(organization.getId(), null, null).size() > 0){
+//			throw new ServiceException(organization.getName() + "组织下存在子组织，不允许删除。");
+//		}
+//
+//		UserCriteria criteria = new UserCriteria();
+//		criteria.createCriteria().andOrgIdEqualTo(organization.getId());
+//		List<User> userList = baseDao.getMapper(UserMapper.class).selectByExample(criteria);
+//		if (userList.size() > 0) {
+//			throw new ServiceException(organization.getName() + "组织下存在用户，不允许删除。");
+//		}
 		
 		baseDao.getMapper(OrganizationMapper.class).deleteByPrimaryKey(id);
 	}

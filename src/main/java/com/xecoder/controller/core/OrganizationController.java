@@ -175,7 +175,8 @@ public class OrganizationController extends BaseAction {
                 return result;
             }
 
-            if(organizationService.findByParentId(Long.valueOf(id)).size()>0) {
+            List<Organization> list = organizationService.findByParentId(Long.valueOf(id));
+            if(list.size()>0) {
                 result.setMsg("该模块有子部门，不可以删除");
                 result.setSuccessful(false);
                 return result;
