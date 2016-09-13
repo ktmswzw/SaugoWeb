@@ -32,6 +32,7 @@ public interface UserService {
 
 	User get(Long id);
 
+	int findAgentCount(User user);
 	/**
 	 * @param id 删除
 	 * @throws ServiceException

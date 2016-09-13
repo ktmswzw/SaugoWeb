@@ -137,7 +137,7 @@ require(
                 show: true
             },
             legend: {
-                data:['近30天总代加盟情况']
+                data:['近30天总代加盟情况(总数'+agentNumber+')']
             },
             toolbox: {
                 show : true,

@@ -164,6 +164,12 @@ public class UserServiceImpl extends BaseService implements UserService {
 		return page.setRows(list);
 	}
 
+    @Override
+	public int findAgentCount(User user){
+        UserCriteria criteria = getCriteria(null,user);
+        return baseDao.getMapper(UserMapper.class).countByExample(criteria);
+    }
+
 
     @Override
     public List<User> findByParentId(Long parentId) {

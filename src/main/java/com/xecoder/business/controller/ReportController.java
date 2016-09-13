@@ -12,6 +12,8 @@ import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.Result;
 import com.xecoder.common.util.SimpleDate;
+import com.xecoder.entity.User;
+import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.viewModel.GridModel;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -38,6 +40,10 @@ public class ReportController extends BaseAction {
     @Autowired
     ReportService reportService;
 
+
+    @Autowired
+    UserService userService;
+
     private static final String INDEX = "/business/report/list";
     private static final String EDIT = "/business/report/edit";
     private static final String CHARLINE = "/business/report/charLine";
@@ -50,8 +56,19 @@ public class ReportController extends BaseAction {
 
     @RequiresPermissions("CharReport:show")
     @RequestMapping(value="/charLine")
-    public String charLine() {
-        return CHARLINE;
+    public ModelAndView charLine() {
+
+        ModelAndView mav = new ModelAndView(CHARLINE);
+        try {
+            User user = new User();
+            user.setStatus("enabled");
+            int agentNumber = userService.findAgentCount(user);
+            mav.addObject("agentNumber", agentNumber);
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @RequiresPermissions("CharReport:show")
