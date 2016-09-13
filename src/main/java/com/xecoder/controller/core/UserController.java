@@ -314,12 +314,29 @@ public class UserController extends BaseAction {
             if (user.getId() == null) {
                 User user1 = SecurityUtils.getLoginUser();
                 user.setParentId(user1.getId());
-                user.setPlainPassword("123456");
+                user.setPlainPassword("");
                 user.setRoles("");
                 user.setEmail("");
                 user.setUsername(user.getPhone());
                 user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
                 result = checkData(result, user);
+
+                if (user1.getRealname().equals("")) {
+                    LogEntity log = new LogEntity();
+                    log.setUsername(user1.getUsername());
+                    log.setCreateTime(new Date());
+                    log.setSuperid(String.valueOf(user1.getId()));
+                    log.setIpAddress(request.getRemoteAddr());
+                    JSONObject object = new JSONObject();
+                    object.put("subAgent", user1.getRealname());
+                    object.put("agent", user.getRealname());
+                    log.setLogLevel("9");
+                    this.sendFill(user1.getPhone(), "SMS_14771654", object.toJSONString(), log,result);
+                    if(!result.isSuccessful()){
+                        return result;
+                    }
+                }
+
             } else {
                 User user1 = SecurityUtils.getLoginUser();
                 updateUserInfo(user, user1);

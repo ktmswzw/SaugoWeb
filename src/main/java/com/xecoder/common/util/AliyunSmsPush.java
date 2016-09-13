@@ -90,6 +90,12 @@ public class AliyunSmsPush {
 //        object.put("number", "200");
 //        LogEntity log = new LogEntity();
 //        sendSms("15869100507", "SMS_14780357", object.toJSONString(),log);
+
+        JSONObject object = new JSONObject();
+        object.put("subAgent", "test2");
+        object.put("agent", "test3");
+        LogEntity log = new LogEntity();
+        sendSms("15869100507", "SMS_14771654", object.toJSONString(),log);
     }
 }
 //模板类型:短信通知
@@ -128,3 +134,7 @@ public class AliyunSmsPush {
 //模板ID:SMS_14685924
 //模板内容:尊敬的${name}，新密码是${password}，请尽快到系统后台更改密码；如不是你发起的请忽略
 //申请说明:
+
+//模板ID:SMS_14771654
+//模板内容:小主，又有新总代了。${subAgent}为他下面的直属总代${agent}申请已经提交，请尽快去确认哦
+//申请说明:新代理申请
