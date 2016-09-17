@@ -36,7 +36,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'select', 'selectCN', 'tExp
             queryParamsB();
             sortSelf = !sortSelf;
         });
-        setHeightSelf(800);
+        setHeightSelf(1200);
         //查询动作
         $('#query').click(function () {
             queryParamsB();
