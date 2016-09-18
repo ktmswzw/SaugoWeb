@@ -33,7 +33,6 @@ public class IndexController extends BaseAction{
 
 	private static final String INDEX = "console/index/index";
 	private static final String AGENT = "business/agent/home";
-	private static final String PORTAL = "console/index/portal";
 	private static final String LOADING = "console/layout/loading";
 
 
@@ -87,13 +86,6 @@ public class IndexController extends BaseAction{
 		}
 		module.setChildren(list1);
 	}
-	
-	@RequestMapping(value="portal", method=RequestMethod.GET)
-	public String portal() {
-		
-		return PORTAL;
-	}
-
 
 	@RequestMapping(value="loading")
 	public String loading() {

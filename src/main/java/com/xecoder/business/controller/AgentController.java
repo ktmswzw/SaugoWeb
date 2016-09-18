@@ -155,7 +155,7 @@ public class AgentController extends BaseAction {
         ModelAndView mav = new ModelAndView(NEW);
         User user = SecurityUtils.getLoginUser();
         mav.addObject("title", "新代理申请");
-        mav.addObject("parentName", user.getRealname());
+        mav.addObject("parentName", user.getRealname()==null?"":user.getParentName());
         try {
             ObjectMapper mapper = JacksonMapper.getInstance();
             String json = mapper.writeValueAsString(new User());
@@ -173,7 +173,7 @@ public class AgentController extends BaseAction {
         ModelAndView mav = new ModelAndView(NEW);
         User user = SecurityUtils.getLoginUser();
         mav.addObject("title", "修改信息");
-        mav.addObject("parentName", user.getParentName());
+        mav.addObject("parentName", user.getRealname()==null?"":user.getParentName());
         try {
             ObjectMapper mapper = JacksonMapper.getInstance();
             String json = mapper.writeValueAsString(user);
