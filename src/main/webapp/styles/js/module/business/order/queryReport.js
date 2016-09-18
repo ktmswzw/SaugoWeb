@@ -19,6 +19,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'tExport', 'tExportS','com
             clickToSelect: true,
             singleSelect: true,
             smartDisplay: false,
+            height:700,
             queryParams: 'reportParamsOrderQuery',
             pagination: false
         });

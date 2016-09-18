@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Security;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -95,7 +97,7 @@ public class ReportController extends BaseAction {
     public GridModel reportSuperlist() {
         Report report = SearchForm(Report.class);
         report.setSuperReport(true);
-        Page info = reportService.reportTree(page(), report);
+        Page info = reportService.reportTreeByPage(page(), report);
         GridModel m = new GridModel();
         m.setRows(info.getRows());
         m.setTotal(info.getCount());
@@ -129,7 +131,7 @@ public class ReportController extends BaseAction {
     public GridModel reportList() {
         Report report = SearchForm(Report.class);
         report.setSuperReport(false);
-        Page info = reportService.reportTree(page(), report);
+        Page info = reportService.reportTreeByPage(page(), report);
         GridModel m = new GridModel();
         m.setRows(info.getRows());
         m.setTotal(info.getCount());
@@ -145,12 +147,20 @@ public class ReportController extends BaseAction {
     @RequiresPermissions("CharReport:show")
     @RequestMapping(value="/lasagnaData/{date}")
     @ResponseBody
-    public List<Order> lasagnaData(@PathVariable String date) {
+    public List<Report> lasagnaData(@PathVariable String date) {
         Report report = new Report();
         report.setBeginDate(SimpleDate.strToDate(date));
         report.setEndDate(SimpleDate.strToDate(date));
-        Page info = reportService.reportTree(page(), report);
-        return info.getRows();
+        Page info = reportService.reportTreeByPage(page(), report);
+        List<Report> result = info.getRows();
+        Iterator<Report> itr = result.iterator();
+        while (itr.hasNext()){
+            Report report1 = itr.next();
+            if(report1.getAgentSum()==0){
+                itr.remove();
+            }
+        }
+        return result;
     }
 
     /**

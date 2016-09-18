@@ -24,19 +24,17 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'select', 'selectCN', 'tExp
             smartDisplay: false,
             queryParams: 'queryParamsF',
             pagination: true,
+            height:500,
             pageSize: 10,
             pageList: [5, 10, 20, 100]
         }).on('check.bs.table', function (e, row) {
             showEdit($table, 'to', 'do', 'in');
         }).on('uncheck.bs.table', function (e, row) {
             showEdit($table, 'to', 'do', 'in');
-        }).on('page-change.bs.table', function (e, size, number) {
-            setHeightSelf(200*number/10);
         }).on('sort.bs.table', function (name,order) {
             queryParamsB();
             sortSelf = !sortSelf;
         });
-        setHeightSelf(1200);
         //查询动作
         $('#query').click(function () {
             queryParamsB();

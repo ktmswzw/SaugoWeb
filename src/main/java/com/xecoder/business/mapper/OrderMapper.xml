@@ -19,11 +19,14 @@
     <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
     <result column="bank_memo" property="bankMemo" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="bank" property="bank" jdbcType="VARCHAR" />
-    <result column="bankAccount" property="bankAccount" jdbcType="VARCHAR" />
-    <result column="bankName" property="bankName" jdbcType="VARCHAR" />
-    <result column="alipayAccount" property="alipayAccount" jdbcType="VARCHAR" />
-    <result column="alipayName" property="alipayName" jdbcType="VARCHAR" />
+    <result column="bank" jdbcType="VARCHAR" property="bank" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="alipay_account" jdbcType="VARCHAR" property="alipayAccount" />
+    <result column="alipay_name" jdbcType="VARCHAR" property="alipayName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="identity_cards" jdbcType="VARCHAR" property="identityCards" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -87,7 +90,7 @@
     nn.id, input_id, input_time, check_id, check_time, produce_id, produce_number, GET_USER_NAME(produce_id) as input_name,
     check_name, GET_PRODUCE_NAME(produce_id) as produce_name, nn.status, agent_id, agent_name, nn.parent_id, GET_USER_NAME(nn.parent_id) as parent_name, bank_memo,
     url,ss.bank as bank, ss.bank_account as bank_account, ss.bank_name as bank_name,
-    ss.alipay_account as alipay_account, ss.alipay_name as alipay_name
+    ss.alipay_account as alipay_account, ss.alipay_name as alipay_name, ss.identity_cards as identity_cards, ss.address as address, ss.phone as phone
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xecoder.business.entity.OrderCriteria" >
     select

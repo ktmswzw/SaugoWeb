@@ -17,6 +17,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'table', 'tablezn','select', 'select
         //动态调整ifream页面高度
         $('#myTree').on('loaded.fu.tree', function (e) {
             //console.log('Loaded');
+            if(document.body.clientHeight<1999)
             setHeight();
         });
 
@@ -45,30 +46,29 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'table', 'tablezn','select', 'select
 
         //列表
         var $table = $('#tableReport').bootstrapTable({
-            url: '',
+            url: WEB_GLOBAL_CTX + listAction,
             dataType: 'json',
-            cache: false,
-            showToggle: true,
-            showExport: true,
-            exportTypes: "['excel']",
-            toolbar: '#custom-toolbar',
-            toolbarAlign: 'left',
-            sidePagination: 'server',
-            clickToSelect: true,
-            singleSelect: true,
+            cache:false,
+            showToggle:true,
+            showExport:true,
+            showRefresh:true,
+            height:600,
+            showColumns:true,
+            exportTypes:"['excel']",
+            toolbar:'#custom-toolbar',
+            toolbarAlign:'left',
+            sidePagination:'server',
+            clickToSelect:true,
+            singleSelect:true,
             smartDisplay: false,
             queryParams: 'reportParamsOrder'
-        }).on('check.bs.table', function (e, row) {
-            showEdit($table, 'to', 'do', 'in');
-        }).on('uncheck.bs.table', function (e, row) {
-            showEdit($table, 'to', 'do', 'in');
-        }).on('page-change.bs.table', function (e, size, number) {
-            setHeightSelf(200 * number / 10);
         });
 
+        setHeightSelf(1000);
 
         //查询动作
         $('#query').click(function () {
+            // $table.bootstrapTable({url:WEB_GLOBAL_CTX + listAction});
             query();
         });
 

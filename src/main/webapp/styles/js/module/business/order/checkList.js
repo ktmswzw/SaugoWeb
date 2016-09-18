@@ -31,16 +31,15 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn',  'select', 'selectCN','tEx
             clickToSelect:true,
             singleSelect:true,
             smartDisplay: false,
+            height:500,
             queryParams: 'queryParamsOrder',
             pagination: true,
-            pageSize: 5,
+            pageSize: 10,
             pageList: [5, 10, 20, 100]
         }).on('check.bs.table', function (e, row) {
             showEdit($table, 'to', 'do', 'in');
         }).on('uncheck.bs.table', function (e, row) {
             showEdit($table, 'to', 'do', 'in');
-        }).on('page-change.bs.table', function (e, size, number) {
-            setHeightSelf(200*number/10);
         });
 
         //查询动作

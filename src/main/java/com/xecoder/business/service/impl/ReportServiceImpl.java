@@ -100,7 +100,7 @@ public class ReportServiceImpl  extends BaseService implements ReportService {
     }
 
     @Override
-    public Page reportTree(Page page, Report report){
+    public Page reportTreeByPage(Page page, Report report){
         page.setCount(countByExample(page,report));
         List<Report> list= baseDao.getMapper(ReportMapper.class).reportTree(getCriteria(page,report));
         if(list!=null)

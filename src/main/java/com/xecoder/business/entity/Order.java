@@ -76,6 +76,15 @@ public class Order {
     @Transient
     private Long point;
 
+    @Transient
+    private String address;
+
+    @Transient
+    private String identityCards;
+
+    @Transient
+    private String phone;
+
     public String getId() {
         return id;
     }
@@ -282,5 +291,29 @@ public class Order {
 
     public void setSelfOrder(String selfOrder) {
         this.selfOrder = selfOrder;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getIdentityCards() {
+        return identityCards;
+    }
+
+    public void setIdentityCards(String identityCards) {
+        this.identityCards = identityCards;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

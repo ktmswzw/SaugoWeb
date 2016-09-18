@@ -30,10 +30,9 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
             smartDisplay: false,
             queryParams: 'queryParamsOrder',
             pagination: true,
-            pageSize: 5,
+            height:600,
+            pageSize: 10,
             pageList: [5, 10, 20, 100]
-        }).on('page-change.bs.table', function (e, size, number) {
-            setHeightSelf(200*number/10);
         });
 
         setHeightSelf(800);

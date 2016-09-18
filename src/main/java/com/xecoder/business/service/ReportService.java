@@ -27,7 +27,7 @@ public interface ReportService {
 
     void delete(Long id);
 
-    Page reportTree(Page page, Report report);
+    Page reportTreeByPage(Page page, Report report);
 
 }
 

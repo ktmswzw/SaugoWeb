@@ -102,9 +102,11 @@ public class OrderController extends BaseAction {
 
             User user = userService.get((long) agentId);
             User currentUser = SecurityUtils.getLoginUser();
-            List<User> list = userService.selectTreeById(currentUser.getId());
-            if (!list.contains(user)) {
-                new IncorrectCaptchaException("没有权限");
+            if(currentUser.getEmail().equals("")) {
+                List<User> list = userService.selectTreeById(currentUser.getId());
+                if (!list.contains(user)) {
+                    new IncorrectCaptchaException("没有权限");
+                }
             }
             String produceId, start, end;
             String[] temp = condition.split("~");
