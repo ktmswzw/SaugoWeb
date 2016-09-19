@@ -74,6 +74,10 @@ public class User implements Serializable {
     @Transient
     private String parentName;
 
+
+    @Transient
+    private boolean superAgent;
+
     private int nodes;
 
     public Long getId() {
@@ -279,6 +283,12 @@ public class User implements Serializable {
         int i=0;
         for(UserRole userRole:userRoles)
         {
+            if(userRole.getRoleId()==2){
+                this.setSuperAgent(true);
+            }
+            if(userRole.getRoleId()==3){
+                this.setSuperAgent(false);
+            }
             if(i<userRoles.size()-1) {
                 role_s += userRole.getRoleId().toString() + ",";
                 role_string += userRole.getRole().getDescription() + ",";
@@ -331,5 +341,13 @@ public class User implements Serializable {
 
     public void setNodes(int nodes) {
         this.nodes = nodes;
+    }
+
+    public boolean isSuperAgent() {
+        return superAgent;
+    }
+
+    public void setSuperAgent(boolean superAgent) {
+        this.superAgent = superAgent;
     }
 }

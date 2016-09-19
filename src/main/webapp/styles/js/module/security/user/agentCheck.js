@@ -2,7 +2,7 @@
  * Created by imanon.net on 16/8/30.
  */
 //加载插件
-requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validator','vb','validatorLAG','comm','form','message'],
+requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedInput','validator','vb','validatorLAG','comm','form','message'],
     function ($,_) {
 
         //返回
@@ -15,10 +15,22 @@ requirejs(['jquery',,'bootstrap','fuelux','switchs','select','selectCN','validat
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
 
+        $("#superAgent").bootstrapSwitch()
+            .on('switchChange.bootstrapSwitch', function(event, state) {
+                $("#superAgent").val(state);
+            });
+
+
 
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
             //初始化页面
             meForm($('#formSubmit'), user);
+
+            $("#superAgent").bootstrapSwitch('state', user.superAgent);
+            $('#superAgent').bootstrapSwitch('disabled', true);
+
+
+
 
             $("#href1").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsFront);
             $("#href1").append('<img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsFront+'" alt="正面" style="height: 400px" class="img-thumbnail img-responsive">');

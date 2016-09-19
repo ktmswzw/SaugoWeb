@@ -115,6 +115,7 @@ requirejs(['jquery', 'bootstrap','table', 'tablezn', 'select', 'selectCN', 'tExp
         });
 
 
+
         parent.Loading.modal('hide');
 
     });
@@ -144,4 +145,12 @@ function queryParamsF(params) {
     params.sortOrder = sortSelf?"desc":"asc";
     return $.extend({}, params, data);
 }
+
+function superAgent(value, row, index) {
+    if(value){
+        return '<span class="glyphicon glyphicon-ok"></span>';
+    }else
+        return "";
+}
+
 

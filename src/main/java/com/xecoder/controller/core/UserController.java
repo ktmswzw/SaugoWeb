@@ -1,38 +1,27 @@
 package com.xecoder.controller.core;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Strings;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.*;
 import com.xecoder.entity.*;
-import com.xecoder.service.core.LogEntityService;
 import com.xecoder.service.core.RoleService;
-import com.xecoder.service.core.UserRoleService;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.shiro.ShiroUser;
 import com.xecoder.viewModel.GridModel;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.ehcache.EhCacheCache;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -383,7 +372,7 @@ public class UserController extends BaseAction {
         user.setStatus("check");
         result.setMsg("修改信息完成,需要确认后才可登录");
 
-        if (user.getParentId() == 2) {
+        if (user.getParentId() == 2 || user.isSuperAgent()) {
             user.setRoles("2");//超级代理
         } else {
             user.setRoles("3");//总代

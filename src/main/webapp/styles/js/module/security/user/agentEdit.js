@@ -12,7 +12,7 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
         var $ERROR = $.scojs_message.TYPE_ERROR;
 
         //状态插件
-        $("input[type=\"checkbox\"], input[type=\"radio\"]").not("[data-switch-no-init]").bootstrapSwitch()
+        $("#state").bootstrapSwitch()
             .on('switchChange.bootstrapSwitch', function(event, state) {
                 if(state) {
                     $("#payType").val("0");
@@ -23,6 +23,11 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                 }
                 $("#alipayDiv").toggleClass("hiddeDiv");
                 $("#bankDiv").toggleClass("hiddeDiv");
+            });
+
+        $("#superAgent").bootstrapSwitch()
+            .on('switchChange.bootstrapSwitch', function(event, state) {
+                    $("#superAgent").val(state);
             });
 
         if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
@@ -38,11 +43,14 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
             $("#href2").append('<button type="button" class="btn btn-link">下载</button>');
 
             $("#state").bootstrapSwitch('state', user.payType == 0);
+
+            $("#superAgent").bootstrapSwitch('state', user.superAgent);
         }
         else{
             $("#payType").val("0");
             $("#status").val("enabled");
             $("#state").bootstrapSwitch('state', true);
+            $("#superAgent").bootstrapSwitch('state', false);
         }
         //修改页面结束
         // $("#bankAccount").mask("9999 9999 9999 9999");
