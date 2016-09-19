@@ -10,8 +10,10 @@ import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.SimpleDate;
 import com.xecoder.entity.User;
+import com.xecoder.entity.UserRole;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
+import com.xecoder.shiro.ShiroUser;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -46,6 +48,7 @@ public class AgentController extends BaseAction {
     @Autowired
     RemunerationService remunerationService;
 
+    private static final String INDEX = "console/index/index";
     private static final String HOME = "/business/agent/home";//主页
     private static final String ORDER = "/business/agent/order";//发起订单
     private static final String ORDEROK = "/business/agent/orderOk";//发起订单
@@ -58,9 +61,15 @@ public class AgentController extends BaseAction {
 
     @RequestMapping(value = "/home")
     public ModelAndView index() {
-        ModelAndView mav = new ModelAndView(HOME);
-        User user = SecurityUtils.getLoginUser();
-        mav.addObject("realname", user.getRealname());
+        ModelAndView mav = new ModelAndView(INDEX);
+        ShiroUser shiroUser = SecurityUtils.getShiroUser();
+        List<UserRole> list = shiroUser.getUser().getUserRoles();
+        for(UserRole userRole:list){
+            if(userRole.getRoleId().equals(2)||userRole.getRoleId().equals(3)){
+                mav = new ModelAndView(HOME);
+                mav.addObject("realname", shiroUser.getUser().getRealname());
+            }
+        }
         return mav;
     }
 

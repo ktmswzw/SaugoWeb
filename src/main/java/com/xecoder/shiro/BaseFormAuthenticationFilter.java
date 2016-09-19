@@ -25,16 +25,8 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xecoder.common.SecurityConstants;
 import com.xecoder.common.util.Exceptions;
 
-
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  1.1.0
- * @since   2012-10-29 上午9:37:02 
- */
 
 public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 	private static final Logger log = LoggerFactory.getLogger(BaseFormAuthenticationFilter.class);
@@ -98,17 +90,15 @@ public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 	@Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject,
             ServletRequest request, ServletResponse response) throws Exception {
-		//issueSuccessRedirect(request, response);
-		//we handled the success redirect directly, prevent the chain from continuing:
+
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse)response;
 		
 		ShiroUser shiroUser = (ShiroUser)subject.getPrincipal();
-		// 加入ipAddress
+
 		shiroUser.setIpAddress(request.getRemoteAddr());
-		
-		// 这个是放入user还是shiroUser呢？
-		httpServletRequest.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
+
+		//httpServletRequest.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
 		
 		if (!"XMLHttpRequest".equalsIgnoreCase(httpServletRequest.getHeader("X-Requested-With")) 
 				|| request.getParameter("ajax") == null) {// 不是ajax请求

@@ -41,12 +41,7 @@ public class IndexController extends BaseAction{
 
 	@RequestMapping(value="",  method=RequestMethod.GET)
 	public String index() {
-		
 		ShiroUser shiroUser = SecurityUtils.getShiroUser();
-		// 加入ipAddress
-		shiroUser.setIpAddress(request.getRemoteAddr());
-		
-		request.getSession().setAttribute(SecurityConstants.LOGIN_USER, shiroUser.getUser());
 		List<UserRole> list = shiroUser.getUser().getUserRoles();
 		for(UserRole userRole:list){
 			if(userRole.getRoleId().equals(2)||userRole.getRoleId().equals(3)){
