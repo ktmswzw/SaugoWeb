@@ -44,7 +44,7 @@ public class IndexController extends BaseAction{
 		ShiroUser shiroUser = SecurityUtils.getShiroUser();
 		List<UserRole> list = shiroUser.getUser().getUserRoles();
 		for(UserRole userRole:list){
-			if(userRole.getRoleId().equals(2)||userRole.getRoleId().equals(3)){
+			if(userRole.getRoleId()==2||userRole.getRoleId()==3){
 				return AGENT;
 			}
 		}

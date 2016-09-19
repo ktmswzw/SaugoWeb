@@ -31,7 +31,7 @@ import com.xecoder.common.util.Exceptions;
 public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 	private static final Logger log = LoggerFactory.getLogger(BaseFormAuthenticationFilter.class);
 	
-	/*
+	/**
 	 * 覆盖默认实现，打印日志便于调试，查看具体登录是什么错误。
 	 *（可以扩展把错误写入数据库之类的。）
 	 * (non-Javadoc)

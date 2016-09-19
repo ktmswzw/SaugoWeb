@@ -22,7 +22,7 @@
 <script type="text/javascript">
     setTimeout(function() {
         var localObj = window.location;
-        if(!isWeixin)
+        if(!isWeixin||isiOS)
             parent.window.location = localObj.protocol + "//" + localObj.host + "/console/index";
         else {
             window.location = localObj.protocol + "//" + localObj.host + "/agent/home"

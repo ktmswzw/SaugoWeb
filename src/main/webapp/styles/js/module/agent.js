@@ -80,6 +80,5 @@ requirejs(['jquery', 'ie10', 'comm'],
         //     }, 3000)
         // }
 
-
     });
 
