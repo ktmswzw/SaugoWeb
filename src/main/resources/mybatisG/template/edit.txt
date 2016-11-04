@@ -40,7 +40,7 @@
 
 </body>
 <@foot/>
-<script src="${base}/styles/js/module/business/{lowerModuleCode}/edit.js"></script>
+<script src="${base}/styles/js/module/business/{lowerModuleCode}/edit.min.js"></script>
 <script type="text/javascript">
     var {lowerModuleCode} = JSON.parse(JSON.stringify(${{lowerModuleCode}}));
 </script>
