@@ -10,6 +10,14 @@ if (top != self) {
 requirejs(['jquery', 'ie10', 'comm'],
     function () {
         requirejs(['bootstrap', 'switchs', 'hideShowPassword'], function () {
+
+            setTimeout(function() {
+                var localObj = window.location;
+                if(isWeixin || isiOS){
+                    window.location = localObj.protocol + "//" + localObj.host + "/agent/home"
+                }
+            },10);
+
             $('#formLogin').submit(function (e) {
                 var username = $('#username');
                 var password = $('#password');

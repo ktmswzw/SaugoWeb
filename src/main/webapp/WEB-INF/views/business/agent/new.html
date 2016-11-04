@@ -63,7 +63,7 @@
             <div class="weui_cell">
                 <div class="weui_cell_hd"><label class="weui_label">开户银行</label></div>
                 <div class="weui_cell_bd weui_cell_primary">
-                    <input class="weui_input" type="text" id="bank"  name="bank">
+                    <input class="weui_input" type="text" id="bank"  name="bank"  placeholder="请输入银行详情" >
                 </div>
             </div>
             <div class="weui_cell">
@@ -115,7 +115,7 @@
         <div class="weui_cell">
             <div class="weui_cell_hd"><label class="weui_label">上级代理</label></div>
             <div class="weui_cell_bd weui_cell_primary">
-                <input class="weui_input" type="text" id="parentName" required name="parentName" value="${parentName}">
+                <input class="weui_input" type="text" id="parentName" required name="parentName" readonly="readonly" value="${parentName}">
             </div>
         </div>
 
@@ -131,13 +131,8 @@
     </div>
 
 
-    <div id="toast" style="display: none;">
-        <div class="weui_mask_transparent"></div>
-        <div class="weui_toast">
-            <p id="msgType"></p>
-            <p class="weui_toast_content" id="error_dialog"></p>
-        </div>
-    </div>
+    <@toast/>
+    <@loadingToast/>
 
     <div class="weui_btn_area">
         <button type="submit" id="save" name="save" class="weui_btn weui_btn_primary">申请</button>

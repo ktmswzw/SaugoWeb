@@ -115,7 +115,7 @@ public class ReportController extends BaseAction {
         Report report = SearchForm(Report.class);
         report.setSuperReport(true);
         if(report.getBeginDate()!=null&&!report.getBeginDate().equals("")){
-            report.setBeginDate(SimpleDate.getDayStart(new Date(),-30));
+            report.setBeginDate(SimpleDate.getDayStart(new Date(),-360));
         }
         List<Report> list = reportService.reportChar(report);
         return list;

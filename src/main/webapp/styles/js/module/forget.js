@@ -35,6 +35,8 @@ requirejs(['jquery', 'ie10', 'comm'],
                         if (result != null) {
                             if (result.successful) {
                                 doErrorMsg(result.msg,true);
+                                $("#captcha").val("");
+                                $("#username").val("");
                                 $("#but_login").toggleClass("weui_btn_disabled");
                                 setTimeout("window.location.href='" + WEB_GLOBAL_CTX + "/agentLogin'", 2000);
                             }

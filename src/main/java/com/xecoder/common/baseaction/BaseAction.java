@@ -180,7 +180,7 @@ public class BaseAction {
     public static Map<String, Object> getParametersStartingWith(ServletRequest request, String prefix) {
         Validate.notNull(request, "Request must not be null");
         Enumeration paramNames = request.getParameterNames();
-        Map<String, Object> params = new TreeMap<String, Object>();
+        Map<String, Object> params = new TreeMap<>();
         if (prefix == null) {
             prefix = "";
         }
@@ -208,6 +208,9 @@ public class BaseAction {
 //            result.setSuccessful(false);
 //            result.setMsg(log.getMessage());
 //        }
-		result.setSuccessful(true);
+        System.out.println("phone = " + phone);
+        System.out.println("code = " + code);
+        System.out.println("json = " + json);
+        result.setSuccessful(true);
     }
 }

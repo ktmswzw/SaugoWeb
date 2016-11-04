@@ -59,6 +59,9 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
                 doErrorMsg("水单照片未上传", false);
                 return false;
             }
+
+            doLoadMsg("照片上传中");
+
             var $form = $(e.target);
             var params = $form.serializeArray();
 

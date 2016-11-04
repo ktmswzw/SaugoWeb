@@ -245,7 +245,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 				String operate = permission.getShortName();
 		
 				StringBuilder builder = new StringBuilder();
-                System.out.println("resource = operate ---" + resource + "--------------"+operate);
+//                System.out.println("resource = operate ---" + resource + "--------------"+operate);
                 builder.append(resource + ":" + operate);
 				
 				shiroUser.getHasModules().put(resource, permission.getModule());

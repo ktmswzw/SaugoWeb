@@ -25,7 +25,7 @@
 	                    <prop key="kaptcha.GimpyEngine">WaterRipple</prop> 
 	                    <prop key="kaptcha.producer.impl">com.google.code.kaptcha.impl.DefaultKaptcha</prop> 
 	                    <prop key="kaptcha.textproducer.impl">com.google.code.kaptcha.text.impl.DefaultTextCreator</prop> 
-	                    <prop key="kaptcha.textproducer.char.string">abcdefghjklmnpqrstuvwxy123456789</prop>
+	                    <prop key="kaptcha.textproducer.char.string">123456789</prop>
 	                    <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
 	                    <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
 	                    <prop key="kaptcha.background.impl">com.google.code.kaptcha.impl.DefaultBackground</prop>

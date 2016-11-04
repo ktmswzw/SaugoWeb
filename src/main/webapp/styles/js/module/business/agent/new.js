@@ -90,6 +90,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
             {
                 afterUrl =  afterUrl + "/agentLogin"+"'";
             }
+            doLoadMsg("照片上传中");
             var $form = $(e.target);
             if ($("#file1").val() != '' && $("#file2").val() != '') {
                 var params = $form.serializeArray();

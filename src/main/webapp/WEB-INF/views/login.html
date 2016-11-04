@@ -60,7 +60,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
-                            <input type="text" id="captcha" name="captcha" class="form-control"
+                            <input type="number" pattern="[0-9]*" minlength="4" maxlength="4" id="captcha" name="captcha" class="form-control"
                                    placeholder="验证码" autocomplete="off" required tabindex="3"/>
                             <span class="input-group-addon refresh" data-toggle="tooltip" title="点击刷新">
                                 <span class="glyphicon glyphicon-refresh" id="refresh"></span>

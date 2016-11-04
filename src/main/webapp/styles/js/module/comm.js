@@ -32,6 +32,13 @@ function doErrorMsg(msg,type) {
         $('#toast').hide();
     }, 1500);
 }
+function doLoadMsg(msg) {
+    $('#loading_dialog').html(msg);
+    $('#loadingToast').show();
+    setTimeout(function () {
+        $('#loadingToast').hide();
+    }, 2000);
+}
 function randomKey(){
     $("#Kaptcha").attr("src", WEB_GLOBAL_CTX+"/captcha/captchaing?" + Math.floor(Math.random() * 100)).fadeIn();
 }

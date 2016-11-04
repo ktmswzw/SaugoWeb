@@ -132,7 +132,7 @@ public class AgentController extends BaseAction {
                         }
                     }
                 }
-                else if(!o.getParentId().equals(user.getId())){//次代
+                else if(!o.getParentId().equals(user.getId())&&!o.getAgentId().equals(user.getId())){//次代
                     for(Remuneration remuneration:remunerations){
                         if(remuneration.getLevel()==2&&o.getProduceId().equals(remuneration.getProduceId())){
                             o.setPoint(o.getProduceNumber()*remuneration.getRemuneration());
@@ -164,7 +164,7 @@ public class AgentController extends BaseAction {
         ModelAndView mav = new ModelAndView(NEW);
         User user = SecurityUtils.getLoginUser();
         mav.addObject("title", "新代理申请");
-        mav.addObject("parentName", user.getRealname()==null?"":user.getParentName());
+        mav.addObject("parentName", user.getRealname()==null?"":user.getRealname());
         try {
             ObjectMapper mapper = JacksonMapper.getInstance();
             String json = mapper.writeValueAsString(new User());

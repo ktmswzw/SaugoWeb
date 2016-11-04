@@ -73,7 +73,7 @@ require(
                 show: true
             },
             legend: {
-                data:['近30天出货统计']
+                data:['近一年出货统计']
             },
             toolbox: {
                 show : true,
@@ -137,7 +137,7 @@ require(
                 show: true
             },
             legend: {
-                data:['近30天总代加盟情况(总数'+agentNumber+')']
+                data:['近一年总代加盟情况(总数'+agentNumber+')']
             },
             toolbox: {
                 show : true,

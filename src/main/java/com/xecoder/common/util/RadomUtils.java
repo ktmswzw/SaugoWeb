@@ -33,7 +33,7 @@ public class RadomUtils {
     public static int nextSixInt(){
         if(randomZ ==null )
         randomZ = new Random();
-        return randomZ.nextInt(8999)+1000;
+        return randomZ.nextInt(899999)+100000;
 
     }
 
