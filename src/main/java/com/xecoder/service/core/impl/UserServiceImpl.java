@@ -256,7 +256,11 @@ public class UserServiceImpl extends BaseService implements UserService {
 	 * @return
 	 */
 	public User getByXXX(User user) {
-        return baseDao.selectOne("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, setCriteria(user));
+        List<User> list = baseDao.selectList("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, setCriteria(user));
+        if(list!=null&&list.size()>0)
+            return list.get(0);
+        else
+            return null;
 	}
 
 

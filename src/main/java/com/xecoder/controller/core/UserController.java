@@ -296,10 +296,6 @@ public class UserController extends BaseAction {
                             @RequestParam("file2") MultipartFile file2) {
         Result result = new Result();
         try {
-            if (!file1.isEmpty()) {
-                user.setCardsFront(UploadUtils.upload(file1, request));
-                user.setCardsBack(UploadUtils.upload(file2, request));
-            }
             if (user.getId() == null) {
                 User user1 = SecurityUtils.getLoginUser();
                 user.setParentId(user1.getId());
@@ -309,7 +305,13 @@ public class UserController extends BaseAction {
                 user.setUsername(user.getPhone());
                 user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
                 result = checkData(result, user);
-
+                if(!result.isSuccessful()){
+                    return result;
+                }
+                if (!file1.isEmpty()) {
+                    user.setCardsFront(UploadUtils.upload(file1, request));
+                    user.setCardsBack(UploadUtils.upload(file2, request));
+                }
                 if (user1.getRealname().equals("")) {
                     LogEntity log = new LogEntity();
                     log.setUsername(user1.getUsername());
@@ -352,12 +354,15 @@ public class UserController extends BaseAction {
                        @RequestParam("file2") MultipartFile file2) {
         Result result = new Result();
         try {
+            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
+            result = checkData(result, user);
+            if(!result.isSuccessful()){
+                return result;
+            }
             if (!file1.isEmpty()) {
                 user.setCardsFront(UploadUtils.upload(file1, request));
                 user.setCardsBack(UploadUtils.upload(file2, request));
             }
-            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
-            result = checkData(result, user);
         } catch (Exception e) {
             result.setSuccessful(false);
             result.setMsg("error");
@@ -392,7 +397,7 @@ public class UserController extends BaseAction {
 
             if (user.getBankAccount() != null && !user.getBankAccount().equals("")) {
                 user2 = new User();
-                user2.setUsername(user.getBankAccount());
+                user2.setBankAccount(user.getBankAccount());
                 User user2s = userService.getByXXX(user2);
                 if (user2s != null) {
                     result.setSuccessful(false);
@@ -402,7 +407,7 @@ public class UserController extends BaseAction {
             }
             if (user.getIdentityCards() != null && !user.getIdentityCards().equals("")) {
                 user2 = new User();
-                user2.setUsername(user.getIdentityCards());
+                user2.setIdentityCards(user.getIdentityCards());
                 User user3 = userService.getByXXX(user2);
                 if (user3 != null) {
                     result.setSuccessful(false);
@@ -448,7 +453,7 @@ public class UserController extends BaseAction {
             if (user.getBankAccount() != null && !user.getBankAccount().equals("")) {
 
                 user2 = new User();
-                user2.setUsername(user.getBankAccount());
+                user2.setBankAccount(user.getBankAccount());
                 User user2s = userService.getByXXX(user2);
                 if (user2s != null && user2.getId() != user.getId()) {
                     result.setSuccessful(false);
@@ -458,7 +463,7 @@ public class UserController extends BaseAction {
             }
             if (user.getIdentityCards() != null && !user.getIdentityCards().equals("")) {
                 user2 = new User();
-                user2.setUsername(user.getIdentityCards());
+                user2.setIdentityCards(user.getIdentityCards());
                 User user3 = userService.getByXXX(user2);
                 if (user3 != null && user3.getId() != user.getId()) {
                     result.setSuccessful(false);
