@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -40,15 +41,17 @@ public class IndexController extends BaseAction{
 	private ModuleService moduleService;
 
 	@RequestMapping(value="",  method=RequestMethod.GET)
-	public String index() {
+	public ModelAndView index() {
+		ModelAndView mav = new ModelAndView(INDEX);
 		ShiroUser shiroUser = SecurityUtils.getShiroUser();
 		List<UserRole> list = shiroUser.getUser().getUserRoles();
 		for(UserRole userRole:list){
 			if(userRole.getRoleId()==2||userRole.getRoleId()==3){
-				return AGENT;
+				mav = new ModelAndView(AGENT);
+				mav.addObject("realname", shiroUser.getUser().getRealname());
 			}
 		}
-		return INDEX;
+		return mav;
 	}
 
 	@RequestMapping(value="/getMenuModule", method=RequestMethod.POST) 
