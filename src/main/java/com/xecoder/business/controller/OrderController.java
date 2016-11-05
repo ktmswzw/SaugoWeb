@@ -279,7 +279,7 @@ public class OrderController extends BaseAction {
                 log.setIpAddress(request.getRemoteAddr());
 
                 JSONObject object = new JSONObject();
-                object.put("name", agent);
+                object.put("agent", agent);
                 object.put("number", String.valueOf(order.getProduceNumber()));
                 log.setLogLevel("6");
                 UserRole userRole = new UserRole();
@@ -433,7 +433,7 @@ public class OrderController extends BaseAction {
                 object.put("number", String.valueOf(order.getProduceNumber()));
                 if (list.size() == 2) {
                     remuneration = list.get(0);
-                    object.put("point", remuneration.getRemuneration()*order.getProduceNumber());
+                    object.put("point", ""+remuneration.getRemuneration()*order.getProduceNumber());
                 }
                 log.setLogLevel("4");
                 this.sendFill(user1.getPhone(), "SMS_14765447", object.toJSONString(), log,result);
@@ -452,7 +452,7 @@ public class OrderController extends BaseAction {
                 object.put("number", String.valueOf(order.getProduceNumber()));
                 if (list.size() == 2) {
                     remuneration = list.get(1);
-                    object.put("point", remuneration.getRemuneration()*order.getProduceNumber());
+                    object.put("point", ""+remuneration.getRemuneration()*order.getProduceNumber());
                 }
                 log.setLogLevel("5");
                 this.sendFill(user2.getPhone(), "SMS_14770485", object.toJSONString(), log,result);

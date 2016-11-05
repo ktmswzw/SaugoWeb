@@ -7,6 +7,7 @@ import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.*;
 import com.xecoder.entity.*;
 import com.xecoder.service.core.RoleService;
+import com.xecoder.service.core.UserRoleService;
 import com.xecoder.service.core.UserService;
 import com.xecoder.shiro.SecurityUtils;
 import com.xecoder.shiro.ShiroUser;
@@ -45,6 +46,9 @@ public class UserController extends BaseAction {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @RequiresPermissions("User:show")
     @RequestMapping(value = "/list")
@@ -307,27 +311,35 @@ public class UserController extends BaseAction {
                 result = checkData(result, user);
                 if(!result.isSuccessful()){
                     return result;
+
                 }
                 if (!file1.isEmpty()) {
                     user.setCardsFront(UploadUtils.upload(file1, request));
                     user.setCardsBack(UploadUtils.upload(file2, request));
                 }
-                if (user1.getRealname().equals("")) {
-                    LogEntity log = new LogEntity();
-                    log.setUsername(user1.getUsername());
-                    log.setCreateTime(new Date());
-                    log.setSuperid(String.valueOf(user1.getId()));
-                    log.setIpAddress(request.getRemoteAddr());
-                    JSONObject object = new JSONObject();
-                    object.put("subAgent", user1.getRealname());
-                    object.put("agent", user.getRealname());
-                    log.setLogLevel("9");
-                    this.sendFill(user1.getPhone(), "SMS_14771654", object.toJSONString(), log,result);
-                    if(!result.isSuccessful()){
+                UserRole userRole = new UserRole();
+                userRole.setRoleId(Long.valueOf(99));
+                List<UserRole> list = userRoleService.find(userRole);
+                if (list != null && list.size() > 0) {
+                    for (UserRole userRole1 : list) {
+                        User user2 = userService.get(userRole1.getUserId());
+                        if (user2 != null) {
+                            LogEntity log = new LogEntity();
+                            log.setUsername(user2.getUsername());
+                            log.setCreateTime(new Date());
+                            log.setSuperid(String.valueOf(user2.getId()));
+                            log.setIpAddress(request.getRemoteAddr());
+                            JSONObject object = new JSONObject();
+                            object.put("subAgent", user1.getRealname());
+                            object.put("agent", user.getRealname());
+                            log.setLogLevel("9");
+                            this.sendFill(user2.getPhone(), "SMS_14771654", object.toJSONString(), log, result);
+                        }
+                    }
+                    if (!result.isSuccessful()) {
                         return result;
                     }
                 }
-
             } else {
                 User user1 = SecurityUtils.getLoginUser();
                 updateUserInfo(user, user1);
