@@ -300,6 +300,10 @@ public class UserController extends BaseAction {
                             @RequestParam("file2") MultipartFile file2) {
         Result result = new Result();
         try {
+            if (!file1.isEmpty()) {
+                user.setCardsFront(UploadUtils.upload(file1, request));
+                user.setCardsBack(UploadUtils.upload(file2, request));
+            }
             if (user.getId() == null) {
                 User user1 = SecurityUtils.getLoginUser();
                 user.setParentId(user1.getId());
@@ -312,10 +316,6 @@ public class UserController extends BaseAction {
                 if(!result.isSuccessful()){
                     return result;
 
-                }
-                if (!file1.isEmpty()) {
-                    user.setCardsFront(UploadUtils.upload(file1, request));
-                    user.setCardsBack(UploadUtils.upload(file2, request));
                 }
                 UserRole userRole = new UserRole();
                 userRole.setRoleId(Long.valueOf(99));
@@ -367,13 +367,13 @@ public class UserController extends BaseAction {
         Result result = new Result();
         try {
             user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
-            result = checkData(result, user);
-            if(!result.isSuccessful()){
-                return result;
-            }
             if (!file1.isEmpty()) {
                 user.setCardsFront(UploadUtils.upload(file1, request));
                 user.setCardsBack(UploadUtils.upload(file2, request));
+            }
+            result = checkData(result, user);
+            if(!result.isSuccessful()){
+                return result;
             }
         } catch (Exception e) {
             result.setSuccessful(false);
