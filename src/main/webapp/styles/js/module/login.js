@@ -13,7 +13,7 @@ requirejs(['jquery', 'ie10', 'comm'],
 
             setTimeout(function() {
                 var localObj = window.location;
-                if(isWeixin || isiOS){
+                if(isWeixin){
                     window.location = localObj.protocol + "//" + localObj.host + "/agent/home"
                 }
             },10);

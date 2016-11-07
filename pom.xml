@@ -28,15 +28,9 @@
         <commons-codec.version>1.9</commons-codec.version>
         <freemarker.version>2.3.19</freemarker.version>
         <jackson.version>2.2.3</jackson.version>
-        <!--远程服务调用-->
-        <dubbo.version>2.5.3</dubbo.version>
-        <zookeeper.version>3.4.6</zookeeper.version>
-        <zkclient.version>0.1</zkclient.version>
+
         <!-- 文件上传 -->
         <commons-fileupload.version>1.2.2</commons-fileupload.version>
-        <guava.version>14.0.1</guava.version>
-        <mongo-java-driver>3.0.0</mongo-java-driver>
-        <spring-data-mongodb>1.7.0.RELEASE</spring-data-mongodb>
 
         <!-- other -->
         <jedis.version>2.5.2</jedis.version>
@@ -107,24 +101,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dubbo</artifactId>
-            <version>${dubbo.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
             <version>${spring-data-redis.version}</version>
@@ -155,16 +131,6 @@
             <version>${fastjson.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>xpp3</groupId>
-            <artifactId>xpp3</artifactId>
-            <version>${xpp3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>${xstream.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>commons-lang</groupId>
@@ -403,12 +369,6 @@
             <version>${commons-lang3.version}</version>
         </dependency>
 
-        <!-- google java library -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
         <!-- kaptcha -->
         <dependency>
             <groupId>com.github.axet</groupId>
@@ -442,12 +402,6 @@
         <!-- OTHER TOOLS end -->
 
 
-        <!-- junit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.openejb</groupId>
             <artifactId>javaee-api</artifactId>
@@ -477,17 +431,7 @@
             <version>${jsf-impl.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.snakerflow</groupId>
-            <artifactId>snaker-core</artifactId>
-            <version>${snaker.version}</version>
-        </dependency>
 
-        <dependency>
-            <groupId>nz.ac.waikato.cms.weka</groupId>
-            <artifactId>WekaExcel</artifactId>
-            <version>${cms.weka}</version>
-        </dependency>
 
         <dependency>
             <groupId>taobao</groupId>

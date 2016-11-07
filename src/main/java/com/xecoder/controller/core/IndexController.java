@@ -1,11 +1,8 @@
 package com.xecoder.controller.core;
 
-import com.google.common.collect.Lists;
-import com.xecoder.common.SecurityConstants;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.entity.Module;
 import com.xecoder.entity.Permission;
-import com.xecoder.entity.Role;
 import com.xecoder.entity.UserRole;
 import com.xecoder.service.core.ModuleService;
 import com.xecoder.shiro.SecurityUtils;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -73,7 +70,7 @@ public class IndexController extends BaseAction{
 
 	
 	private void check(Module module, Subject subject) {
-		List<Module> list1 = Lists.newArrayList();
+		List<Module> list1 = new ArrayList<>();
 		for (Module m1 : module.getChildren()) {
 			// 只加入拥有view权限的Module
 			if (subject.isPermitted(m1.getSn() + ":"

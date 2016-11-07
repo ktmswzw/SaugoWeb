@@ -1,10 +1,8 @@
 package com.xecoder.controller.core;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
 import com.xecoder.common.baseaction.BaseAction;
 import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.DataAttributes;
@@ -25,8 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -134,7 +131,7 @@ public class ModuleController extends BaseAction {
 
 
     private List<Module> check(List<Module> modules, Subject subject) {
-        List<Module> list1 = Lists.newArrayList();
+        List<Module> list1 = new ArrayList<>();
         for (Module m1 :modules) {
             // 只加入拥有view权限的Module
             if (subject.isPermitted(m1.getSn() + ":"+ Permission.PERMISSION_SHOW))

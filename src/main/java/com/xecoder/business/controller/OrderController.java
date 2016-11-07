@@ -422,7 +422,7 @@ public class OrderController extends BaseAction {
             //积分
             Remuneration remuneration = new Remuneration();
             remuneration.setProduceId(order.getProduceId());
-            Page page = new Page(1, 10, "level", "desc");
+            Page page = new Page(1, 10, "level", "asc");
             List<Remuneration> list = remunerationService.findAll(page, remuneration);
 
             if (order.getParentId() != null) {//上级代理
