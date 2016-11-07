@@ -6,7 +6,7 @@
 
 
     <defaultCache
-            maxEntriesLocalHeap="10000"
+            maxEntriesLocalHeap="100000"
             eternal="false"
             timeToIdleSeconds="300"
             timeToLiveSeconds="600"
@@ -16,7 +16,7 @@
     <!-- security entity-->
 
     <cache name="shiro-kickout-session"
-           maxEntriesLocalHeap="2000"
+           maxEntriesLocalHeap="100000"
            eternal="false"
            timeToIdleSeconds="36000"
            timeToLiveSeconds="0"
@@ -25,7 +25,7 @@
     </cache>
     <!-- 登录记录缓存 锁定10分钟 -->
     <cache name="passwordRetryCache"
-           maxEntriesLocalHeap="2000"
+           maxEntriesLocalHeap="100000"
            eternal="false"
            timeToIdleSeconds="600"
            timeToLiveSeconds="600"
@@ -34,7 +34,7 @@
     </cache>
 
     <cache name="authorizationCache"
-           maxEntriesLocalHeap="2000"
+           maxEntriesLocalHeap="100000"
            eternal="false"
            timeToIdleSeconds="3600"
            timeToLiveSeconds="0"
@@ -43,7 +43,7 @@
     </cache>
 
     <cache name="authenticationCache"
-           maxEntriesLocalHeap="2000"
+           maxEntriesLocalHeap="100000"
            eternal="false"
            timeToIdleSeconds="3600"
            timeToLiveSeconds="0"
@@ -52,7 +52,7 @@
     </cache>
 
     <cache name="authorizationPrincipalCache"
-           maxEntriesLocalHeap="2000"
+           maxEntriesLocalHeap="100000"
            eternal="false"
            timeToIdleSeconds="3600"
            timeToLiveSeconds="0"

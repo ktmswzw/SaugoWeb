@@ -19,7 +19,7 @@
 
 	<!-- DefaultCache setting. -->
 	<defaultCache 
-		maxEntriesLocalHeap="10000" 
+		maxEntriesLocalHeap="100000"
 		eternal="false"
 		timeToIdleSeconds="300" 
 		timeToLiveSeconds="600" 
@@ -29,7 +29,7 @@
 	<!-- security entity-->
 	<cache
 			name="Role"
-			maxEntriesLocalHeap="10000"
+			maxEntriesLocalHeap="100000"
 			eternal="false"
 			timeToIdleSeconds="300"
 			timeToLiveSeconds="600"
@@ -39,7 +39,7 @@
 
 	<cache
 			name="Dictionary"
-			maxEntriesLocalHeap="10000"
+			maxEntriesLocalHeap="100000"
 			eternal="false"
 			timeToIdleSeconds="300"
 			timeToLiveSeconds="600"
@@ -48,7 +48,7 @@
 			memoryStoreEvictionPolicy="LFU" />
 
 	<cache name="shiro-kickout-session"
-		   maxEntriesLocalHeap="2000"
+		   maxEntriesLocalHeap="100000"
 		   eternal="false"
 		   timeToIdleSeconds="36000"
 		   timeToLiveSeconds="0"
