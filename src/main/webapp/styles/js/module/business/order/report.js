@@ -63,7 +63,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'table', 'tablezn','select', 'select
         });
 
 
-        setHeightSelf(1000);
+         setHeightSelf(1000);
 
         //查询动作
         $('#query').click(function () {

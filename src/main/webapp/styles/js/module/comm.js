@@ -358,7 +358,7 @@ function showEdit(obj, editDivId, appendDivId) {
 //调整父级高度
 function setHeight()
 {
-    var now = document.body.clientHeight + 300;
+    var now = document.body.clientHeight;
     $('#main', parent.document).attr("style","height:"+now+"px");
 }
 

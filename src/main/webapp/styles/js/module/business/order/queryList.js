@@ -35,7 +35,6 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
             pageList: [5, 10, 20, 100]
         });
 
-        setHeightSelf(800);
         //查询动作
         $('#query').click(function () {
             $table.bootstrapTable('refresh', {

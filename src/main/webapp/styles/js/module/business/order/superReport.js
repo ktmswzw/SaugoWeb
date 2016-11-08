@@ -64,7 +64,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'table', 'tablezn','select', 'select
             queryParams: 'reportParamsOrder'
         });
 
-        setHeightSelf(1000);
+        // setHeightSelf(1000);
 
         //查询动作
         $('#query').click(function () {
