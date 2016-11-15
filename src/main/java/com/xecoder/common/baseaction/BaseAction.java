@@ -192,12 +192,9 @@ public class BaseAction {
 //        boolean flag = AliyunSmsPush.sendSms(phone, code, json, log);
 //        if (!flag) {
 //            logEntityService.save(log);
-//            result.setSuccessful(false);
-//            result.setMsg(log.getMessage());
 //        }
         System.out.println("phone = " + phone);
         System.out.println("code = " + code);
         System.out.println("json = " + json);
-        result.setSuccessful(true);
     }
 }
