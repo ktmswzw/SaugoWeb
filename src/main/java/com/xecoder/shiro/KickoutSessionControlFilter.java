@@ -1,5 +1,6 @@
 package com.xecoder.shiro;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.Session;
@@ -13,7 +14,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -30,6 +34,9 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
 
     private SessionManager sessionManager;
     private Cache<String, Deque<Serializable>> cache;
+    protected static final String[] blackUrlPathPattern = new String[] { ".aspx", ".asp", ".php", ".exe",
+            ".jsp", ".pl", ".py", ".groovy", ".sh", ".rb", ".dll", ".bat", ".bin", ".dat",
+            ".bas", ".c", ".cmd", ".com", ".cpp", ".jar", ".class", ".lnk", ".js" };
 
     public void setKickoutUrl(String kickoutUrl) {
         this.kickoutUrl = kickoutUrl;
@@ -63,6 +70,19 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
             //如果没有登录，直接进行之后的流程
             return true;
         }
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+        String reqUrl = httpRequest.getRequestURI().toLowerCase().trim();
+
+        for (String pattern : blackUrlPathPattern) {
+            if (StringUtils.countMatches(reqUrl,pattern)>0) {
+                LOG.error("unsafe request >>> " + " request time: " +
+                        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "; request ip: " +
+                        SecurityUtils.getIpAddr(httpRequest) + "; request url: " + httpRequest.getRequestURI());
+                return false;
+            }
+        }
+
         Session session = subject.getSession();
 
         ShiroUser shiroUser = (ShiroUser)subject.getPrincipal();

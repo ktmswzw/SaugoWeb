@@ -79,9 +79,12 @@ function getAgentCheck() {
         type: 'GET',
         url: WEB_GLOBAL_CTX + "/console/security/user/alterAgentCheck",
         error: function () {// 请求失败处理函数
-            //$.scojs_message("更新失败,请重新登录!", $ERROR);
+            logoutByError();
         },
         success: function (result) {
+            if(result.length>100){
+                logoutByError();
+            }
             if(result!=0){
                 $("#alterAgent").html(result);
                 $(document).attr("title","提醒"+result+"条代理请求需要确认!!!");
@@ -104,9 +107,12 @@ function getOrderCheck() {
         type: 'GET',
         url: WEB_GLOBAL_CTX + "/business/order/alterOrderCheck",
         error: function () {// 请求失败处理函数
-            //$.scojs_message("更新失败,请重新登录!", $ERROR);
+            logoutByError();
         },
         success: function (result) {
+            if(result.length>100){
+                logoutByError();
+            }
             if(result!=0) {
                 $("#alterOrder").html(result);
                 $(document).attr("title","提醒"+result+"条发货订单请求需要确认!!!");

@@ -28,13 +28,6 @@
         <property name="rememberMeManager" ref="rememberMeManager"/>
 	</bean>
 
-    <!-- 基于Form表单的身份验证过滤器 -->
-    <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
-        <property name="usernameParam" value="username"/>
-        <property name="passwordParam" value="password"/>
-        <property name="rememberMeParam" value="rememberMe"/>
-        <property name="loginUrl" value="/login"/>
-    </bean>
 
     <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
@@ -125,21 +118,33 @@
 		<property name="filterChainDefinitions">
 			<value>
                 /home = anon
+                /*.txt = anon
                 /index = anon
                 /img/** = anon
 				/styles/** = anon
                 /captcha/** = anon
 				/login/timeout = anon
-                /login/autoLoad = anon
-				/login/load = anon
 				/login = authc
 				/agentLogin = anon
+				/forgetSend = anon
+				/login/do = anon
+				/forget = anon
 				/logout = logout
 		    	/console/** = kickout,user
 		    	/business/** = kickout,user
+		    	/agent/** = kickout,user
+                /** = user
 		 	</value>
 		</property>
 	</bean>
+
+    <!-- 基于Form表单的身份验证过滤器 -->
+    <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+        <property name="usernameParam" value="username"/>
+        <property name="passwordParam" value="password"/>
+        <property name="rememberMeParam" value="rememberMe"/>
+        <property name="loginUrl" value="/login"/>
+    </bean>
 
     <bean id="kickoutSessionControlFilter" class="com.xecoder.shiro.KickoutSessionControlFilter">
         <property name="cacheManager" ref="shiroEhcacheManager"/>
@@ -150,6 +155,7 @@
     </bean>
 
 	<bean id="captchaFormAuthenticationFilter" class="com.xecoder.shiro.CaptchaFormAuthenticationFilter"/>
+
 	<bean id="myUserFilter" class="com.xecoder.shiro.MyUserFilter"/>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->

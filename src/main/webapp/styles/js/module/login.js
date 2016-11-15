@@ -14,7 +14,7 @@ requirejs(['jquery', 'ie10', 'comm'],
             setTimeout(function() {
                 var localObj = window.location;
                 if(isWeixin){
-                    window.location = localObj.protocol + "//" + localObj.host + "/agent/home"
+                    window.location = localObj.protocol + "//" + localObj.host + "/agentLogin"
                 }
             },10);
 

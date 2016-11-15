@@ -77,23 +77,10 @@ public class BaseAction {
         this.response = response;
         this.session = request.getSession();
         this.logBean = new LogEntity();
-        logBean.setIpAddress(getIpAddr(request));
+        logBean.setIpAddress(SecurityUtils.getIpAddr(request));
         logBean.setCreateTime(new Date());
     }
 
-    private String getIpAddr(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
-    }
 
     public ModelAndView getView(String view, String name, Object obj) {
         ModelAndView mav = new ModelAndView(view);
@@ -202,15 +189,15 @@ public class BaseAction {
     }
 
     public void sendFill(String phone, String code, String json, LogEntity log, Result result) {
-        boolean flag = AliyunSmsPush.sendSms(phone, code, json, log);
-        if (!flag) {
-            logEntityService.save(log);
-            result.setSuccessful(false);
-            result.setMsg(log.getMessage());
-        }
-//        System.out.println("phone = " + phone);
-//        System.out.println("code = " + code);
-//        System.out.println("json = " + json);
-//        result.setSuccessful(true);
+//        boolean flag = AliyunSmsPush.sendSms(phone, code, json, log);
+//        if (!flag) {
+//            logEntityService.save(log);
+//            result.setSuccessful(false);
+//            result.setMsg(log.getMessage());
+//        }
+        System.out.println("phone = " + phone);
+        System.out.println("code = " + code);
+        System.out.println("json = " + json);
+        result.setSuccessful(true);
     }
 }

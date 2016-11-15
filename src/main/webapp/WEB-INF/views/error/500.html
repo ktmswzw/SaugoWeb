@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>淑格订单管理系统</title>
+    <title>淑格订单管理系统-500-</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="icon" href="/styles/images/logo/muyu.png" type="image/png">
     <link href="/styles/css/weui.min.css" rel="stylesheet">
@@ -20,12 +20,7 @@
 <script src="${base}/styles/js/module/comm.min.js"></script>
 <script type="text/javascript">
     setTimeout(function() {
-        var localObj = window.location;
-        if(!isWeixin)
-            parent.window.location = localObj.protocol + "//" + localObj.host + "/login";
-        else {
-            window.location = localObj.protocol + "//" + localObj.host + "/agentLogin"
-        }
+        logoutByError();
     },2000);
 </script>
 </html>

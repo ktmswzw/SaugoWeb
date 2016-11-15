@@ -654,3 +654,12 @@ if (/Android/gi.test(navigator.userAgent)) {
         }
     })
 }
+
+function logoutByError() {
+    var localObj = window.location;
+    if(isWeixin==undefined||(isWeixin!=undefined&&!isWeixin))
+        parent.window.location = localObj.protocol + "//" + localObj.host + "/login";
+    else {
+        window.location = localObj.protocol + "//" + localObj.host + "/agentLogin"
+    }
+}
