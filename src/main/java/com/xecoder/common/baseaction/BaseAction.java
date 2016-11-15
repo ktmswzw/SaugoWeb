@@ -211,6 +211,6 @@ public class BaseAction {
 //        System.out.println("phone = " + phone);
 //        System.out.println("code = " + code);
 //        System.out.println("json = " + json);
-        result.setSuccessful(true);
+//        result.setSuccessful(true);
     }
 }

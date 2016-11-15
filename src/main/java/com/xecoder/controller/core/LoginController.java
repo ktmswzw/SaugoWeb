@@ -96,6 +96,7 @@ public class LoginController extends BaseAction {
                 log.setIpAddress(request.getRemoteAddr());
                 JSONObject object = new JSONObject();
                 object.put("name",user.getRealname());
+                System.out.println("user.getPlainPassword() = " + user.getPlainPassword());
                 object.put("password",user.getPlainPassword());
                 log.setLogLevel("3");
                 this.sendFill(user.getPhone(),"SMS_14685924", object.toJSONString(), log,result);

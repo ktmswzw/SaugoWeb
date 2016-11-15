@@ -152,8 +152,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		if(page == null){
 			list = baseDao.getMapper(UserMapper.class).selectByExample(criteria);
 		}
-		
-		list = baseDao.selectByPage("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria, page);
+        list = baseDao.selectByPage("com.xecoder.mapper.UserMapper."+BaseDao.SELECT_BY_EXAMPLE, criteria, page);
 		if(list != null && list.size() > 0){
 			for(User u:list){
 				setUserOrganization(u);

@@ -72,12 +72,16 @@ public class UserController extends BaseAction {
     @RequestMapping(value = "/userList")
     @ResponseBody
     public GridModel userList() {
+
+//        System.out.println("new SimpleDate(new Date) 1= " +SimpleDate.formatDateTime(new java.util.Date()));
         User user = form(User.class);
         user.setEmail("1");
         Page info = userService.findByPage(page(), user);
         GridModel m = new GridModel();
         m.setRows(info.getRows());
         m.setTotal(info.getCount());
+
+//        System.out.println("new SimpleDate(new Date) 2= " +SimpleDate.formatDateTime(new java.util.Date()));
         return m;
     }
 
