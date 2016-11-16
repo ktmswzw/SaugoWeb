@@ -118,22 +118,17 @@
 		<property name="filterChainDefinitions">
 			<value>
                 /home = anon
-                /*.txt = anon
                 /index = anon
-                /img/** = anon
-				/styles/** = anon
+                /styles/** = anon
                 /captcha/** = anon
-				/login/timeout = anon
-				/login = authc
-				/agentLogin = anon
-				/forgetSend = anon
-				/login/do = anon
-				/forget = anon
-				/logout = logout
-		    	/console/** = kickout,user
-		    	/business/** = kickout,user
-		    	/agent/** = kickout,user
-                /** = user
+                /login/timeout = anon
+                /agentLogin = anon
+                /forgetSend = anon
+                /login/do = anon
+                /forget = anon
+                /login = authc
+                /logout = logout
+                /** = kickout,user
 		 	</value>
 		</property>
 	</bean>

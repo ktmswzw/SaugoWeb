@@ -39,7 +39,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
         }
 
         //初始化下拉框 //可做异步下拉框选择
-        initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, produceId, "id", "name", true);
+        initSelectOne("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, produceId, "id", "name", true);
 
 
         $("#produceId").change(function () {
@@ -47,11 +47,14 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
             $("#produceName").val(v);
         });
 
-        initSelect("agentId", WEB_GLOBAL_CTX + "/console/security/user/chooseList", {name: ''}, agentId, "id", "realname", true);
+        initSelectOne("agentId", WEB_GLOBAL_CTX + "/console/security/user/chooseList", {name: ''}, agentId, "id", "realname", true);
         $("#agentId").change(function () {
             var v = $('#agentId').find("option:selected").text();
             $("#agentName").val(v.split("-上级")[0]);
         });
+
+
+
 
         setHeightSelf(1000);
         var valid = $('#formSubmit').formValidation({

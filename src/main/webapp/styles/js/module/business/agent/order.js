@@ -37,7 +37,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
 
 
         //初始化下拉框 //可做异步下拉框选择
-        initSelect("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, produceId, "id", "name", false);
+        initSelectOne("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, produceId, "id", "name", false);
 
 
         $('#formSubmit').submit(function (e) {
