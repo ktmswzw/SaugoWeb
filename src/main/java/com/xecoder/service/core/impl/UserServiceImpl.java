@@ -138,7 +138,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         }
         else
         {
-            criteria.setOrderByClause("realname" + " " + "asc");
+            criteria.setOrderByClause("create_time" + " " + "desc");
         }
 
         return criteria;

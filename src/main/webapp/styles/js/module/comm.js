@@ -514,11 +514,13 @@ function exportValue(value, row, index) {
         return "";
 }
 function idFormatter(value, row, index) {
-    var temp = "";
-    if (value.length > 0 && value != undefined) {
-        temp = '<button type="button" class="btn btn-primary btn-sm" onclick="viewInfo(\''+row.id+'\')">查看</button>';
+    if (value.length > 0 && value != undefined ) {
+        if(row.status == 2)
+            return '<button type="button" class="btn btn-primary btn-sm" onclick="viewInfo(\''+row.id+'\')">查看</button>';
+        else
+            return '<button type="button" class="btn btn-danger btn-sm" onclick="viewInfo(\''+row.id+'\')">无效</button>';
     }
-    return temp;
+    return "";
 }
 function viewInfo(id)
 {
