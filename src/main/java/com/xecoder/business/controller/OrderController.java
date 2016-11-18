@@ -241,23 +241,29 @@ public class OrderController extends BaseAction {
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result saveOrder(@ModelAttribute Order order,
-                            @RequestParam("file") MultipartFile file) {
+                            @RequestParam(value = "file",required = false) MultipartFile file,
+                            @RequestParam(value = "file2",required = false) MultipartFile file2 ,
+                            @RequestParam(value = "file3",required = false) MultipartFile file3 ,
+                            @RequestParam(value = "file4",required = false) MultipartFile file4 ,
+                            @RequestParam(value = "file5",required = false) MultipartFile file5)
+    {
         Result result = new Result();
         String agent = "";
         try {
-
-            if (!file.isEmpty()) {
-//                order.setBankMemo(file.getOriginalFilename());
-                String path = UploadUtils.upload(file, request);
-                order.setUrl(path);
-//                String code = ImageReader.getCode(path);
-//                order.setProduceName(code);
-            }
+            if (file!=null&&!file.isEmpty())
+                order.setUrl(UploadUtils.upload(file, request));
+            if (file2!=null&&!file2.isEmpty())
+                order.setUrl2(UploadUtils.upload(file2, request));
+            if (file3!=null&&!file3.isEmpty())
+                order.setUrl3(UploadUtils.upload(file3, request));
+            if (file4!=null&&!file4.isEmpty())
+                order.setUrl4(UploadUtils.upload(file4, request));
+            if (file5!=null&&!file5.isEmpty())
+                order.setUrl5(UploadUtils.upload(file5, request));
             if (order.getAgentId() != null && order.getAgentId() != 0) {
                 User u = userService.get(order.getAgentId());
                 agent = u.getRealname();
                 order.setParentId(u.getParentId());
-                //order.setParentName(u.getParentName());
             }
             order.setStatus(1);
             order.setInputTime(new Date());

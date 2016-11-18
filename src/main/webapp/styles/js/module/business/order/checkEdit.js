@@ -15,12 +15,43 @@ requirejs(['jquery', 'bootstrap', 'fuelux','validator', 'vb', 'validatorLAG', 'c
         var $ERROR = $.scojs_message.TYPE_ERROR;
         var produceId = "";
         var agentId = "";
+        var count = 1,edit_count=1;
         if (order != undefined && order.id != null && order.id != "") {
             //初始化页面
             meForm($('#formSubmit'), order);
             $("#href").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url);
             $("#href").append('<img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url+'" alt="银行水单" style="height: 400px" class="img-thumbnail img-responsive">');
 
+            if(order.url2!="") {
+                edit_count +=1;
+                editUrl(order.url2,edit_count);
+            }
+            if(order.url3!="") {
+                edit_count +=1;
+                editUrl(order.url3,edit_count);
+            }
+            if(order.url4!="") {
+                edit_count +=1;
+                editUrl(order.url4,edit_count);
+            }
+            if(order.url5!="") {
+                edit_count +=1;
+                editUrl(order.url5,edit_count);
+            }
+        }
+
+
+        function editUrl(url,count) {
+            insertImageHtml(count);
+            $("#href"+count).attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + url);
+            $("#href"+count).append('<img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+url+'" alt="银行水单" style="height: 400px" class="img-thumbnail img-responsive">');
+        }
+
+
+
+        function insertImageHtml(number) {
+            $("#newImage").after('<div class="row control-group"><div class="col-sm-2 col-sm-offset-1"><label class="control-label" >水单'+number+'</label>' +
+                '</div><div class="col-sm-8"><a href="" target="_blank" id="href'+number+'"></a></div></div>');
         }
 
         setHeightSelf(600);

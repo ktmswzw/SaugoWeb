@@ -28,6 +28,10 @@
                     <input type="hidden" name="inputTime" id="inputTime"/>
                     <input type="hidden" name="status" id="status"/>
                     <input type="hidden" name="url" id="url"/>
+                    <input type="hidden" name="url2" id="url2"/>
+                    <input type="hidden" name="url3" id="url3"/>
+                    <input type="hidden" name="url4" id="url4"/>
+                    <input type="hidden" name="url5" id="url5"/>
                 </div>
 
 
@@ -54,20 +58,21 @@
                     <div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="agentName">代理</label>
                     </div>
                     <div class="col-sm-8 controls">
-                        <select id="agentId" name="agentId" class="form-control" data-live-search="true" required
-                                class="selectpicker show-tick">
+                        <select id="agentId" name="agentId" class="form-control selectpicker show-tick" data-live-search="true" required>
                         </select>
                     </div>
                 </div>
 
-
-                <div class="row control-group">
+                <div class="row control-group" id="newImage">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" for="file">水单</label>
+                        <label class="control-label" for="file">水单1</label>
                     </div>
-                    <div class="col-sm-8 controls">
-                        <input type="file" class="form-control" id="file" name="file"
-                               placeholder="选择图片" size="100" />
+                    <div class="col-sm-7 controls" >
+                            <input type="file" class="form-control" id="file" name="file"
+                                   placeholder="选择图片" size="100" />
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" id="insertMore" class="btn btn-default"><span class="glyphicon glyphicon-chevron-down"></span><span class="glyphicon glyphicon-picture"></span></button>
                     </div>
                     <div class="col-sm-1">
                         <a href="" target="_blank" id="href"></a>
@@ -109,8 +114,8 @@
                 <div class="row control-group">
                     <div class="col-sm-4 col-sm-offset-5">
                         <div style="align-content: center">
-                            <button type="submit" id="save" class="btn btn-primary">保存</button>
-                            <button type="button" id="back" class="btn btn-default">取消</button>
+                            <button type="submit" id="save" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;保存</button>
+                            <button type="button" id="back" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;取消</button>
                         </div>
                     </div>
                 </div>

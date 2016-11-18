@@ -62,9 +62,9 @@
                 </div>
 
 
-                <div class="row control-group">
+                <div class="row control-group" id="newImage">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <label class="control-label" >水单</label>
+                        <label class="control-label" >水单1</label>
                     </div>
                     <div class="col-sm-8">
                         <a href="" target="_blank" id="href"></a>
@@ -116,8 +116,8 @@
                 <div class="row control-group">
                     <div class="col-sm-4 col-sm-offset-5">
                         <div style="align-content: center">
-                            <button type="submit" id="save" class="btn btn-primary">确认</button>
-                            <button type="button" id="back" class="btn btn-default">取消</button>
+                            <button type="submit" id="save" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;保存</button>
+                            <button type="button" id="back" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;取消</button>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
 
 </body>
 <@foot/>
-<script src="${base}/styles/js/module/business/order/checkEdit.min.js"></script>
+<script src="${base}/styles/js/module/business/order/checkEdit.js"></script>
 <script type="text/javascript">
     var order = JSON.parse(JSON.stringify(${order}));
 </script>

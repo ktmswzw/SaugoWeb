@@ -13,6 +13,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
         var produceId = "1";
         var agentId = "";
 
+        var count = 1,edit_count=1;
         if (order != undefined && order.id != null && order.id != "") {
             //初始化页面
             meForm($('#formSubmit'), order);
@@ -20,8 +21,27 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
             delete order["produceId"];
             agentId = order.agentId;
             delete order["agentId"];
-            $("#href").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url);
-            $("#href").append('<button type="button" class="btn btn-link">下载</button>');
+            if(order.url!="") {
+                $("#href").attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + order.url);
+                $("#href").append('<button type="button" class="btn btn-link">下载</button>');
+            }
+            if(order.url2!="") {
+                edit_count +=1;
+                editUrl(order.url2,edit_count);
+            }
+            if(order.url3!="") {
+                edit_count +=1;
+                editUrl(order.url3,edit_count);
+            }
+            if(order.url4!="") {
+                edit_count +=1;
+                editUrl(order.url4,edit_count);
+            }
+            if(order.url5!="") {
+                edit_count +=1;
+                editUrl(order.url5,edit_count);
+            }
+
         }
         else {
             $("#inputId").val(order.inputId);
@@ -29,6 +49,21 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
             $('#produceId').append("<option ></option>");
             $('#agentId').append("<option ></option>");
         }
+
+        function editUrl(url,count) {
+            insertImageHtml(count);
+            $("#href"+count).attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + url);
+            $("#href"+count).append('<button type="button" class="btn btn-link">下载</button>');
+        }
+
+
+
+        function insertImageHtml(number) {
+            $("#newImage").after('<div class="row control-group" ><div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="file'+number+'">水单'+number+'</label></div>' +
+                '<div class="col-sm-8 controls" ><input type="file" class="form-control" id="file'+number+'" name="file" size="100" /></div>'+
+                '<div class="col-sm-1"><a href="" target="_blank" id="href'+number+'"></a></div></div>');
+        }
+
 
         // $("#state").bootstrapSwitch('state', false);
         //修改页面结束
@@ -53,7 +88,18 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
             $("#agentName").val(v.split("-上级")[0]);
         });
 
+        $("#insertMore").click(function(){
+            if(count<5){
+                count +=1;
+                insertImageHtml(count);
+            }
+        });
 
+        function insertImageHtml(number) {
+            $("#newImage").after('<div class="row control-group" ><div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="file'+number+'">水单'+number+'</label></div>' +
+                '<div class="col-sm-8 controls" ><input type="file" class="form-control" id="file'+number+'" name="file" size="100" /></div>'+
+            '<div class="col-sm-1"><a href="" target="_blank" id="href'+number+'"></a></div></div>');
+        }
 
 
         setHeightSelf(1000);
@@ -81,10 +127,20 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
             }
             else if ($("#file").val() != '') {
                 var formData = new FormData(),
-                    files = $form.find('[name="file"]')[0].files;
+                    files = $form.find('[name="file"]');
                 $.each(files, function (i, file) {
-                    formData.append('file', file);
+                    if(i==0)
+                    formData.append('file', file.files[0]);
+                    if(i==1)
+                    formData.append('file2', file.files[0]);
+                    if(i==2)
+                    formData.append('file3', file.files[0]);
+                    if(i==3)
+                    formData.append('file4', file.files[0]);
+                    if(i==4)
+                    formData.append('file5', file.files[0]);
                 });
+
                 $.each(params, function (i, val) {
                     formData.append(val.name, val.value);
                 });
