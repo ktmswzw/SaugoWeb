@@ -338,4 +338,20 @@ public class Order {
     public String getUrl5() {
         return url5;
     }
+
+    public void setUrl2(String url2) {
+        this.url2 = url2;
+    }
+
+    public void setUrl3(String url3) {
+        this.url3 = url3;
+    }
+
+    public void setUrl4(String url4) {
+        this.url4 = url4;
+    }
+
+    public void setUrl5(String url5) {
+        this.url5 = url5;
+    }
 }
