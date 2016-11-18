@@ -10,7 +10,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
         //提示框
         var $OK = $.scojs_message.TYPE_OK;
         var $ERROR = $.scojs_message.TYPE_ERROR;
-        var produceId = "";
+        var produceId = "1";
         var agentId = "";
 
         if (order != undefined && order.id != null && order.id != "") {

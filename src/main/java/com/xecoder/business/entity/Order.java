@@ -44,6 +44,12 @@ public class Order {
 
 
     private String url;
+    private String url2;
+    private String url3;
+    private String url4;
+    private String url5;
+
+
 
     @Transient
     private String selfOrder;
@@ -315,5 +321,21 @@ public class Order {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUrl2() {
+        return url2;
+    }
+
+    public String getUrl3() {
+        return url3;
+    }
+
+    public String getUrl4() {
+        return url4;
+    }
+
+    public String getUrl5() {
+        return url5;
     }
 }
