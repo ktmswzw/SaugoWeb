@@ -13,7 +13,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
         var produceId = "1";
         var agentId = "";
 
-        var count = 1,edit_count=1;
+        var count = 1;
         if (order != undefined && order.id != null && order.id != "") {
             //初始化页面
             meForm($('#formSubmit'), order);
@@ -25,21 +25,21 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
                 $("#href").attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + order.url);
                 $("#href").append('<button type="button" class="btn btn-link">下载</button>');
             }
-            if(order.url2!="") {
-                edit_count +=1;
-                editUrl(order.url2,edit_count);
+            if(order.url2 != "" && order.url2 != null) {
+                count +=1;
+                editUrl(order.url2,2);
             }
-            if(order.url3!="") {
-                edit_count +=1;
-                editUrl(order.url3,edit_count);
+            if(order.url3!="" && order.url3 != null) {
+                count +=1;
+                editUrl(order.url3,3);
             }
-            if(order.url4!="") {
-                edit_count +=1;
-                editUrl(order.url4,edit_count);
+            if(order.url4!="" && order.url4 != null) {
+                count +=1;
+                editUrl(order.url4,4);
             }
-            if(order.url5!="") {
-                edit_count +=1;
-                editUrl(order.url5,edit_count);
+            if(order.url5!="" && order.url5 != null) {
+                count +=1;
+                editUrl(order.url5,5);
             }
 
         }
@@ -50,16 +50,16 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
             $('#agentId').append("<option ></option>");
         }
 
-        function editUrl(url,count) {
-            insertImageHtml(count);
-            $("#href"+count).attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + url);
-            $("#href"+count).append('<button type="button" class="btn btn-link">下载</button>');
+        function editUrl(url,cnt) {
+            insertImageHtml(cnt);
+            $("#href"+cnt).attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + url);
+            $("#href"+cnt).append('<button type="button" class="btn btn-link">下载</button>');
         }
 
 
 
         function insertImageHtml(number) {
-            $("#newImage").after('<div class="row control-group" ><div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="file'+number+'">水单'+number+'</label></div>' +
+            $("#newImage").before('<div class="row control-group" ><div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="file'+number+'">水单'+number+'</label></div>' +
                 '<div class="col-sm-8 controls" ><input type="file" class="form-control" id="file'+number+'" name="file" size="100" /></div>'+
                 '<div class="col-sm-1"><a href="" target="_blank" id="href'+number+'"></a></div></div>');
         }
@@ -92,11 +92,13 @@ requirejs(['jquery', 'bootstrap', 'fuelux',  'select', 'selectCN', 'validator', 
             if(count<5){
                 count +=1;
                 insertImageHtml(count);
+                if(count==5)
+                    $("#insertMore").remove();
             }
         });
 
         function insertImageHtml(number) {
-            $("#newImage").after('<div class="row control-group" ><div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="file'+number+'">水单'+number+'</label></div>' +
+            $("#newImage").before('<div class="row control-group" ><div class="col-sm-2 col-sm-offset-1"><label class="control-label" for="file'+number+'">水单'+number+'</label></div>' +
                 '<div class="col-sm-8 controls" ><input type="file" class="form-control" id="file'+number+'" name="file" size="100" /></div>'+
             '<div class="col-sm-1"><a href="" target="_blank" id="href'+number+'"></a></div></div>');
         }

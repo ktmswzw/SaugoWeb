@@ -6,6 +6,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
 
         var produceId = "";
 
+        var count = 1;
         if (order != undefined && order.id != null && order.id != "") {
             //初始化页面
             meForm($('#formSubmit'), order);
@@ -14,20 +15,90 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
             $("#href").attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + order.url);
             $("#href").append('<p><img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+order.url+'" alt="银行水单" style="height: 100px"></p>');
 
+
+
             if(order.status!=1||order.selfOrder=="0"){
                 $("#save").remove();
                 $("#bankImage").toggleClass("hiddeDiv");
                 $("#bankId").remove();
                 $("#title").html("查看订单");
+
+                if(order.url2 != "" && order.url2 != null) {
+                    count +=1;
+                    editImage(order.url2,2);
+                }
+                if(order.url3!="" && order.url3 != null) {
+                    count +=1;
+                    editImage(order.url3,3);
+                }
+                if(order.url4!="" && order.url4 != null) {
+                    count +=1;
+                    editImage(order.url4,4);
+                }
+                if(order.url5!="" && order.url5 != null) {
+                    count +=1;
+                    editImage(order.url5,5);
+                }
             }
             else {
                 $("#delete").toggleClass("hiddeDiv");
                 $("#title").html("修改订单");
+
+                if(order.url2 != "" && order.url2 != null) {
+                    count +=1;
+                    editUrl(order.url2,2);
+                }
+                if(order.url3!="" && order.url3 != null) {
+                    count +=1;
+                    editUrl(order.url3,3);
+                }
+                if(order.url4!="" && order.url4 != null) {
+                    count +=1;
+                    editUrl(order.url4,4);
+                }
+                if(order.url5!="" && order.url5 != null) {
+                    count +=1;
+                    editUrl(order.url5,5);
+                }
             }
         }
         else {
             meForm($('#formSubmit'), order);
         }
+
+
+        function editUrl(url,cnt) {
+            insertImageHtml(cnt);
+            $("#href"+cnt).attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + url);
+            $("#href"+cnt).append('<p><img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+url+'" alt="银行水单" style="height: 100px"></p>');
+        }
+
+        function editImage(url,cnt) {
+            insertImageView(cnt);
+            $("#href"+cnt).attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + url);
+            $("#href"+cnt).append('<p><img src="'+WEB_GLOBAL_CTX + "/download/getImg?filePath="+url+'" alt="银行水单" style="height: 100px"></p>');
+        }
+
+
+        $("#insertMore").click(function(){
+            if(count<5){
+                count +=1;
+                insertImageHtml(count);
+                if(count==5)
+                    $("#insertMore").remove();
+            }
+        });
+
+        function insertImageView(number) {
+            $("#bankImage").after('<div class="weui_cell"><div class="weui_cell_hd"><label class="weui_label">水单'+number+'</label></div>' +
+                '<div class="weui_cell_bd weui_cell_primary"><a href="" target="_blank" id="href'+number+'"></a></div></div>');
+        }
+
+        function insertImageHtml(number) {
+            $("#bankImage").before('<div class="weui_cell"><div class="weui_cell_hd"><label class="weui_label">水单'+number+'</label></div>' +
+                '<div class="weui_cell_bd weui_cell_primary"><input id="file'+number+'" name="file" placeholder="选择图片" type="file"></div></div>');
+        }
+
 
 
         $("#produceId").change(function () {
@@ -69,9 +140,18 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
 
                 e.preventDefault();
                 var formData = new FormData(),
-                    files = $form.find('[name="file"]')[0].files;
+                    files = $form.find('[name="file"]');
                 $.each(files, function (i, file) {
-                    formData.append('file', file);
+                    if(i==0)
+                        formData.append('file', file.files[0]);
+                    if(i==1)
+                        formData.append('file2', file.files[0]);
+                    if(i==2)
+                        formData.append('file3', file.files[0]);
+                    if(i==3)
+                        formData.append('file4', file.files[0]);
+                    if(i==4)
+                        formData.append('file5', file.files[0]);
                 });
                 $.each(params, function (i, val) {
                     formData.append(val.name, val.value);

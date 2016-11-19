@@ -5,6 +5,7 @@
 <body>
 <form role="form" id="formSubmit" commandName="order"
       enctype='multipart/form-data'>
+
     <div class="hd">
         <h1 class="page_title" id="title">发货申请</h1>
     </div>
@@ -19,6 +20,10 @@
         <input type="hidden" name="parentName" id="parentName"/>
         <input type="hidden" name="status" id="status"/>
         <input type="hidden" name="url" id="url"/>
+        <input type="hidden" name="url2" id="url2"/>
+        <input type="hidden" name="url3" id="url3"/>
+        <input type="hidden" name="url4" id="url4"/>
+        <input type="hidden" name="url5" id="url5"/>
 
         <div class="weui_cell weui_cell_select weui_select_after">
             <div class="weui_cell_hd">
@@ -41,9 +46,12 @@
 
 
         <div class="weui_cell" id="bankId">
-            <div class="weui_cell_hd"><label class="weui_label">水单</label></div>
+            <div class="weui_cell_hd"><label class="weui_label">水单1</label></div>
             <div class="weui_cell_bd weui_cell_primary">
                 <input id="file" name="file" placeholder="选择图片" type="file">
+            </div>
+            <div class="weui_cell_ft">111
+                <button type="button" id="insertMore" name="but_login" class="weui_btn weui_btn_mini weui_btn_primary" >+</button>
             </div>
         </div>
 
@@ -75,7 +83,7 @@
 
 
             <div class="weui_cell">
-                <div class="weui_cell_hd"><label class="weui_label">查看</label></div>
+                <div class="weui_cell_hd"><label class="weui_label">水单1</label></div>
                 <div class="weui_cell_bd weui_cell_primary">
                     <a href="" target="_blank" id="href"></a>
                 </div>
