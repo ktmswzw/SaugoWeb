@@ -189,8 +189,8 @@ public class BaseAction {
     }
 
     public void sendFill(String phone, String code, String json, LogEntity log, Result result) {
-//        boolean flag = AliyunSmsPush.sendSms(phone, code, json, log);
-//        if (!flag) {
+//        result.setSuccessful(result.isSuccessful()&&AliyunSmsPush.sendSms(phone, code, json, log));
+//        if (!result.isSuccessful()) {
 //            logEntityService.save(log);
 //        }
         System.out.println("phone = " + phone);

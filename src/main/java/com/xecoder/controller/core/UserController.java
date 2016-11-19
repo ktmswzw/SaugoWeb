@@ -236,7 +236,7 @@ public class UserController extends BaseAction {
             user1.setStatus("enabled");
             result.setSuccessful(true);
             result.setMsg("帐号已可使用");
-            if (user1.getPassword()==null||user1.getPassword().equals("")) {
+            if (user1.getPassword()==null||user1.getPassword().equals("")) {//新用户
                 user1.setPlainPassword(String.valueOf(RadomUtils.nextSixInt()));
                 LogEntity log = new LogEntity();
                 log.setUsername(user.getUsername());
@@ -251,6 +251,22 @@ public class UserController extends BaseAction {
                 this.sendFill(user1.getPhone(), "SMS_14726055", object.toJSONString(), log,result);
                 if(!result.isSuccessful()){
                     return result;
+                }
+                if(user1.getParentId()!=null) {
+                    User user2 = userService.get(user1.getParentId());
+                    LogEntity log2 = new LogEntity();
+                    log2.setUsername(user.getUsername());
+                    log2.setCreateTime(new Date());
+                    log2.setSuperid(String.valueOf(user.getId()));
+                    log2.setIpAddress(request.getRemoteAddr());
+                    JSONObject object2 = new JSONObject();
+                    object2.put("subAgent", user2.getRealname());
+                    object2.put("agent", user1.getRealname());
+                    log2.setLogLevel("10");
+                    this.sendFill(user2.getPhone(), "SMS_27415122", object2.toJSONString(), log2, result);
+                    if (!result.isSuccessful()) {
+                        return result;
+                    }
                 }
             }
             userService.update(user1);
