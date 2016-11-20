@@ -120,6 +120,7 @@
                 /home = anon
                 /index = anon
                 /styles/** = anon
+                /druid/** = anon
                 /captcha/** = anon
                 /login/timeout = anon
                 /agentLogin = anon

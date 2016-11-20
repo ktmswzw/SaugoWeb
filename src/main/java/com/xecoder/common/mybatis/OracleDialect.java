@@ -13,11 +13,11 @@ public class OracleDialect implements Dialect{
         // 从第6条开始，显示10
         String sql = od.getLimitSqlString(str, 6, 2, 20);
         
-        System.out.println(sql);
+        //System.out.println(sql);
         
         String count_sql = od.getCountSqlString(sql);
         
-        System.out.println(count_sql);
+        //System.out.println(count_sql);
     }
     
     public String getLimitSqlString(String sql, int offset, int limit, int count) {
