@@ -331,14 +331,14 @@ public class UserController extends BaseAction {
                 user.setRoles("");
                 user.setEmail("");
                 user.setUsername(user.getPhone());
-                user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
+                user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X").replaceAll(" ",""));
                 result = checkData(result, user);
                 if(!result.isSuccessful()){
                     return result;
 
                 }
                 UserRole userRole = new UserRole();
-                userRole.setRoleId(Long.valueOf(99));
+                userRole.setRoleId(99L);
                 List<UserRole> list = userRoleService.find(userRole);
                 if (list != null && list.size() > 0) {
                     for (UserRole userRole1 : list) {
@@ -386,7 +386,7 @@ public class UserController extends BaseAction {
                        @RequestParam("file2") MultipartFile file2) {
         Result result = new Result();
         try {
-            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X"));
+            user.setIdentityCards(user.getIdentityCards().replaceAll("\\*", "X").replaceAll(" ",""));
             if (!file1.isEmpty()) {
                 user.setCardsFront(UploadUtils.upload(file1, request));
                 user.setCardsBack(UploadUtils.upload(file2, request));
@@ -415,14 +415,14 @@ public class UserController extends BaseAction {
             user.setRoles("3");//总代
         }
         if (user.getId() == null) {
-            User user2 = new User();
+            User user2;
             if (user.getUsername() != null && !user.getUsername().equals("")) {
                 user2 = new User();
                 user2.setUsername(user.getUsername());
-                User user1 = userService.getByXXX(user2);
-                if (user1 != null) {
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，手机号码：" + user.getUsername() + "_" + user1.getRealname() + "已存在。");
+                    result.setMsg("添加失败，手机号码：" + user3.getUsername() + "_" + user3.getRealname() + "已存在。");
                     return result;
                 }
             }
@@ -430,10 +430,10 @@ public class UserController extends BaseAction {
             if (user.getBankAccount() != null && !user.getBankAccount().equals("")) {
                 user2 = new User();
                 user2.setBankAccount(user.getBankAccount());
-                User user2s = userService.getByXXX(user2);
-                if (user2s != null) {
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，银行帐号：" + user.getBankAccount() + "_" + user2s.getRealname() + "已经使用。");
+                    result.setMsg("添加失败，银行帐号：" + user3.getBankAccount() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
@@ -443,7 +443,7 @@ public class UserController extends BaseAction {
                 User user3 = userService.getByXXX(user2);
                 if (user3 != null) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，身份证号码：" + user.getIdentityCards() + "_" + user3.getRealname() + "已经使用。");
+                    result.setMsg("添加失败，身份证号码：" + user3.getIdentityCards() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
@@ -453,7 +453,7 @@ public class UserController extends BaseAction {
                 User user3 = userService.getByXXX(user2);
                 if (user3 != null) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，支付宝帐号：" + user.getAlipayAccount() + "_" + user3.getRealname() + "已经使用。");
+                    result.setMsg("添加失败，支付宝帐号：" + user3.getAlipayAccount() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
@@ -463,21 +463,21 @@ public class UserController extends BaseAction {
                 User user3 = userService.getByXXX(user2);
                 if (user3 != null) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，支付宝名称：" + user.getAlipayName() + "_" + user3.getRealname() + "已经使用。");
+                    result.setMsg("添加失败，支付宝名称：" + user3.getAlipayName() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
             userService.save(user);
         } else {
 
-            User user2 = new User();
+            User user2;
             if (user.getUsername() != null && !user.getUsername().equals("")) {
                 user2 = new User();
                 user2.setUsername(user.getUsername());
-                User user1 = userService.getByXXX(user2);
-                if (user1 != null && user1.getId() != user.getId()) {
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null && !user3.getId().equals(user.getId())) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，手机号码：" + user.getUsername() + "_" + user1.getRealname() + "已存在。");
+                    result.setMsg("添加失败，手机号码：" + user3.getUsername() + "_" + user3.getRealname() + "已存在。");
                     return result;
                 }
             }
@@ -486,10 +486,10 @@ public class UserController extends BaseAction {
 
                 user2 = new User();
                 user2.setBankAccount(user.getBankAccount());
-                User user2s = userService.getByXXX(user2);
-                if (user2s != null && user2.getId() != user.getId()) {
+                User user3 = userService.getByXXX(user2);
+                if (user3 != null && !user3.getId().equals(user.getId())) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，银行帐号：" + user.getBankAccount() + "_" + user2s.getRealname() + "已经使用。");
+                    result.setMsg("添加失败，银行帐号：" + user3.getBankAccount() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
@@ -497,9 +497,9 @@ public class UserController extends BaseAction {
                 user2 = new User();
                 user2.setIdentityCards(user.getIdentityCards());
                 User user3 = userService.getByXXX(user2);
-                if (user3 != null && user3.getId() != user.getId()) {
+                if (user3 != null && !user3.getId().equals(user.getId())) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，身份证号码：" + user.getIdentityCards() + "_" + user3.getRealname() + "已经使用。");
+                    result.setMsg("添加失败，身份证号码：" + user3.getIdentityCards() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
@@ -507,9 +507,9 @@ public class UserController extends BaseAction {
                 user2 = new User();
                 user2.setAlipayAccount(user.getAlipayAccount());
                 User user3 = userService.getByXXX(user2);
-                if (user3 != null && user3.getId() != user.getId()) {
+                if (user3 != null && !user3.getId().equals(user.getId())) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，支付宝帐号：" + user.getAlipayAccount() + "_" + user3.getRealname() + "已经使用。");
+                    result.setMsg("添加失败，支付宝帐号：" + user3.getAlipayAccount() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
@@ -517,9 +517,9 @@ public class UserController extends BaseAction {
                 user2 = new User();
                 user2.setAlipayName(user.getAlipayName());
                 User user3 = userService.getByXXX(user2);
-                if (user3 != null && user3.getId() != user.getId()) {
+                if (user3 != null && !user3.getId().equals(user.getId())) {
                     result.setSuccessful(false);
-                    result.setMsg("添加失败，支付宝名称：" + user.getAlipayName() + "_" + user3.getRealname() + "已经使用。");
+                    result.setMsg("添加失败，支付宝名称：" + user3.getAlipayName() + "_" + user3.getRealname() + "已经使用。");
                     return result;
                 }
             }
