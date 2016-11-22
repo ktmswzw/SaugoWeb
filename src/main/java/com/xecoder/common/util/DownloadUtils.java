@@ -32,7 +32,7 @@ public class DownloadUtils {
         }
 
         String userAgent = request.getHeader("User-Agent");
-        boolean isIE = (userAgent != null) && (userAgent.toLowerCase().indexOf("msie") != -1);
+        boolean isIE = (userAgent != null) && (userAgent.toLowerCase().contains("msie"));
 
         response.reset();
         response.setHeader("Pragma", "No-cache");
@@ -44,17 +44,10 @@ public class DownloadUtils {
 
         String displayFilename = displayName.substring(displayName.lastIndexOf("_") + 1);
         displayFilename = displayFilename.replace(" ", "_");
-        if (isIE) {
-            displayFilename = URLEncoder.encode(displayFilename, "UTF-8");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + displayFilename + "\"");
-        } else {
-            displayFilename = new String(displayFilename.getBytes("UTF-8"), "ISO8859-1");
-            response.setHeader("Content-Disposition", "attachment;filename=" + displayFilename);
-        }
+        setHeader(isIE,displayFilename,response);
         BufferedInputStream is = null;
-        OutputStream os = null;
+        OutputStream os;
         try {
-
             os = response.getOutputStream();
             is = new BufferedInputStream(new FileInputStream(file));
             IOUtils.copy(is, os);
@@ -77,7 +70,7 @@ public class DownloadUtils {
         }
 
         String userAgent = request.getHeader("User-Agent");
-        boolean isIE = (userAgent != null) && (userAgent.toLowerCase().indexOf("msie") != -1);
+        boolean isIE = (userAgent != null) && (userAgent.toLowerCase().contains("msie"));
 
         response.reset();
         response.setHeader("Pragma", "No-cache");
@@ -85,21 +78,14 @@ public class DownloadUtils {
         response.setDateHeader("Expires", 0L);
 
         response.setContentType("application/x-download");
-        response.setContentLength((int) bytes.length);
+        response.setContentLength(bytes.length);
 
         String displayFilename = displayName.substring(displayName.lastIndexOf("_") + 1);
         displayFilename = displayFilename.replace(" ", "_");
-        if (isIE) {
-            displayFilename = URLEncoder.encode(displayFilename, "UTF-8");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + displayFilename + "\"");
-        } else {
-            displayFilename = new String(displayFilename.getBytes("UTF-8"), "ISO8859-1");
-            response.setHeader("Content-Disposition", "attachment;filename=" + displayFilename);
-        }
+        setHeader(isIE,displayFilename,response);
         BufferedInputStream is = null;
-        OutputStream os = null;
+        OutputStream os;
         try {
-
             os = response.getOutputStream();
             is = new BufferedInputStream(new ByteArrayInputStream(bytes));
             IOUtils.copy(is, os);
@@ -107,6 +93,24 @@ public class DownloadUtils {
             e.printStackTrace();
         } finally {
             IOUtils.closeQuietly(is);
+        }
+    }
+
+    private static void setHeader(boolean isIE, String displayFilename,HttpServletResponse response){
+        if (isIE) {
+            try {
+                displayFilename = URLEncoder.encode(displayFilename, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + displayFilename + "\"");
+        } else {
+            try {
+                displayFilename = new String(displayFilename.getBytes("UTF-8"), "ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            response.setHeader("Content-Disposition", "attachment;filename=" + displayFilename);
         }
     }
 }
