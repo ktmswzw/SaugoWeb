@@ -191,6 +191,8 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
             }
         });
 
+        $("#phone").bind("change",function(){removeDis();});
+        $("#identityCards").bind("change",function(){removeDis();});
         $("#bank").bind("change",function(){removeDis();});
         $("#bankAccount").bind("change",function(){removeDis();});
         $("#bankName").bind("change",function(){removeDis();});
