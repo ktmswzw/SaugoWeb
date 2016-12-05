@@ -8,18 +8,14 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
 
         initSelectOne("produceId", WEB_GLOBAL_CTX + "/business/produce/chooseList", {name: ''}, produceId, "id", "name", false);
 
-
         $('#agentId').append("<option ></option>");
         initSelectOne("agentId", WEB_GLOBAL_CTX + "/console/security/user/chooseListThree", {name: ''}, agentId, "id", "realname", false);
 
-
         $('#status').append("<option ></option>");
-        initSelectOne("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'ORDER_STATUS'}, status, "dicKey", "dicValue",false);
+        initSelectOne("status", WEB_GLOBAL_CTX + "/business/dictionary/getDropDown", {dicName: 'ORDER_STATUS'}, status, "dicKey", "dicValue", false);
 
-
-        $("#query").bind("click", function () {
+        $("#produceId,#status,#beginDate,#endDate").change(function () {
             $("#formSubmit").submit();
         });
-
     });
 

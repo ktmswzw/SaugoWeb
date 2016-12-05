@@ -22,7 +22,7 @@
                 </div>
                 <div class="weui_cell weui_cell_select weui_select_after">
                 <div class="weui_cell_hd">
-                    <label for="produceId" class="weui_label">状态</label>
+                    <label for="status" class="weui_label">状态</label>
                 </div>
                 <div class="weui_cell_bd weui_cell_primary">
                     <select class="weui_select" name="status" id="status" >
@@ -40,15 +40,12 @@
                 </div>
                 <div class="weui_cell weui_cell_select weui_select_after">
                     <div class="weui_cell_hd">
-                        <label for="produceId" class="weui_label">代理</label>
+                        <label for="agentId" class="weui_label">代理</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
                         <select class="weui_select" name="agentId" id="agentId" >
                         </select>
                     </div>
-                </div>
-                <div class="weui_cell">
-                    <button type="submit" id="query" name="query" class="weui_btn weui_btn_primary">查询</button>
                 </div>
             </div>
         </div>
@@ -103,7 +100,7 @@
 </div>
 
 <@foot/>
-<script src="${base}/styles/js/module/business/agent/reportAdv.min.js"></script>
+<script src="${base}/styles/js/module/business/agent/reportAdv.js"></script>
 <script type="text/javascript">
     var produceId = "${produceId}";
     var agentId = "${agentId}";

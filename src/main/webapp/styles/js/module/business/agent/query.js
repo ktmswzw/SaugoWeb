@@ -12,7 +12,7 @@ requirejs(['jquery', 'ie10', 'comm', 'form'],
         $('#status').append("<option ></option>");
         initSelectOne("status", WEB_GLOBAL_CTX+"/business/dictionary/getDropDown", {dicName: 'ORDER_STATUS'}, status, "dicKey", "dicValue",false);
 
-        $("#query").bind("click", function () {
+        $("#type,#produceId,#status,#beginDate,#endDate").change(function(){
             $("#formSubmit").submit();
         });
 

@@ -409,7 +409,7 @@ public class UserController extends BaseAction {
         user.setStatus("check");
         result.setMsg("修改信息完成,需要确认后才可登录");
 
-        if (user.getParentId() == 2 || user.isSuperAgent()) {
+        if (user.isSuperAgent()) {
             user.setRoles("2");//超级代理
         } else {
             user.setRoles("3");//总代
