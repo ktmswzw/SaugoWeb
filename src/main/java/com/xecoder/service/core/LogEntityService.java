@@ -1,10 +1,10 @@
 package com.xecoder.service.core;
 
-import java.util.List;
-
 import com.xecoder.common.mybatis.Page;
 import com.xecoder.entity.LogEntity;
 import com.xecoder.log.LogLevel;
+
+import java.util.List;
 
 
 /** 
@@ -15,7 +15,7 @@ import com.xecoder.log.LogLevel;
  */
 public interface LogEntityService {
 
-void save(LogEntity logEntity);
+	void save(LogEntity logEntity);
 	
 	LogEntity get(Long id);
 	

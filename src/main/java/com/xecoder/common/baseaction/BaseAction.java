@@ -1,18 +1,8 @@
 package com.xecoder.common.baseaction;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.TreeMap;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xecoder.common.util.AliyunSmsPush;
+import com.xecoder.common.SecurityConstants;
+import com.xecoder.common.mybatis.Page;
 import com.xecoder.common.util.DateConverter;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.Result;
@@ -27,10 +17,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import com.xecoder.common.SecurityConstants;
-import com.xecoder.common.mybatis.Page;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class BaseAction {
@@ -79,6 +75,11 @@ public class BaseAction {
         this.logBean = new LogEntity();
         logBean.setIpAddress(SecurityUtils.getIpAddr(request));
         logBean.setCreateTime(new Date());
+        logBean.setMessage(this.request.getMethod());
+        User currentUser = SecurityUtils.getLoginUser();
+        if(currentUser!=null)
+        logBean.setUsername(currentUser.getRealname());
+        logEntityService.save(logBean);
     }
 
 

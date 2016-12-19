@@ -30,7 +30,7 @@ requirejs(['jquery', 'bootstrap', 'table', 'tablezn', 'select', 'selectCN','tExp
             smartDisplay: false,
             queryParams: 'queryParamsOrder',
             pagination: true,
-            height:600,
+            height:500,
             pageSize: 10,
             pageList: [5, 10, 20, 100]
         });
