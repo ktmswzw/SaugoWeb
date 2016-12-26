@@ -127,7 +127,7 @@
                 /forgetSend = anon
                 /login/do = anon
                 /forget = anon
-                /login = authc
+                /login = anon
                 /logout = logout
                 /** = kickout,user
 		 	</value>

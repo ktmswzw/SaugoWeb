@@ -3,6 +3,7 @@ package com.xecoder.common.baseaction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xecoder.common.SecurityConstants;
 import com.xecoder.common.mybatis.Page;
+import com.xecoder.common.util.AliyunSmsPush;
 import com.xecoder.common.util.DateConverter;
 import com.xecoder.common.util.JacksonMapper;
 import com.xecoder.common.util.Result;
@@ -76,10 +77,12 @@ public class BaseAction {
         logBean.setIpAddress(SecurityUtils.getIpAddr(request));
         logBean.setCreateTime(new Date());
         logBean.setMessage(this.request.getMethod());
-        User currentUser = SecurityUtils.getLoginUser();
-        if(currentUser!=null)
-        logBean.setUsername(currentUser.getRealname());
-        logEntityService.save(logBean);
+        if(SecurityUtils.getSubject()!=null&&SecurityUtils.getShiroUser()!=null) {
+            User currentUser = SecurityUtils.getLoginUser();
+            if (currentUser != null)
+                logBean.setUsername(currentUser.getRealname());
+            logEntityService.save(logBean);
+        }
     }
 
 
@@ -190,10 +193,10 @@ public class BaseAction {
     }
 
     public void sendFill(String phone, String code, String json, LogEntity log, Result result) {
-//        result.setSuccessful(result.isSuccessful()&&AliyunSmsPush.sendSms(phone, code, json, log));
-//        if (!result.isSuccessful()) {
-//            logEntityService.save(log);
-//        }
+        result.setSuccessful(result.isSuccessful()&& AliyunSmsPush.sendSms(phone, code, json, log));
+        if (!result.isSuccessful()) {
+            logEntityService.save(log);
+        }
         System.out.println("phone = " + phone);
         System.out.println("code = " + code);
         System.out.println("json = " + json);
