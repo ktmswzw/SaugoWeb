@@ -1,9 +1,9 @@
 //加载插件
-requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedInput','validator','vb','validatorLAG','comm','form','message'],
-    function ($,_) {
+requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'maskedInput', 'validator', 'vb', 'validatorLAG', 'comm', 'form', 'message'],
+    function ($, _) {
 
         //返回
-        $("#back").bind("click",function(){
+        $("#back").bind("click", function () {
             window.history.go(-1);
         });
 
@@ -13,8 +13,8 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
 
         //状态插件
         $("#state").bootstrapSwitch()
-            .on('switchChange.bootstrapSwitch', function(event, state) {
-                if(state) {
+            .on('switchChange.bootstrapSwitch', function (event, state) {
+                if (state) {
                     $("#payType").val("0");
 
                 }
@@ -26,27 +26,27 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
             });
 
         $("#superAgent").bootstrapSwitch()
-            .on('switchChange.bootstrapSwitch', function(event, state) {
-                    $("#superAgent").val(state);
+            .on('switchChange.bootstrapSwitch', function (event, state) {
+                $("#superAgent").val(state);
             });
 
-        if(user!=undefined&&user!=null&&user!=""&&(user.id != null )) {
+        if (user != undefined && user != null && user != "" && (user.id != null )) {
             //初始化页面
             meForm($('#formSubmit'), user);
 
 
-            $("#href1").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsFront);
+            $("#href1").attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + user.cardsFront);
             $("#href1").append('<button type="button" class="btn btn-link">下载</button>');
 
 
-            $("#href2").attr("href",WEB_GLOBAL_CTX + "/download/getImg?filePath="+user.cardsBack);
+            $("#href2").attr("href", WEB_GLOBAL_CTX + "/download/getImg?filePath=" + user.cardsBack);
             $("#href2").append('<button type="button" class="btn btn-link">下载</button>');
 
             $("#state").bootstrapSwitch('state', user.payType == 0);
 
             $("#superAgent").bootstrapSwitch('state', user.superAgent);
         }
-        else{
+        else {
             $("#payType").val("0");
             $("#status").val("enabled");
             $("#state").bootstrapSwitch('state', true);
@@ -60,11 +60,11 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
 
         //页面特殊要求
         $("#username").val(($("#phone").val()));
-        $("#phone").change(function(){
+        $("#phone").change(function () {
             $("#username").val(($("#phone").val()));
         });
 
-        $("#realname").change(function(){
+        $("#realname").change(function () {
             $("#bankName").val(($("#realname").val()));
         });
 
@@ -76,14 +76,14 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
 
         //同步值
         $('#myTree').on('updated.fu.tree', function (e, selected) {
-            asyncTreeValue("myTree","parentId");
+            asyncTreeValue("myTree", "parentId");
         });
         $('#myTree').on('selected.fu.tree', function (e, info) {
-            asyncTreeValue("myTree","parentId");
+            asyncTreeValue("myTree", "parentId");
         });
 
         //初始树
-        meTreeInit('myTree',new Array(user.parentId+""),"/console/security/user/findJsonById/",false,true,1);
+        meTreeInit('myTree', new Array(user.parentId + ""), "/console/security/user/findJsonById/", false, true, 1);
 
 
         //提交
@@ -105,7 +105,7 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
 
             var $form = $(e.target);
             var params = $form.serializeArray();
-            if ($("#parentId").val() == $("#id").val() ) {
+            if ($("#parentId").val() == $("#id").val()) {
                 highlight_error($("#parentId"));
                 $.scojs_message("上级代理不能是自己", $ERROR);
                 return false;
@@ -115,11 +115,11 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
                 $.scojs_message("上级代理必须选择一个", $ERROR);
                 return false;
             }
-/*            if ((user.id == null) && ( $("#plainPassword").val() == '')) {
-                highlight_error($("#plainPassword"));
-                $.scojs_message("密码为空", $ERROR);
-                return false;
-            }*/
+            /*            if ((user.id == null) && ( $("#plainPassword").val() == '')) {
+             highlight_error($("#plainPassword"));
+             $.scojs_message("密码为空", $ERROR);
+             return false;
+             }*/
             if (($("#payType").val() == 0 ) && ( $("#bank").val() == '' || $("#bankAccount").val() == '' || $("#bankName").val() == ''  )) {
                 highlight_error($("#bank"));
                 $.scojs_message("银行信息不完整", $ERROR);
@@ -191,16 +191,36 @@ requirejs(['jquery','bootstrap','fuelux','switchs','select','selectCN','maskedIn
             }
         });
 
-        $("#phone").bind("change",function(){removeDis();});
-        $("#identityCards").bind("change",function(){removeDis();});
-        $("#bank").bind("change",function(){removeDis();});
-        $("#bankAccount").bind("change",function(){removeDis();});
-        $("#bankName").bind("change",function(){removeDis();});
-        $("#alipayAccount").bind("change",function(){removeDis();});
-        $("#alipayName").bind("change",function(){removeDis();});
-        $("#file1").bind("change",function(){removeDis();});
-        $("#file2").bind("change",function(){removeDis();});
-        $("#parentId").bind("change",function(){removeDis();});
+        $("#phone").bind("change", function () {
+            removeDis();
+        });
+        $("#identityCards").bind("change", function () {
+            removeDis();
+        });
+        $("#bank").bind("change", function () {
+            removeDis();
+        });
+        $("#bankAccount").bind("change", function () {
+            removeDis();
+        });
+        $("#bankName").bind("change", function () {
+            removeDis();
+        });
+        $("#alipayAccount").bind("change", function () {
+            removeDis();
+        });
+        $("#alipayName").bind("change", function () {
+            removeDis();
+        });
+        $("#file1").bind("change", function () {
+            removeDis();
+        });
+        $("#file2").bind("change", function () {
+            removeDis();
+        });
+        $("#parentId").bind("change", function () {
+            removeDis();
+        });
 
 
     });

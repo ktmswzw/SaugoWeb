@@ -74,14 +74,18 @@ public class BaseAction {
         this.response = response;
         this.session = request.getSession();
         this.logBean = new LogEntity();
-        logBean.setIpAddress(SecurityUtils.getIpAddr(request));
-        logBean.setCreateTime(new Date());
-        logBean.setMessage(this.request.getMethod());
-        if(SecurityUtils.getSubject()!=null&&SecurityUtils.getShiroUser()!=null) {
-            User currentUser = SecurityUtils.getLoginUser();
-            if (currentUser != null)
-                logBean.setUsername(currentUser.getRealname());
-            logEntityService.save(logBean);
+        try {
+            logBean.setIpAddress(SecurityUtils.getIpAddr(request));
+            logBean.setCreateTime(new Date());
+            logBean.setMessage(request.getRequestURI());
+            if (SecurityUtils.getSubject() != null && SecurityUtils.getShiroUser() != null) {
+                User currentUser = SecurityUtils.getLoginUser();
+                if (currentUser != null)
+                    logBean.setUsername(currentUser.getRealname());
+                logEntityService.save(logBean);
+            }
+        }catch (Exception e){
+
         }
     }
 
@@ -197,8 +201,8 @@ public class BaseAction {
         if (!result.isSuccessful()) {
             logEntityService.save(log);
         }
-        System.out.println("phone = " + phone);
-        System.out.println("code = " + code);
-        System.out.println("json = " + json);
+//        System.out.println("phone = " + phone);
+//        System.out.println("code = " + code);
+//        System.out.println("json = " + json);
     }
 }
