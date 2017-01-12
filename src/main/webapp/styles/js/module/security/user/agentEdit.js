@@ -71,7 +71,7 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'ma
         //动态调整ifream页面高度
         $('#myTree').on('loaded.fu.tree', function (e) {
             //console.log('Loaded');
-            setHeight();
+            setHeightSelf(200);
         });
 
         //同步值
@@ -221,7 +221,9 @@ requirejs(['jquery', 'bootstrap', 'fuelux', 'switchs', 'select', 'selectCN', 'ma
         $("#parentId").bind("change", function () {
             removeDis();
         });
-
+        $("#address").bind("change", function () {
+            removeDis();
+        });
 
     });
 
