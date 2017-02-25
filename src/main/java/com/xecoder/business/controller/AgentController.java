@@ -104,7 +104,7 @@ public class AgentController extends BaseAction {
         ModelAndView mav = new ModelAndView(pageType);
         User user = SecurityUtils.getLoginUser();
         Order order = new Order();
-        Date dateB = beginDate == null || beginDate.equals("") ? SimpleDate.getDayEnd(new Date(), -30) : SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
+        Date dateB = beginDate == null || beginDate.equals("") ? SimpleDate.getDayEnd(new Date(), -365) : SimpleDate.strToDate(beginDate, "yyyy-MM-dd");
         Date dateE = endDate == null || endDate.equals("") ? SimpleDate.getDayEnd(new Date(), 0) : SimpleDate.strToDate(endDate, "yyyy-MM-dd");
         order.setBeginDate(dateB);
         order.setEndDate(dateE);
